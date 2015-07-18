@@ -27,5 +27,8 @@ public class SortableCarTableView extends SortableTableView<Car> {
         setColumnWeight(1, 4);
         setColumnWeight(2, 2);
         setColumnWeight(3, 1);
+
+        setHeaderBackgroundColor(0xFFEEEEEE); //0xFF9696ff
+        setHeaderElevation(10);
     }
 }

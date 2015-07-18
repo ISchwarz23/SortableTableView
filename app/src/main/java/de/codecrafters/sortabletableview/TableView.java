@@ -3,6 +3,8 @@ package de.codecrafters.sortabletableview;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
+import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -93,6 +95,31 @@ public class TableView<T> extends LinearLayout {
         removeViewAt(0);
         addView(tableHeaderView, 0);
         forceRefresh();
+    }
+
+    /**
+     * Sets the given resource as background of the table header.
+     * @param resId The if of the resource tht shall be set as background of the table header.
+     */
+    public void setHeaderBackground(int resId) {
+        tableHeaderView.setBackgroundResource(resId);
+    }
+
+    /**
+     * Sets the given color as background of the table header.
+     * @param color The color that shall be set as background of the table header.
+     */
+    public void setHeaderBackgroundColor(int color) {
+        tableHeaderView.setBackgroundColor(color);
+    }
+
+    /**
+     * Sets the elevation level of the header view. If you are not able to see the elevation shadow
+     * you should set a background(-color) to the header.
+     * @param elevation The elevation that shall be set to the table header.
+     */
+    public void setHeaderElevation(int elevation) {
+        ViewCompat.setElevation(tableHeaderView, elevation);
     }
 
     /**
