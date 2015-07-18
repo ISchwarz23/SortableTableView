@@ -40,20 +40,134 @@ public class TableView<T> extends LinearLayout {
     private Set<TableDataClickListener<T>> dataClickListeners = new HashSet<>();
 
 
+    /**
+     * Creates a new TableView with the given context.\n
+     * (Has same effect like calling {@code new TableView(context, null, 0})
+     * @param context The context that shall be used.
+     */
     public TableView(Context context) {
         this(context, null);
     }
 
-    public TableView(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+    /**
+     * Creates a new TableView with the given context.\n
+     * (Has same effect like calling {@code new TableView(context, attrs, 0})
+     * @param context The context that shall be used.
+     * @param attributes The attributes that shall be set to the view.
+     */
+    public TableView(Context context, AttributeSet attributes) {
+        this(context, attributes, 0);
     }
-
-    public TableView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+    /**
+     * Creates a new TableView with the given context.
+     * @param context The context that shall be used.
+     * @param attributes The attributes that shall be set to the view.
+     * @param styleAttributes The style attributes that shall be set to the view.
+     */
+    public TableView(Context context, AttributeSet attributes, int styleAttributes) {
+        super(context, attributes, styleAttributes);
         setOrientation(LinearLayout.VERTICAL);
-        setAttributes(context, attrs);
+        setAttributes(context, attributes);
         setupTableHeaderView();
         setupTableDataView();
+    }
+
+    /**
+     * Replaces the default {@link TableHeaderView} with the given one.
+     * @param headerView The new {@link TableHeaderView} that should be set.
+     */
+    protected void setTableHeaderView(TableHeaderView headerView) {
+        this.tableHeaderView = headerView;
+        tableHeaderView.setAdapter(tableHeaderAdapter);
+        removeViewAt(0);
+        addView(tableHeaderView, 0);
+        forceRefresh();
+    }
+
+    /**
+     * Adds a {@link TableDataClickListener} to this table.
+     * @param listener The listener that should be added.
+     */
+    public void addTableDataClickListener(TableDataClickListener<T> listener) {
+        dataClickListeners.add(listener);
+    }
+
+    /**
+     * Removes a {@link TableDataClickListener} to this table.
+     * @param listener The listener that should be removed.
+     */
+    public void removeTableDataClickListener(TableDataClickListener<T> listener) {
+        dataClickListeners.remove(listener);
+    }
+
+    /**
+     * Sets the {@link TableHeaderAdapter} that is used to render the header views for each column.
+     * @param headerAdapter The {@link TableHeaderAdapter} that should be set.
+     */
+    public void setHeaderAdapter(TableHeaderAdapter headerAdapter) {
+        tableHeaderAdapter = headerAdapter;
+        tableHeaderAdapter.setColumnModel(columnModel);
+        tableHeaderView.setAdapter(tableHeaderAdapter);
+        forceRefresh();
+    }
+
+    /**
+     * Sets the {@link TableDataAdapter} that is used to render the data view for each cell.
+     * @param dataAdapter The {@link TableDataAdapter} that should be set.
+     */
+    public void setDataAdapter(TableDataAdapter<T> dataAdapter) {
+        tableDataAdapter = dataAdapter;
+        tableDataAdapter.setColumnModel(columnModel);
+        tableDataView.setAdapter(tableDataAdapter);
+        forceRefresh();
+    }
+
+    /**
+     * Sets the number of columns of this table.
+     * @param columnCount The number of columns.
+     */
+    public void setColumnCount(int columnCount) {
+        columnModel.setColumnCount(columnCount);
+        forceRefresh();
+    }
+
+    /**
+     * Sets the column weight (the relative width of the column) of the given column.
+     * @param columnIndex The index of the column the weight should be set to.
+     * @param columnWeight The weight that should be set to the column.
+     */
+    public void setColumnWeight(int columnIndex, int columnWeight) {
+        columnModel.setColumnWeight(columnIndex, columnWeight);
+        forceRefresh();
+    }
+
+    /**
+     * Gives the column weight (the relative width of the column) of the given column.
+     * @param columnIndex The index of the column the weight should be returned.
+     * @return The weight of the given column index.
+     */
+    public int getColumnWeight(int columnIndex) {
+        return columnModel.getColumnWeight(columnIndex);
+    }
+
+    private void forceRefresh() {
+        tableHeaderView.invalidate();
+        tableDataView.invalidate();
+    }
+
+    private void setAttributes(Context context, AttributeSet attributes) {
+        TypedArray styledAttributes = context.obtainStyledAttributes(attributes, R.styleable.TableView);
+
+        for (int i = 0; i < styledAttributes.getIndexCount(); ++i) {
+            int attribute = styledAttributes.getIndex(i);
+            switch (attribute) {
+                case R.styleable.TableView_columnCount:
+                    int columnCount = styledAttributes.getInt(attribute, DEFAULT_COLUMN_COUNT);
+                    columnModel = new TableColumnModel(columnCount);
+                    break;
+            }
+        }
+        styledAttributes.recycle();
     }
 
     private void setupTableHeaderView() {
@@ -84,71 +198,12 @@ public class TableView<T> extends LinearLayout {
         addView(tableDataView);
     }
 
-    protected void setTableHeaderView(TableHeaderView headerView) {
-        this.tableHeaderView = headerView;
-        tableHeaderView.setAdapter(tableHeaderAdapter);
-        removeViewAt(0);
-        addView(tableHeaderView, 0);
-        forceRefresh();
-    }
 
-    public void addTableDataClickListener(TableDataClickListener<T> listener) {
-        dataClickListeners.add(listener);
-    }
-
-    public void removeTableDataClickListener(TableDataClickListener<T> listener) {
-        dataClickListeners.remove(listener);
-    }
-
-    public void setHeaderAdapter(TableHeaderAdapter headerAdapter) {
-        tableHeaderAdapter = headerAdapter;
-        tableHeaderAdapter.setColumnModel(columnModel);
-        tableHeaderView.setAdapter(tableHeaderAdapter);
-        forceRefresh();
-    }
-
-    public void setDataAdapter(TableDataAdapter<T> dataAdapter) {
-        tableDataAdapter = dataAdapter;
-        tableDataAdapter.setColumnModel(columnModel);
-        tableDataView.setAdapter(tableDataAdapter);
-        forceRefresh();
-    }
-
-    public void setColumnCount(int columnCount) {
-        columnModel.setColumnCount(columnCount);
-        forceRefresh();
-    }
-
-    public void setColumnWeight(int columnIndex, int columnWeight) {
-        columnModel.setColumnWeight(columnIndex, columnWeight);
-        forceRefresh();
-    }
-
-    public int getColumnWeight(int columnIndex) {
-        return columnModel.getColumnWeight(columnIndex);
-    }
-
-    private void forceRefresh() {
-        tableHeaderView.invalidate();
-        tableDataView.invalidate();
-    }
-
-    private void setAttributes(Context context, AttributeSet attributes) {
-        TypedArray styledAttributes = context.obtainStyledAttributes(attributes, R.styleable.TableView);
-
-        for (int i = 0; i < styledAttributes.getIndexCount(); ++i) {
-            int attribute = styledAttributes.getIndex(i);
-            switch (attribute) {
-                case R.styleable.TableView_columnCount:
-                    int columnCount = styledAttributes.getInt(attribute, DEFAULT_COLUMN_COUNT);
-                    columnModel = new TableColumnModel(columnCount);
-                    break;
-            }
-        }
-        styledAttributes.recycle();
-    }
-
-
+    /**
+     * Internal management of clicks on the data view.
+     *
+     * @author ISchwarz
+     */
     private class InternalDataClickListener implements AdapterView.OnItemClickListener {
 
         @Override
@@ -171,6 +226,30 @@ public class TableView<T> extends LinearLayout {
 
     }
 
+    /**
+     * The {@link TableHeaderAdapter} that is used by default. It contains the column model of the
+     * table but no headers.
+     *
+     * @author ISchwarz
+     */
+    private class DefaultTableHeaderAdapter extends TableHeaderAdapter {
+
+        public DefaultTableHeaderAdapter(Context context) {
+            super(context, columnModel);
+        }
+
+        @Override
+        public View getHeaderView(int columnIndex, ViewGroup parentView) {
+            return new TextView(getContext());
+        }
+    }
+
+    /**
+     * The {@link TableDataAdapter} that is used by default. It contains the column model of the
+     * table but no data.
+     *
+     * @author ISchwarz
+     */
     private class DefaultTableDataAdapter extends TableDataAdapter<T> {
 
         public DefaultTableDataAdapter(Context context) {
@@ -183,6 +262,36 @@ public class TableView<T> extends LinearLayout {
         }
     }
 
+    /**
+     * The {@link TableHeaderAdapter} that is used while the view is in edit mode.
+     *
+     * @author ISchwarz
+     */
+    private class EditModeTableHeaderAdapter extends TableHeaderAdapter {
+
+        private static final float TEXT_SIZE = 18;
+
+        public EditModeTableHeaderAdapter(Context context) {
+            super(context, columnModel);
+        }
+
+        @Override
+        public View getHeaderView(int columnIndex, ViewGroup parentView) {
+            Log.d("HeaderAdapter", "Header" + columnIndex);
+            TextView textView = new TextView(getContext());
+            textView.setText("Header " + columnIndex);
+            textView.setPadding(20, 30, 20, 30);
+            textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
+            textView.setTextSize(TEXT_SIZE);
+            return textView;
+        }
+    }
+
+    /**
+     * The {@link TableDataAdapter} that is used while the view is in edit mode.
+     *
+     * @author ISchwarz
+     */
     private class EditModeTableDataAdapter extends TableDataAdapter<T> {
 
         private static final float TEXT_SIZE = 16;
@@ -203,38 +312,6 @@ public class TableView<T> extends LinearLayout {
         @Override
         public int getCount() {
             return 150;
-        }
-    }
-
-    private class DefaultTableHeaderAdapter extends TableHeaderAdapter {
-
-        public DefaultTableHeaderAdapter(Context context) {
-            super(context, columnModel);
-        }
-
-        @Override
-        public View getHeaderView(int columnIndex, ViewGroup parentView) {
-            return new TextView(getContext());
-        }
-    }
-
-    private class EditModeTableHeaderAdapter extends TableHeaderAdapter {
-
-        private static final float TEXT_SIZE = 18;
-
-        public EditModeTableHeaderAdapter(Context context) {
-            super(context, columnModel);
-        }
-
-        @Override
-        public View getHeaderView(int columnIndex, ViewGroup parentView) {
-            Log.d("HeaderAdapter", "Header" + columnIndex);
-            TextView textView = new TextView(getContext());
-            textView.setText("Header " + columnIndex);
-            textView.setPadding(20, 30, 20, 30);
-            textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
-            textView.setTextSize(TEXT_SIZE);
-            return textView;
         }
     }
 
