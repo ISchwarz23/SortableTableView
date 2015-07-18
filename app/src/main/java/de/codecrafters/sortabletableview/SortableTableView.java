@@ -150,9 +150,9 @@ public class SortableTableView<T> extends TableView<T> {
         private void setSortView(int columnIndex) {
             sortableTableHeaderView.resetSortViews();
             if (isSortedUp) {
-                sortableTableHeaderView.showSortView(columnIndex, SortableTableHeaderView.SortViewPresentation.SORT_UP);
+                sortableTableHeaderView.setSortViewPresentation(columnIndex, SortableTableHeaderView.SortViewPresentation.SORT_UP);
             } else {
-                sortableTableHeaderView.showSortView(columnIndex, SortableTableHeaderView.SortViewPresentation.SORT_DOWN);
+                sortableTableHeaderView.setSortViewPresentation(columnIndex, SortableTableHeaderView.SortViewPresentation.SORT_DOWN);
             }
         }
 
@@ -188,10 +188,10 @@ public class SortableTableView<T> extends TableView<T> {
         public void setComparator(int columnIndex, Comparator<T> columnComparator) {
             if (columnComparator == null) {
                 comparators.remove(columnIndex);
-                sortableTableHeaderView.showSortView(columnIndex, SortableTableHeaderView.SortViewPresentation.NONE);
+                sortableTableHeaderView.setSortViewPresentation(columnIndex, SortableTableHeaderView.SortViewPresentation.NONE);
             } else {
                 comparators.put(columnIndex, columnComparator);
-                sortableTableHeaderView.showSortView(columnIndex, SortableTableHeaderView.SortViewPresentation.SORTABLE);
+                sortableTableHeaderView.setSortViewPresentation(columnIndex, SortableTableHeaderView.SortViewPresentation.SORTABLE);
             }
         }
 
