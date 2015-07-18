@@ -71,13 +71,8 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SortableTableView<Car> tableView = (SortableTableView) findViewById(R.id.tableView);
-        tableView.setHeaderAdapter(new SimpleTableHeaderAdapter(this, "Hersteller", "Typ", "Leistung", "Preis"));
+        SortableCarTableView tableView = (SortableCarTableView) findViewById(R.id.tableView);
         tableView.setDataAdapter(new CarTableDataAdapter(this, CAR_LIST));
-        tableView.setColumnWeight(0, 2);
-        tableView.setColumnWeight(1, 4);
-        tableView.setColumnWeight(2, 2);
-        tableView.setColumnWeight(3, 1);
         tableView.setColumnComparator(0, new CarProducerComparator());
         tableView.setColumnComparator(1, new CarNameComparator());
         tableView.setColumnComparator(2, new CarPsComparator());
