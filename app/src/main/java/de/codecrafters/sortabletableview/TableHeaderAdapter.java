@@ -63,7 +63,7 @@ public abstract class TableHeaderAdapter {
     }
 
     /**
-     * Sets the {@link TableColumnModel} that will be used to render the table cells.
+     * Sets the {@link TableColumnModel} that will be used to render the table headers.
      * @param columnModel The {@link TableColumnModel} that should be set.
      */
     public void setColumnModel(TableColumnModel columnModel) {
@@ -71,14 +71,14 @@ public abstract class TableHeaderAdapter {
     }
 
     /**
-     * Gives the {@link TableColumnModel} that is currently used to render the table cells.
+     * Gives the {@link TableColumnModel} that is currently used to render the table headers.
      */
     public TableColumnModel getColumnModel() {
         return columnModel;
     }
 
     /**
-     * Sets the column count which is used to render the table cells.
+     * Sets the column count which is used to render the table headers.
      * @param columnCount The column count that should be set.
      */
     public void setColumnCount(int columnCount) {
@@ -86,7 +86,7 @@ public abstract class TableHeaderAdapter {
     }
 
     /**
-     * Gives the column count that is currently used to render the table cells.
+     * Gives the column count that is currently used to render the table headers.
      * @return The number of columns.
      */
     public int getColumnCount() {
@@ -120,9 +120,9 @@ public abstract class TableHeaderAdapter {
     }
 
     /**
-     * Method used for creating the header views for the different columns.
+     * Method that gives the header views for the different columns.
      * @param columnIndex The index of the column to return the header view.
-     * @param parentView The parent of the view that will be created by this method.
+     * @param parentView The view to which the returned view will be added.
      * @return The created header view for the given column.
      */
     public abstract View getHeaderView(int columnIndex, ViewGroup parentView);
