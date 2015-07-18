@@ -1,9 +1,11 @@
 package de.codecrafters.sortabletableview;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,10 +24,12 @@ class TableHeaderView extends LinearLayout {
 
         LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         setLayoutParams(layoutParams);
+        setGravity(Gravity.CENTER_VERTICAL);
     }
 
-    private void addViews() {
+    private void renderHeaderViews() {
         removeAllViews();
+        this.headerViews.clear();
 
         for(int columnIndex=0; columnIndex<adapter.getColumnCount(); columnIndex++) {
             LayoutParams headerLayoutParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -35,7 +39,7 @@ class TableHeaderView extends LinearLayout {
             headerView.setLayoutParams(headerLayoutParams);
 
             headerViews.add(headerView);
-            addView(headerView);
+//            addView(headerView, columnIndex);
         }
     }
 
@@ -49,18 +53,21 @@ class TableHeaderView extends LinearLayout {
 
         for(int columnIndex=0; columnIndex<headerViews.size(); columnIndex++) {
             View headerView = headerViews.get(columnIndex);
+            if(headerView == null) {
+                headerView = new TextView(getContext());
+            }
 
             int width = widthUnit * adapter.getColumnWeight(columnIndex);
             LayoutParams headerLayoutParams = new LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT);
 
             headerView.setLayoutParams(headerLayoutParams);
-            addView(headerView);
+            addView(headerView, columnIndex);
         }
     }
 
     public void setAdapter(TableHeaderAdapter adapter) {
         this.adapter = adapter;
-        addViews();
+        renderHeaderViews();
         invalidate();
     }
 

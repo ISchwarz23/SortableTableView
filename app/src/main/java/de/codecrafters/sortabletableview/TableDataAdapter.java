@@ -1,12 +1,14 @@
 package de.codecrafters.sortabletableview;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -17,7 +19,6 @@ import java.util.List;
 public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
 
     private TableColumnModel columnModel;
-    private int viewWidth;
 
     public TableDataAdapter(Context context, List<T> data, int columnCount) {
         this(context, data, new TableColumnModel(columnCount));
@@ -36,17 +37,25 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
         return columnModel.getColumnCount();
     }
 
+    public void setColumnModel(TableColumnModel columnModel) {
+        this.columnModel = columnModel;
+    }
+
     @Override
     public View getView(int rowIndex, View convertView, ViewGroup parent) {
         LinearLayout rowView = new LinearLayout(getContext());
 
         ListView.LayoutParams rowLayoutParams = new ListView.LayoutParams(ListView.LayoutParams.MATCH_PARENT, ListView.LayoutParams.WRAP_CONTENT);
         rowView.setLayoutParams(rowLayoutParams);
+        rowView.setGravity(Gravity.CENTER_VERTICAL);
 
         int widthUnit = (parent.getWidth() / columnModel.getColumnWeightSum());
 
         for(int columnIndex=0; columnIndex<getColumnCount(); columnIndex++) {
             View cellView = getCellView(rowIndex, columnIndex, rowView);
+            if(cellView == null) {
+                cellView = new TextView(getContext());
+            }
 
             int width = widthUnit * columnModel.getColumnWeight(columnIndex);
 

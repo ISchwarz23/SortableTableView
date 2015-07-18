@@ -9,6 +9,6 @@
         android:id="@+id/tableView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        custom:columnCount="3"/>
+        custom:columnCount="4"/>
 
 </RelativeLayout>

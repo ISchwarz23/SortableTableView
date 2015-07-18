@@ -71,10 +71,14 @@ public class TableView<T> extends LinearLayout {
         tableHeaderAdapter = headerAdapter;
         tableHeaderAdapter.setColumnModel(columnModel);
         tableHeaderView.setAdapter(tableHeaderAdapter);
+        forceRefresh();
     }
 
-    public void setDataAdapter(TableDataAdapter<T> cellAdapter) {
-        tableDataAdapter = cellAdapter;
+    public void setDataAdapter(TableDataAdapter<T> dataAdapter) {
+        tableDataAdapter = dataAdapter;
+        tableDataAdapter.setColumnModel(columnModel);
+        tableDataView.setAdapter(tableDataAdapter);
+        forceRefresh();
     }
 
     public void setColumnCount(int columnCount) {
