@@ -7,11 +7,16 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
+import de.codecrafters.sortabletableview.listeners.TableDataClickListener;
 
 
 /**
@@ -31,6 +36,8 @@ public class TableView<T> extends LinearLayout {
 
     private TableHeaderAdapter tableHeaderAdapter;
     protected TableDataAdapter<T> tableDataAdapter;
+
+    private Set<TableDataClickListener<T>> dataClickListeners = new HashSet<>();
 
 
     public TableView(Context context) {
@@ -69,6 +76,7 @@ public class TableView<T> extends LinearLayout {
         }
         tableDataView = new ListView(getContext());
         tableDataView.setAdapter(tableDataAdapter);
+        tableDataView.setOnItemClickListener(new InternalDataClickListener());
 
         LayoutParams dataViewLayoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         tableDataView.setLayoutParams(dataViewLayoutParams);
@@ -82,6 +90,14 @@ public class TableView<T> extends LinearLayout {
         removeViewAt(0);
         addView(tableHeaderView, 0);
         forceRefresh();
+    }
+
+    public void addTableDataClickListener(TableDataClickListener<T> listener) {
+        dataClickListeners.add(listener);
+    }
+
+    public void removeTableDataClickListener(TableDataClickListener<T> listener) {
+        dataClickListeners.remove(listener);
     }
 
     public void setHeaderAdapter(TableHeaderAdapter headerAdapter) {
@@ -130,6 +146,29 @@ public class TableView<T> extends LinearLayout {
             }
         }
         styledAttributes.recycle();
+    }
+
+
+    private class InternalDataClickListener implements AdapterView.OnItemClickListener {
+
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            informAllListeners(i);
+        }
+
+        private void informAllListeners(int rowIndex) {
+            T clickedObject = tableDataAdapter.getItem(rowIndex);
+
+            for (TableDataClickListener<T> listener : dataClickListeners) {
+                try {
+                    listener.onDataClicked(rowIndex, clickedObject);
+                } catch (Throwable t) {
+                    t.printStackTrace();
+                    // continue calling listeners
+                }
+            }
+        }
+
     }
 
     private class DefaultTableDataAdapter extends TableDataAdapter<T> {

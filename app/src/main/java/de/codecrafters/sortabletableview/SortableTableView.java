@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import de.codecrafters.sortabletableview.listeners.TableHeaderClickListener;
+
 /**
  * Extension of the {@link TableView} that gives the possibility to sort the table by every single
  * column. For this purpose implementations of {@link Comparator} are used. If there is a comparator
@@ -51,7 +53,15 @@ public class SortableTableView<T> extends TableView<T> {
         sortingController.setComparator(columnIndex, columnComparator);
     }
 
-    private class SortingController implements HeaderClickListener {
+    public void addTableHeaderListener(TableHeaderClickListener listener) {
+        sortableTableHeaderView.addHeaderClickListener(listener);
+    }
+
+    public void removeTableHeaderListener(TableHeaderClickListener listener) {
+        sortableTableHeaderView.removeHeaderClickListener(listener);
+    }
+
+    private class SortingController implements TableHeaderClickListener {
 
         private Map<Integer, Comparator<T>> comparators = new HashMap<>();
         private int sortedColumnIndex = -1;
@@ -60,7 +70,7 @@ public class SortableTableView<T> extends TableView<T> {
         @Override
         public void onHeaderClicked(int columnIndex) {
 
-            if (comparators.containsKey(columnIndex)) {
+            if (!comparators.containsKey(columnIndex)) {
                 Log.i(LOG_TAG, "Unable to sort column with index " + columnIndex + ". Reason: no comparator set.");
                 return;
             }
@@ -115,20 +125,6 @@ public class SortableTableView<T> extends TableView<T> {
                 sortableTableHeaderView.showSortView(columnIndex, SortableTableHeaderView.SortViewPresentation.SORTABLE);
             }
         }
-
-    }
-
-    /**
-     * Listener interface to listen for clicks on table headers of a {@link SortableTableView}.
-     */
-    public interface HeaderClickListener {
-
-        /**
-         * This method is called of a table header was clicked.
-         *
-         * @param columnIndex
-         */
-        void onHeaderClicked(int columnIndex);
 
     }
 

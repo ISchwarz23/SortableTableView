@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import de.codecrafters.sortabletableview.TableDataAdapter;
 import de.codecrafters.sortabletableview.adapters.SimpleTableHeaderAdapter;
 import de.codecrafters.sortabletableview.example.Car;
 import de.codecrafters.sortabletableview.example.CarProducer;
+import de.codecrafters.sortabletableview.listeners.TableDataClickListener;
 
 
 public class MainActivity extends Activity {
@@ -59,6 +61,17 @@ public class MainActivity extends Activity {
         tableView.setComparator(1, new CarNameComparator());
         tableView.setComparator(2, new CarPsComparator());
         tableView.setComparator(3, new CarPriceComparator());
+        tableView.addTableDataClickListener(new CarClickListener());
+    }
+
+
+    private class CarClickListener implements TableDataClickListener<Car> {
+
+        @Override
+        public void onDataClicked(int rowIndex, Car clickedData) {
+            String carString = clickedData.getProducer().getName() + " " + clickedData.getName();
+            Toast.makeText(getApplicationContext(), carString, Toast.LENGTH_SHORT).show();
+        }
     }
 
     private static class CarPsComparator implements Comparator<Car> {

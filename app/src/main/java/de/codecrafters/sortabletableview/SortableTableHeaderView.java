@@ -12,6 +12,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import de.codecrafters.sortabletableview.listeners.TableHeaderClickListener;
+
 /**
  * Extension of the {@link TableHeaderView} that will show sorting indicators at the start of the header.
  *
@@ -22,7 +24,7 @@ class SortableTableHeaderView extends TableHeaderView {
     private static final String LOG_TAG = SortableTableHeaderView.class.toString();
 
     private Map<Integer, ImageView> sortViews = new HashMap<>();
-    private Set<SortableTableView.HeaderClickListener> listeners = new HashSet<>();
+    private Set<TableHeaderClickListener> listeners = new HashSet<>();
 
     public SortableTableHeaderView(Context context) {
         super(context);
@@ -81,12 +83,16 @@ class SortableTableHeaderView extends TableHeaderView {
         }
     }
 
-    public void addHeaderClickListener(SortableTableView.HeaderClickListener listener) {
+    public void addHeaderClickListener(TableHeaderClickListener listener) {
         listeners.add(listener);
     }
 
+    public void removeHeaderClickListener(TableHeaderClickListener listener) {
+        listeners.remove(listener);
+    }
+
     private void informHeaderListeners(int columnIndex) {
-        for (SortableTableView.HeaderClickListener listener : listeners) {
+        for (TableHeaderClickListener listener : listeners) {
             try {
                 listener.onHeaderClicked(columnIndex);
             } catch (Throwable t) {
@@ -95,6 +101,7 @@ class SortableTableHeaderView extends TableHeaderView {
             }
         }
     }
+
 
     private class InternalHeaderClickListener implements View.OnClickListener {
 
@@ -115,7 +122,7 @@ class SortableTableHeaderView extends TableHeaderView {
         NONE,
         SORTABLE,
         SORT_UP,
-        SORT_DOWN;
+        SORT_DOWN
 
     }
 

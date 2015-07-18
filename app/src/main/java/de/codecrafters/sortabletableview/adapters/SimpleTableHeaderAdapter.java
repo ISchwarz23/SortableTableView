@@ -15,7 +15,7 @@ import de.codecrafters.sortabletableview.TableHeaderAdapter;
  *
  * @author ISchwarz
  */
-public class SimpleTableHeaderAdapter extends TableHeaderAdapter {
+public final class SimpleTableHeaderAdapter extends TableHeaderAdapter {
 
     private String[] headers;
     private int paddingLeft = 20;
