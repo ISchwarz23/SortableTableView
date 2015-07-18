@@ -124,6 +124,7 @@ public class MainActivity extends Activity {
         }
     }
 
+
     private static class CarTableDataAdapter extends TableDataAdapter<Car> {
 
         private static final int TEXT_SIZE = 14;
@@ -156,8 +157,21 @@ public class MainActivity extends Activity {
             return renderedView;
         }
 
-        private View renderPrice(Car data) {
-            return renderString(PRICE_FORMATTER.format(data.getPrice()) + " €");
+        private View renderPrice(Car car) {
+            String priceString = PRICE_FORMATTER.format(car.getPrice()) + " €";
+
+            TextView textView = new TextView(getContext());
+            textView.setText(priceString);
+            textView.setPadding(20, 10, 20, 10);
+            textView.setTextSize(TEXT_SIZE);
+
+            if(car.getPrice() < 50000) {
+                textView.setTextColor(0xFF00FF00);
+            } else if(car.getPrice() > 100000) {
+                textView.setTextColor(0xFFFF0000);
+            }
+
+            return textView;
         }
 
         private View renderPower(Car car) {
