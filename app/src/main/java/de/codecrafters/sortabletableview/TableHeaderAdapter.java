@@ -13,48 +13,110 @@ import android.view.ViewGroup;
  */
 public abstract class TableHeaderAdapter {
 
-    private final Context context;
     private TableColumnModel columnModel;
+    private final Context context;
 
+
+    /**
+     * Creates a new TableHeaderAdapter.
+     * @param context The context that shall be used.
+     */
     public TableHeaderAdapter(Context context) {
         this(context, 0);
     }
 
-    public TableHeaderAdapter(Context context, int columnCount) {
+    /**
+     * Creates a new TableHeaderAdapter. (internally used)
+     * @param context The context that shall be used.
+     * @param columnCount The number of columns.
+     */
+    protected TableHeaderAdapter(Context context, int columnCount) {
         this(context, new TableColumnModel(columnCount));
     }
 
-    public TableHeaderAdapter(Context context, TableColumnModel columnModel) {
+    /**
+     * Creates a new TableHeaderAdapter. (internally used)
+     * @param context The context that shall be used.
+     * @param columnModel The column model to be used.
+     */
+    protected TableHeaderAdapter(Context context, TableColumnModel columnModel) {
         this.context = context;
         this.columnModel = columnModel;
     }
 
+    /**
+     * Gives the {@link Context} of this adapter. (Hint: use this method in the {@code getHeaderView()}-method
+     * to programmatically initialize new views.)
+     * @return The {@link Context} of this adapter.
+     */
     public Context getContext() {
         return context;
     }
 
+    /**
+     * Gives the {@link LayoutInflater} of this adapter. (Hint: use this method in the
+     * {@code getHeaderView()}-method to inflate xml-layout-files.)
+     * @return The {@link LayoutInflater} of this adapter.
+     */
     public LayoutInflater getLayoutInflater() {
         return (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    public int getColumnCount() {
-        return columnModel.getColumnCount();
-    }
-
+    /**
+     * Sets the {@link TableColumnModel} that will be used to render the table cells.
+     * @param columnModel The {@link TableColumnModel} that should be set.
+     */
     public void setColumnModel(TableColumnModel columnModel) {
         this.columnModel = columnModel;
     }
 
+    /**
+     * Gives the {@link TableColumnModel} that is currently used to render the table cells.
+     */
+    public TableColumnModel getColumnModel() {
+        return columnModel;
+    }
+
+    /**
+     * Sets the column count which is used to render the table cells.
+     * @param columnCount The column count that should be set.
+     */
+    public void setColumnCount(int columnCount) {
+        columnModel.setColumnCount(columnCount);
+    }
+
+    /**
+     * Gives the column count that is currently used to render the table cells.
+     * @return The number of columns.
+     */
+    public int getColumnCount() {
+        return columnModel.getColumnCount();
+    }
+
+    /**
+     * Sets the column weight (the relative width of a column) of the column at the given index.
+     * @param columnIndex The index of the column to which this weight should be assigned.
+     * @param columnWeight The weight that should be set to the column at the given index.
+     */
     public void setColumnWeight(int columnIndex, int columnWeight) {
         columnModel.setColumnWeight(columnIndex, columnWeight);
     }
 
-    public int getColumnWeightSum() {
-        return columnModel.getColumnWeightSum();
-    }
-
+    /**
+     * Gives the column weight (the relative width of a column) of the column at the given index.
+     * @param columnIndex The index of the column to receive the column weight.
+     * @return The column weight of the column at the given index.
+     */
     public int getColumnWeight(int columnIndex) {
         return columnModel.getColumnWeight(columnIndex);
+    }
+
+    /**
+     * Gives the overall column weight (sum of all column weights).
+     * @return The collumn weight sum.
+     */
+    public int getColumnWeightSum() {
+        return columnModel.getColumnWeightSum();
     }
 
     /**
