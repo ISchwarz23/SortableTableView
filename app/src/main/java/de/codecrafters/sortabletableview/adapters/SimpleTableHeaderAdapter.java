@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import de.codecrafters.sortabletableview.TableHeaderAdapter;
 
+
 /**
  * Simple implementation of the {@link TableHeaderAdapter}. This adapter will render the given header
  * Strings as {@link TextView}.
@@ -25,16 +26,103 @@ public final class SimpleTableHeaderAdapter extends TableHeaderAdapter {
     private int textSize = 18;
     private int typeface = Typeface.BOLD;
 
+    /**
+     * Creates a new SimpleTableHeaderAdapter.
+     *
+     * @param context
+     *         The context to use inside this {@link TableHeaderAdapter}.
+     * @param headers
+     *         The header labels that shall be rendered.
+     */
     public SimpleTableHeaderAdapter(Context context, String... headers) {
         super(context);
         this.headers = headers;
+    }
+
+    /**
+     * Sets the padding that will be used for all table headers.
+     *
+     * @param left
+     *         The padding on the left side.
+     * @param top
+     *         The padding on the top side.
+     * @param right
+     *         The padding on the right side.
+     * @param bottom
+     *         The padding on the bottom side.
+     */
+    public void setPaddings(int left, int top, int right, int bottom) {
+        paddingLeft = left;
+        paddingTop = top;
+        paddingRight = right;
+        paddingBottom = bottom;
+    }
+
+    /**
+     * Sets the padding that will be used on the left side for all table headers.
+     *
+     * @param paddingLeft
+     *         The padding on the left side.
+     */
+    public void setPaddingLeft(int paddingLeft) {
+        this.paddingLeft = paddingLeft;
+    }
+
+    /**
+     * Sets the padding that will be used on the top side for all table headers.
+     *
+     * @param paddingTop
+     *         The padding on the top side.
+     */
+    public void setPaddingTop(int paddingTop) {
+        this.paddingTop = paddingTop;
+    }
+
+    /**
+     * Sets the padding that will be used on the right side for all table headers.
+     *
+     * @param paddingRight
+     *         The padding on the right side.
+     */
+    public void setPaddingRight(int paddingRight) {
+        this.paddingRight = paddingRight;
+    }
+
+    /**
+     * Sets the padding that will be used on the bottom side for all table headers.
+     *
+     * @param paddingBottom
+     *         The padding on the bottom side.
+     */
+    public void setPaddingBottom(int paddingBottom) {
+        this.paddingBottom = paddingBottom;
+    }
+
+    /**
+     * Sets the text size that will be used for all table headers.
+     *
+     * @param textSize
+     *         The text size that shall be used.
+     */
+    public void setTextSize(int textSize) {
+        this.textSize = textSize;
+    }
+
+    /**
+     * Sets the typeface that will be used for all table headers.
+     *
+     * @param typeface
+     *         The type face that shall be used.
+     */
+    public void setTypeface(int typeface) {
+        this.typeface = typeface;
     }
 
     @Override
     public View getHeaderView(int columnIndex, ViewGroup parentView) {
         TextView textView = new TextView(getContext());
 
-        if(columnIndex < headers.length) {
+        if (columnIndex < headers.length) {
             textView.setText(headers[columnIndex]);
         }
 
@@ -45,36 +133,5 @@ public final class SimpleTableHeaderAdapter extends TableHeaderAdapter {
         textView.setEllipsize(TextUtils.TruncateAt.END);
 
         return textView;
-    }
-
-    public void setPaddings(int left, int top, int right, int bottom) {
-        paddingLeft = left;
-        paddingTop = top;
-        paddingRight = right;
-        paddingBottom = bottom;
-    }
-
-    public void setPaddingLeft(int paddingLeft) {
-        this.paddingLeft = paddingLeft;
-    }
-
-    public void setPaddingTop(int paddingTop) {
-        this.paddingTop = paddingTop;
-    }
-
-    public void setPaddingRight(int paddingRight) {
-        this.paddingRight = paddingRight;
-    }
-
-    public void setPaddingBottom(int paddingBottom) {
-        this.paddingBottom = paddingBottom;
-    }
-
-    public void setTextSize(int textSize) {
-        this.textSize = textSize;
-    }
-
-    public void setTypeface(int typeface) {
-        this.typeface = typeface;
     }
 }
