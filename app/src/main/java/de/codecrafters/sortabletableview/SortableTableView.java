@@ -59,12 +59,36 @@ public class SortableTableView<T> extends TableView<T> {
 
         @Override
         public void onHeaderClicked(int columnIndex) {
-            Comparator<T> columnComparator = comparators.get(columnIndex);
 
-            if (columnComparator == null) {
+            if (comparators.containsKey(columnIndex)) {
                 Log.i(LOG_TAG, "Unable to sort column with index " + columnIndex + ". Reason: no comparator set.");
                 return;
             }
+
+            Comparator<T> comparator = getComparator(columnIndex);
+            sortDataSFCT(comparator);
+            setSortView(columnIndex);
+
+            sortedColumnIndex = columnIndex;
+            tableDataAdapter.notifyDataSetChanged();
+        }
+
+        private void setSortView(int columnIndex) {
+            sortableTableHeaderView.resetSortViews();
+            if (isSortedUp) {
+                sortableTableHeaderView.showSortView(columnIndex, SortableTableHeaderView.SortViewPresentation.SORT_UP);
+            } else {
+                sortableTableHeaderView.showSortView(columnIndex, SortableTableHeaderView.SortViewPresentation.SORT_DOWN);
+            }
+        }
+
+        private void sortDataSFCT(Comparator<T> comparator) {
+            List<T> data = tableDataAdapter.getData();
+            Collections.sort(data, comparator);
+        }
+
+        private Comparator<T> getComparator(int columnIndex) {
+            Comparator<T> columnComparator = comparators.get(columnIndex);
 
             Comparator<T> comparator;
             if (sortedColumnIndex == columnIndex) {
@@ -78,19 +102,8 @@ public class SortableTableView<T> extends TableView<T> {
                 comparator = columnComparator;
                 isSortedUp = true;
             }
-            sortedColumnIndex = columnIndex;
 
-            List<T> data = tableDataAdapter.getData();
-            Collections.sort(data, comparator);
-
-            sortableTableHeaderView.resetSortViews();
-            if (isSortedUp) {
-                sortableTableHeaderView.showSortView(columnIndex, SortableTableHeaderView.SortViewPresentation.SORT_UP);
-            } else {
-                sortableTableHeaderView.showSortView(columnIndex, SortableTableHeaderView.SortViewPresentation.SORT_DOWN);
-            }
-
-            tableDataAdapter.notifyDataSetChanged();
+            return comparator;
         }
 
         public void setComparator(int columnIndex, Comparator<T> columnComparator) {
