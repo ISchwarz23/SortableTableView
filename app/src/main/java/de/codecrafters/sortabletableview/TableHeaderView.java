@@ -10,6 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * This view represents the header of a table. The given {@link TableHeaderAdapter} is used to fill
  * this view with data.
@@ -21,6 +22,10 @@ class TableHeaderView extends LinearLayout {
     protected TableHeaderAdapter adapter;
     protected List<View> headerViews = new ArrayList<>();
 
+    /**
+     * Creates a new TableHeaderView.
+     * @param context The context that shall be used.
+     */
     public TableHeaderView(Context context) {
         super(context);
         setOrientation(LinearLayout.HORIZONTAL);
@@ -30,6 +35,19 @@ class TableHeaderView extends LinearLayout {
         setGravity(Gravity.CENTER_VERTICAL);
     }
 
+    /**
+     * Sets the {@link TableHeaderAdapter} that is used to render the header views of every single column.
+     * @param adapter The {@link TableHeaderAdapter} that should be set.
+     */
+    public void setAdapter(TableHeaderAdapter adapter) {
+        this.adapter = adapter;
+        renderHeaderViews();
+        invalidate();
+    }
+
+    /**
+     * This method renders the header views for every single column.
+     */
     protected void renderHeaderViews() {
         removeAllViews();
         headerViews.clear();
@@ -60,12 +78,6 @@ class TableHeaderView extends LinearLayout {
             headerView.setLayoutParams(headerLayoutParams);
             addView(headerView, columnIndex);
         }
-    }
-
-    public void setAdapter(TableHeaderAdapter adapter) {
-        this.adapter = adapter;
-        renderHeaderViews();
-        invalidate();
     }
 
 }

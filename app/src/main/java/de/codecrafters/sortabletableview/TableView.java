@@ -29,15 +29,14 @@ public class TableView<T> extends LinearLayout {
 
     private static final int DEFAULT_COLUMN_COUNT = 4;
 
+    private Set<TableDataClickListener<T>> dataClickListeners = new HashSet<>();
+    private TableColumnModel columnModel;
+
     private TableHeaderView tableHeaderView;
     private ListView tableDataView;
 
-    private TableColumnModel columnModel;
-
     private TableHeaderAdapter tableHeaderAdapter;
     protected TableDataAdapter<T> tableDataAdapter;
-
-    private Set<TableDataClickListener<T>> dataClickListeners = new HashSet<>();
 
 
     /**
