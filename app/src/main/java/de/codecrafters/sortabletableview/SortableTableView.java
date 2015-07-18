@@ -34,7 +34,9 @@ public class SortableTableView<T> extends TableView<T> {
     /**
      * Creates a new SortableTableView with the given context.\n
      * (Has same effect like calling {@code new SortableTableView(context, null, 0})
-     * @param context The context that shall be used.
+     *
+     * @param context
+     *         The context that shall be used.
      */
     public SortableTableView(Context context) {
         this(context, null);
@@ -43,8 +45,11 @@ public class SortableTableView<T> extends TableView<T> {
     /**
      * Creates a new SortableTableView with the given context.\n
      * (Has same effect like calling {@code new SortableTableView(context, attrs, 0})
-     * @param context The context that shall be used.
-     * @param attributes The attributes that shall be set to the view.
+     *
+     * @param context
+     *         The context that shall be used.
+     * @param attributes
+     *         The attributes that shall be set to the view.
      */
     public SortableTableView(Context context, AttributeSet attributes) {
         this(context, attributes, 0);
@@ -52,9 +57,13 @@ public class SortableTableView<T> extends TableView<T> {
 
     /**
      * Creates a new SortableTableView with the given context.
-     * @param context The context that shall be used.
-     * @param attributes The attributes that shall be set to the view.
-     * @param styleAttributes The style attributes that shall be set to the view.
+     *
+     * @param context
+     *         The context that shall be used.
+     * @param attributes
+     *         The attributes that shall be set to the view.
+     * @param styleAttributes
+     *         The style attributes that shall be set to the view.
      */
     public SortableTableView(Context context, AttributeSet attributes, int styleAttributes) {
         super(context, attributes, styleAttributes);
@@ -69,8 +78,11 @@ public class SortableTableView<T> extends TableView<T> {
     /**
      * Sets the given {@link Comparator} for the column at the given index. The comparator will be used for
      * sorting the given column.
-     * @param columnIndex The index of the column the given {@link Comparator} shall be set to.
-     * @param columnComparator The {@link Comparator} that shall be set to the column at the given index.
+     *
+     * @param columnIndex
+     *         The index of the column the given {@link Comparator} shall be set to.
+     * @param columnComparator
+     *         The {@link Comparator} that shall be set to the column at the given index.
      */
     public void setColumnComparator(int columnIndex, Comparator<T> columnComparator) {
         sortingController.setComparator(columnIndex, columnComparator);
@@ -78,7 +90,9 @@ public class SortableTableView<T> extends TableView<T> {
 
     /**
      * Gives the {@link Comparator} of the column at the given index.
-     * @param columnIndex The index of the column to receive the applied {@link Comparator}.
+     *
+     * @param columnIndex
+     *         The index of the column to receive the applied {@link Comparator}.
      * @return The {@link Comparator} of the column at the given index.
      */
     public Comparator<T> getColumnComparator(int columnIndex) {
@@ -87,7 +101,9 @@ public class SortableTableView<T> extends TableView<T> {
 
     /**
      * Adds the given {@link TableHeaderClickListener} to this table.
-     * @param listener The listener that shall be added to this table.
+     *
+     * @param listener
+     *         The listener that shall be added to this table.
      */
     public void addTableHeaderListener(TableHeaderClickListener listener) {
         sortableTableHeaderView.addHeaderClickListener(listener);
@@ -95,7 +111,9 @@ public class SortableTableView<T> extends TableView<T> {
 
     /**
      * Removes the given {@link TableHeaderClickListener} from this table.
-     * @param listener The listener that shall be removed from this table.
+     *
+     * @param listener
+     *         The listener that shall be removed from this table.
      */
     public void removeTableHeaderListener(TableHeaderClickListener listener) {
         sortableTableHeaderView.removeHeaderClickListener(listener);
@@ -106,7 +124,9 @@ public class SortableTableView<T> extends TableView<T> {
      * This method has the same effect like a click of the user to the table header of the given column. (This means
      * calling this method twice on the same column index will cause a descending ordering). Better practice for
      * doing programmatically ordering of the table is to call the method {@code sort(Comparator<T>}.
-     * @param columnIndex The index of the column on which the sorting shall be executed.
+     *
+     * @param columnIndex
+     *         The index of the column on which the sorting shall be executed.
      */
     public void sort(int columnIndex) {
         sortingController.onHeaderClicked(columnIndex);
@@ -114,7 +134,9 @@ public class SortableTableView<T> extends TableView<T> {
 
     /**
      * Sorts the table using the given {@link Comparator}.
-     * @param comparator The {@link Comparator} that shall be used to sort the table.
+     *
+     * @param comparator
+     *         The {@link Comparator} that shall be used to sort the table.
      */
     public void sort(Comparator<T> comparator) {
         sortingController.sortDataSFCT(comparator);

@@ -42,7 +42,9 @@ public class TableView<T> extends LinearLayout {
     /**
      * Creates a new TableView with the given context.\n
      * (Has same effect like calling {@code new TableView(context, null, 0})
-     * @param context The context that shall be used.
+     *
+     * @param context
+     *         The context that shall be used.
      */
     public TableView(Context context) {
         this(context, null);
@@ -51,8 +53,11 @@ public class TableView<T> extends LinearLayout {
     /**
      * Creates a new TableView with the given context.\n
      * (Has same effect like calling {@code new TableView(context, attrs, 0})
-     * @param context The context that shall be used.
-     * @param attributes The attributes that shall be set to the view.
+     *
+     * @param context
+     *         The context that shall be used.
+     * @param attributes
+     *         The attributes that shall be set to the view.
      */
     public TableView(Context context, AttributeSet attributes) {
         this(context, attributes, 0);
@@ -60,9 +65,13 @@ public class TableView<T> extends LinearLayout {
 
     /**
      * Creates a new TableView with the given context.
-     * @param context The context that shall be used.
-     * @param attributes The attributes that shall be set to the view.
-     * @param styleAttributes The style attributes that shall be set to the view.
+     *
+     * @param context
+     *         The context that shall be used.
+     * @param attributes
+     *         The attributes that shall be set to the view.
+     * @param styleAttributes
+     *         The style attributes that shall be set to the view.
      */
     public TableView(Context context, AttributeSet attributes, int styleAttributes) {
         super(context, attributes, styleAttributes);
@@ -74,7 +83,9 @@ public class TableView<T> extends LinearLayout {
 
     /**
      * Replaces the default {@link TableHeaderView} with the given one.
-     * @param headerView The new {@link TableHeaderView} that should be set.
+     *
+     * @param headerView
+     *         The new {@link TableHeaderView} that should be set.
      */
     protected void setTableHeaderView(TableHeaderView headerView) {
         this.tableHeaderView = headerView;
@@ -86,7 +97,9 @@ public class TableView<T> extends LinearLayout {
 
     /**
      * Adds a {@link TableDataClickListener} to this table.
-     * @param listener The listener that should be added.
+     *
+     * @param listener
+     *         The listener that should be added.
      */
     public void addTableDataClickListener(TableDataClickListener<T> listener) {
         dataClickListeners.add(listener);
@@ -94,7 +107,9 @@ public class TableView<T> extends LinearLayout {
 
     /**
      * Removes a {@link TableDataClickListener} to this table.
-     * @param listener The listener that should be removed.
+     *
+     * @param listener
+     *         The listener that should be removed.
      */
     public void removeTableDataClickListener(TableDataClickListener<T> listener) {
         dataClickListeners.remove(listener);
@@ -102,7 +117,9 @@ public class TableView<T> extends LinearLayout {
 
     /**
      * Sets the {@link TableHeaderAdapter} that is used to render the header views for each column.
-     * @param headerAdapter The {@link TableHeaderAdapter} that should be set.
+     *
+     * @param headerAdapter
+     *         The {@link TableHeaderAdapter} that should be set.
      */
     public void setHeaderAdapter(TableHeaderAdapter headerAdapter) {
         tableHeaderAdapter = headerAdapter;
@@ -113,7 +130,9 @@ public class TableView<T> extends LinearLayout {
 
     /**
      * Sets the {@link TableDataAdapter} that is used to render the data view for each cell.
-     * @param dataAdapter The {@link TableDataAdapter} that should be set.
+     *
+     * @param dataAdapter
+     *         The {@link TableDataAdapter} that should be set.
      */
     public void setDataAdapter(TableDataAdapter<T> dataAdapter) {
         tableDataAdapter = dataAdapter;
@@ -124,7 +143,9 @@ public class TableView<T> extends LinearLayout {
 
     /**
      * Sets the number of columns of this table.
-     * @param columnCount The number of columns.
+     *
+     * @param columnCount
+     *         The number of columns.
      */
     public void setColumnCount(int columnCount) {
         columnModel.setColumnCount(columnCount);
@@ -133,8 +154,11 @@ public class TableView<T> extends LinearLayout {
 
     /**
      * Sets the column weight (the relative width of the column) of the given column.
-     * @param columnIndex The index of the column the weight should be set to.
-     * @param columnWeight The weight that should be set to the column.
+     *
+     * @param columnIndex
+     *         The index of the column the weight should be set to.
+     * @param columnWeight
+     *         The weight that should be set to the column.
      */
     public void setColumnWeight(int columnIndex, int columnWeight) {
         columnModel.setColumnWeight(columnIndex, columnWeight);
@@ -143,7 +167,9 @@ public class TableView<T> extends LinearLayout {
 
     /**
      * Gives the column weight (the relative width of the column) of the given column.
-     * @param columnIndex The index of the column the weight should be returned.
+     *
+     * @param columnIndex
+     *         The index of the column the weight should be returned.
      * @return The weight of the given column index.
      */
     public int getColumnWeight(int columnIndex) {

@@ -24,7 +24,9 @@ class TableHeaderView extends LinearLayout {
 
     /**
      * Creates a new TableHeaderView.
-     * @param context The context that shall be used.
+     *
+     * @param context
+     *         The context that shall be used.
      */
     public TableHeaderView(Context context) {
         super(context);
@@ -37,7 +39,9 @@ class TableHeaderView extends LinearLayout {
 
     /**
      * Sets the {@link TableHeaderAdapter} that is used to render the header views of every single column.
-     * @param adapter The {@link TableHeaderAdapter} that should be set.
+     *
+     * @param adapter
+     *         The {@link TableHeaderAdapter} that should be set.
      */
     public void setAdapter(TableHeaderAdapter adapter) {
         this.adapter = adapter;
@@ -52,7 +56,7 @@ class TableHeaderView extends LinearLayout {
         removeAllViews();
         headerViews.clear();
 
-        for(int columnIndex=0; columnIndex<adapter.getColumnCount(); columnIndex++) {
+        for (int columnIndex = 0; columnIndex < adapter.getColumnCount(); columnIndex++) {
             View headerView = adapter.getHeaderView(columnIndex, this);
             headerViews.add(headerView);
         }
@@ -66,9 +70,9 @@ class TableHeaderView extends LinearLayout {
 
         int widthUnit = (getWidth() / adapter.getColumnWeightSum());
 
-        for(int columnIndex=0; columnIndex<headerViews.size(); columnIndex++) {
+        for (int columnIndex = 0; columnIndex < headerViews.size(); columnIndex++) {
             View headerView = headerViews.get(columnIndex);
-            if(headerView == null) {
+            if (headerView == null) {
                 headerView = new TextView(getContext());
             }
 
