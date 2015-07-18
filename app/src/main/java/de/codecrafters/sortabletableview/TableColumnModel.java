@@ -4,7 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Ingo on 17.07.2015.
+ * A model holding the column information of a {@link TableView}.
+ * Such column information is the relative column width (alias ColumnWeight) and the number of columns
+ * (alias ColumnCount).
+ *
+ * @author ISchwarz
  */
 public class TableColumnModel {
 

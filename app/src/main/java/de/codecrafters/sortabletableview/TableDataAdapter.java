@@ -14,7 +14,9 @@ import java.util.List;
 
 
 /**
- * Created by Ingo on 17.07.2015.
+ * The abstract implementation of an adapter used to bring data to a {@link TableView}.
+ *
+ * @author ISchwarz
  */
 public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
 

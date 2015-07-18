@@ -1,4 +1,4 @@
-package de.codecrafters.sortabletableview;
+package de.codecrafters.sortabletableview.example;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,6 +13,10 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import de.codecrafters.sortabletableview.R;
+import de.codecrafters.sortabletableview.SortableTableView;
+import de.codecrafters.sortabletableview.TableDataAdapter;
+import de.codecrafters.sortabletableview.adapters.SimpleTableHeaderAdapter;
 import de.codecrafters.sortabletableview.example.Car;
 import de.codecrafters.sortabletableview.example.CarProducer;
 
@@ -48,7 +52,7 @@ public class MainActivity extends Activity {
         SortableTableView<Car> tableView = (SortableTableView) findViewById(R.id.tableView);
         tableView.setHeaderAdapter(new SimpleTableHeaderAdapter(this, "Hersteller", "Typ", "PS", "Preis"));
         tableView.setDataAdapter(new CarTableDataAdapter(this, CAR_LIST));
-        tableView.setColumnWeight(0, 2);
+        tableView.setColumnWeight(0, 1);
         tableView.setColumnWeight(1, 2);
         tableView.setColumnWeight(2, 1);
         tableView.setColumnWeight(3, 2);

@@ -11,7 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Ingo on 17.07.2015.
+ * This view represents the header of a table. The given {@link TableHeaderAdapter} is used to fill
+ * this view with data.
+ *
+ * @author ISchwarz
  */
 class TableHeaderView extends LinearLayout {
 
@@ -32,12 +35,7 @@ class TableHeaderView extends LinearLayout {
         headerViews.clear();
 
         for(int columnIndex=0; columnIndex<adapter.getColumnCount(); columnIndex++) {
-            LayoutParams headerLayoutParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            headerLayoutParams.weight = adapter.getColumnWeight(columnIndex);
-
             View headerView = adapter.getHeaderView(columnIndex, this);
-            headerView.setLayoutParams(headerLayoutParams);
-
             headerViews.add(headerView);
         }
     }

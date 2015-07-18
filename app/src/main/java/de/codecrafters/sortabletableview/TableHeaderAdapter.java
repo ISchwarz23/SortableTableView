@@ -7,7 +7,9 @@ import android.view.ViewGroup;
 
 
 /**
- * Created by Ingo on 17.07.2015.
+ * The abstract implementation of an adapter used to bring data to a {@link TableHeaderView}.
+ *
+ * @author ISchwarz
  */
 public abstract class TableHeaderAdapter {
 
@@ -55,6 +57,12 @@ public abstract class TableHeaderAdapter {
         return columnModel.getColumnWeight(columnIndex);
     }
 
+    /**
+     * Method used for creating the header views for the different columns.
+     * @param columnIndex The index of the column to return the header view.
+     * @param parentView The parent of the view that will be created by this method.
+     * @return The created header view for the given column.
+     */
     public abstract View getHeaderView(int columnIndex, ViewGroup parentView);
 
 }

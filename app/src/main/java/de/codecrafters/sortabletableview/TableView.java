@@ -15,7 +15,10 @@ import java.util.ArrayList;
 
 
 /**
- * Created by Ingo on 17.07.2015.
+ * A view that is able to display data as a table. For bringing the data to the view the {@link TableDataAdapter} can be used.
+ * For formatting the table headers the {@link TableHeaderAdapter} can be used.
+ *
+ * @author ISchwarz
  */
 public class TableView<T> extends LinearLayout {
 
@@ -47,7 +50,7 @@ public class TableView<T> extends LinearLayout {
     }
 
     private void setupTableHeaderView() {
-        if(isInEditMode()) {
+        if (isInEditMode()) {
             tableHeaderAdapter = new EditModeTableHeaderAdapter(getContext());
         } else {
             tableHeaderAdapter = new DefaultTableHeaderAdapter(getContext());
@@ -59,7 +62,7 @@ public class TableView<T> extends LinearLayout {
     }
 
     private void setupTableDataView() {
-        if(isInEditMode()) {
+        if (isInEditMode()) {
             tableDataAdapter = new EditModeTableDataAdapter(getContext());
         } else {
             tableDataAdapter = new DefaultTableDataAdapter(getContext());
@@ -77,7 +80,7 @@ public class TableView<T> extends LinearLayout {
         this.tableHeaderView = headerView;
         tableHeaderView.setAdapter(tableHeaderAdapter);
         removeViewAt(0);
-        addView(tableHeaderView,0);
+        addView(tableHeaderView, 0);
         forceRefresh();
     }
 

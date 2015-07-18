@@ -11,7 +11,15 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Ingo on 18.07.2015.
+ * Extension of the {@link TableView} that gives the possibility to sort the table by every single
+ * column. For this purpose implementations of {@link Comparator} are used. If there is a comparator
+ * set for a column the {@link SortableTableView} will automatically display an ImageView at the start
+ * of the header indicating to the user, that this column is sortable.
+ * If the user clicks this header the given comparator will used to sort the table ascending by the
+ * content of this column. If the user clicks this header again, the table is sorted descending
+ * by the content of this column.
+ *
+ * @author ISchwarz
  */
 public class SortableTableView<T> extends TableView<T> {
 
@@ -53,14 +61,14 @@ public class SortableTableView<T> extends TableView<T> {
         public void onHeaderClicked(int columnIndex) {
             Comparator<T> columnComparator = comparators.get(columnIndex);
 
-            if(columnComparator == null) {
+            if (columnComparator == null) {
                 Log.i(LOG_TAG, "Unable to sort column with index " + columnIndex + ". Reason: no comparator set.");
                 return;
             }
 
             Comparator<T> comparator;
-            if(sortedColumnIndex == columnIndex) {
-                if(isSortedUp) {
+            if (sortedColumnIndex == columnIndex) {
+                if (isSortedUp) {
                     comparator = Collections.reverseOrder(columnComparator);
                 } else {
                     comparator = columnComparator;
@@ -76,7 +84,7 @@ public class SortableTableView<T> extends TableView<T> {
             Collections.sort(data, comparator);
 
             sortableTableHeaderView.resetSortViews();
-            if(isSortedUp) {
+            if (isSortedUp) {
                 sortableTableHeaderView.showSortView(columnIndex, SortableTableHeaderView.SortViewPresentation.SORT_UP);
             } else {
                 sortableTableHeaderView.showSortView(columnIndex, SortableTableHeaderView.SortViewPresentation.SORT_DOWN);
@@ -86,7 +94,7 @@ public class SortableTableView<T> extends TableView<T> {
         }
 
         public void setComparator(int columnIndex, Comparator<T> columnComparator) {
-            if(columnComparator == null) {
+            if (columnComparator == null) {
                 comparators.remove(columnIndex);
                 sortableTableHeaderView.showSortView(columnIndex, SortableTableHeaderView.SortViewPresentation.NONE);
             } else {
@@ -94,6 +102,20 @@ public class SortableTableView<T> extends TableView<T> {
                 sortableTableHeaderView.showSortView(columnIndex, SortableTableHeaderView.SortViewPresentation.SORTABLE);
             }
         }
+
+    }
+
+    /**
+     * Listener interface to listen for clicks on table headers of a {@link SortableTableView}.
+     */
+    public interface HeaderClickListener {
+
+        /**
+         * This method is called of a table header was clicked.
+         *
+         * @param columnIndex
+         */
+        void onHeaderClicked(int columnIndex);
 
     }
 
