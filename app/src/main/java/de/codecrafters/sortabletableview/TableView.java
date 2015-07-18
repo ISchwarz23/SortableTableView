@@ -57,6 +57,7 @@ public class TableView<T> extends LinearLayout {
     public TableView(Context context, AttributeSet attributes) {
         this(context, attributes, 0);
     }
+
     /**
      * Creates a new TableView with the given context.
      * @param context The context that shall be used.

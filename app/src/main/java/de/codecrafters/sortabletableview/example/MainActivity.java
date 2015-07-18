@@ -78,10 +78,10 @@ public class MainActivity extends Activity {
         tableView.setColumnWeight(1, 4);
         tableView.setColumnWeight(2, 2);
         tableView.setColumnWeight(3, 1);
-        tableView.setComparator(0, new CarProducerComparator());
-        tableView.setComparator(1, new CarNameComparator());
-        tableView.setComparator(2, new CarPsComparator());
-        tableView.setComparator(3, new CarPriceComparator());
+        tableView.setColumnComparator(0, new CarProducerComparator());
+        tableView.setColumnComparator(1, new CarNameComparator());
+        tableView.setColumnComparator(2, new CarPsComparator());
+        tableView.setColumnComparator(3, new CarPriceComparator());
         tableView.addTableDataClickListener(new CarClickListener());
     }
 
