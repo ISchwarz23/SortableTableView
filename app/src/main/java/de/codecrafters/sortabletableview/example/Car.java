@@ -29,6 +29,10 @@ public class Car {
         return ps;
     }
 
+    public int getKw() {
+        return (int)(ps / 1.36);
+    }
+
     public double getPrice() {
         return price;
     }

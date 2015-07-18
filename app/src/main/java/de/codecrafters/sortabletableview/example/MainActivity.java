@@ -18,8 +18,6 @@ import de.codecrafters.sortabletableview.R;
 import de.codecrafters.sortabletableview.SortableTableView;
 import de.codecrafters.sortabletableview.TableDataAdapter;
 import de.codecrafters.sortabletableview.adapters.SimpleTableHeaderAdapter;
-import de.codecrafters.sortabletableview.example.Car;
-import de.codecrafters.sortabletableview.example.CarProducer;
 import de.codecrafters.sortabletableview.listeners.TableDataClickListener;
 
 
@@ -37,13 +35,35 @@ public class MainActivity extends Activity {
         Car audiA7 = new Car(audi, "A7", 420, 87000);
         Car audiA8 = new Car(audi, "A8", 320, 110000);
 
+        CarProducer bmw = new CarProducer(R.mipmap.bmw, "BMW");
+        Car bmw1 = new Car(bmw, "1er", 170, 25000);
+        Car bmw3 = new Car(bmw, "3er", 230, 42000);
+        Car bmwX3 = new Car(bmw, "X3", 230, 45000);
+        Car bmw4 = new Car(bmw, "4er", 250, 39000);
+        Car bmwM4 = new Car(bmw, "M4", 350, 60000);
+        Car bmw5 = new Car(bmw, "5er", 230, 46000);
+
+        CarProducer porsche = new CarProducer(R.mipmap.porsche, "Porsche");
+        Car porsche911 = new Car(porsche, "911", 280, 45000);
+        Car porscheCayman = new Car(porsche, "Cayman", 330, 52000);
+        Car porscheCaymanGT4 = new Car(porsche, "Cayman GT4", 385, 86000);
+
         CAR_LIST.add(audiA3);
         CAR_LIST.add(audiA1);
+        CAR_LIST.add(porscheCayman);
         CAR_LIST.add(audiA7);
-        CAR_LIST.add(audiA6);
         CAR_LIST.add(audiA8);
         CAR_LIST.add(audiA4);
+        CAR_LIST.add(bmwX3);
+        CAR_LIST.add(porsche911);
+        CAR_LIST.add(bmw1);
+        CAR_LIST.add(audiA6);
         CAR_LIST.add(audiA5);
+        CAR_LIST.add(bmwM4);
+        CAR_LIST.add(bmw5);
+        CAR_LIST.add(porscheCaymanGT4);
+        CAR_LIST.add(bmw3);
+        CAR_LIST.add(bmw4);
     }
 
     @Override
@@ -52,12 +72,13 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         SortableTableView<Car> tableView = (SortableTableView) findViewById(R.id.tableView);
-        tableView.setHeaderAdapter(new SimpleTableHeaderAdapter(this, "Hersteller", "Typ", "PS", "Preis"));
+        tableView.setHeaderAdapter(new SimpleTableHeaderAdapter(this, "Hersteller", "Typ", "Leistung", "Preis"));
         tableView.setDataAdapter(new CarTableDataAdapter(this, CAR_LIST));
-        tableView.setColumnWeight(0, 1);
-        tableView.setColumnWeight(1, 2);
-        tableView.setColumnWeight(2, 1);
-        tableView.setColumnWeight(3, 2);
+        tableView.setColumnWeight(0, 2);
+        tableView.setColumnWeight(1, 4);
+        tableView.setColumnWeight(2, 2);
+        tableView.setColumnWeight(3, 1);
+        tableView.setComparator(0, new CarProducerComparator());
         tableView.setComparator(1, new CarNameComparator());
         tableView.setComparator(2, new CarPsComparator());
         tableView.setComparator(3, new CarPriceComparator());
@@ -71,6 +92,14 @@ public class MainActivity extends Activity {
         public void onDataClicked(int rowIndex, Car clickedData) {
             String carString = clickedData.getProducer().getName() + " " + clickedData.getName();
             Toast.makeText(getApplicationContext(), carString, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private static class CarProducerComparator implements Comparator<Car> {
+
+        @Override
+        public int compare(Car car1, Car car2) {
+            return car1.getProducer().getName().compareTo(car2.getProducer().getName());
         }
     }
 
@@ -122,7 +151,7 @@ public class MainActivity extends Activity {
                     renderedView = renderCatName(data);
                     break;
                 case 2:
-                    renderedView = renderPs(data);
+                    renderedView = renderPower(data);
                     break;
                 case 3:
                     renderedView = renderPrice(data);
@@ -136,8 +165,15 @@ public class MainActivity extends Activity {
             return renderString(PRICE_FORMATTER.format(data.getPrice()) + " €");
         }
 
-        private View renderPs(Car car) {
-            return renderString(String.valueOf(car.getPs()));
+        private View renderPower(Car car) {
+            View view = getLayoutInflater().inflate(R.layout.table_cell_power, null, false);
+            TextView kwView = (TextView) view.findViewById(R.id.kw_view);
+            TextView psView = (TextView) view.findViewById(R.id.ps_view);
+
+            kwView.setText(car.getKw() + " kW");
+            psView.setText(car.getPs() + " PS");
+
+            return view;
         }
 
         private View renderCatName(Car car) {
@@ -145,15 +181,10 @@ public class MainActivity extends Activity {
         }
 
         private View renderProducerLogo(Car car) {
-            return renderDrawableRes(car.getProducer().getLogo());
-        }
-
-        private View renderDrawableRes(int drawableRes) {
-            ImageView imageView = new ImageView(getContext());
-            imageView.setImageResource(drawableRes);
-            imageView.setPadding(20, 10, 20, 10);
-
-            return imageView;
+            View view = getLayoutInflater().inflate(R.layout.table_cell_image, null, false);
+            ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
+            imageView.setImageResource(car.getProducer().getLogo());
+            return view;
         }
 
         private View renderString(String value) {
@@ -161,7 +192,6 @@ public class MainActivity extends Activity {
             textView.setText(value);
             textView.setPadding(20, 10, 20, 10);
             textView.setTextSize(TEXT_SIZE);
-
             return textView;
         }
 
