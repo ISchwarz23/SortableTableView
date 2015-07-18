@@ -118,7 +118,7 @@ public class TableView<T> extends LinearLayout {
     private class DefaultTableDataAdapter extends TableDataAdapter<T> {
 
         public DefaultTableDataAdapter(Context context) {
-            super(context, new ArrayList<T>(), columnModel);
+            super(context, columnModel, new ArrayList<T>());
         }
 
         @Override
@@ -132,7 +132,7 @@ public class TableView<T> extends LinearLayout {
         private static final float TEXT_SIZE = 16;
 
         public EditModeTableDataAdapter(Context context) {
-            super(context, null, columnModel);
+            super(context, columnModel, null);
         }
 
         @Override

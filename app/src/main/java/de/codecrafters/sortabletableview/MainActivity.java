@@ -44,8 +44,8 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         TableView<Car> tableView = (TableView) findViewById(R.id.tableView);
-        tableView.setHeaderAdapter(new SimpleTableHeaderAdapter(this, 4, "Hersteller", "Typ", "PS", "Preis"));
-        tableView.setDataAdapter(new CarTableDataAdapter(this, CAR_LIST, 4));
+        tableView.setHeaderAdapter(new SimpleTableHeaderAdapter(this, "Hersteller", "Typ", "PS", "Preis"));
+        tableView.setDataAdapter(new CarTableDataAdapter(this, CAR_LIST));
         tableView.setColumnWeight(0, 2);
         tableView.setColumnWeight(1, 3);
         tableView.setColumnWeight(2, 1);
@@ -57,8 +57,8 @@ public class MainActivity extends Activity {
 
         private static final int TEXT_SIZE = 14;
 
-        public CarTableDataAdapter(Context context, List<Car> data, int columnCount) {
-            super(context, data, columnCount);
+        public CarTableDataAdapter(Context context, List<Car> data) {
+            super(context, data);
         }
 
         @Override

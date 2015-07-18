@@ -14,6 +14,10 @@ public abstract class TableHeaderAdapter {
     private final Context context;
     private TableColumnModel columnModel;
 
+    public TableHeaderAdapter(Context context) {
+        this(context, 0);
+    }
+
     public TableHeaderAdapter(Context context, int columnCount) {
         this(context, new TableColumnModel(columnCount));
     }

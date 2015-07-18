@@ -20,12 +20,16 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
 
     private TableColumnModel columnModel;
 
-    public TableDataAdapter(Context context, List<T> data, int columnCount) {
-        this(context, data, new TableColumnModel(columnCount));
+    public TableDataAdapter(Context context, List<T> data) {
+        this(context, 0, data);
     }
 
-    public TableDataAdapter(Context context, List<T> data, TableColumnModel columnModel) {
-        super(context, 0, data);
+    protected TableDataAdapter(Context context, int columnCount, List<T> data) {
+        this(context, new TableColumnModel(columnCount), data);
+    }
+
+    protected TableDataAdapter(Context context, TableColumnModel columnModel, List<T> data) {
+        super(context, -1, data);
         this.columnModel = columnModel;
     }
 

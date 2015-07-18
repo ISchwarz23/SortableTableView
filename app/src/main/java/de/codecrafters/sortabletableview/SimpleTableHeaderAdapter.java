@@ -16,8 +16,8 @@ public class SimpleTableHeaderAdapter extends TableHeaderAdapter {
 
     private String[] headers;
 
-    public SimpleTableHeaderAdapter(Context context, int columnCount, String... headers) {
-        super(context, columnCount);
+    public SimpleTableHeaderAdapter(Context context, String... headers) {
+        super(context);
         this.headers = headers;
     }
 
