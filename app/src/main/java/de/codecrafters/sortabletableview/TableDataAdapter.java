@@ -19,6 +19,7 @@ import java.util.List;
 public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
 
     private TableColumnModel columnModel;
+    private final List<T> data;
 
     public TableDataAdapter(Context context, List<T> data) {
         this(context, 0, data);
@@ -31,6 +32,7 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
     protected TableDataAdapter(Context context, TableColumnModel columnModel, List<T> data) {
         super(context, -1, data);
         this.columnModel = columnModel;
+        this.data = data;
     }
 
     public LayoutInflater getLayoutInflater() {
@@ -74,6 +76,8 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
 
     public abstract View getCellView(int rowIndex, int columnIndex, ViewGroup parentView);
 
-
+    public List<T> getData() {
+        return data;
+    }
 
 }

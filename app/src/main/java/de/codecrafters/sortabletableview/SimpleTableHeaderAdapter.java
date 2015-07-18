@@ -2,7 +2,6 @@ package de.codecrafters.sortabletableview;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -25,9 +24,7 @@ public class SimpleTableHeaderAdapter extends TableHeaderAdapter {
     public View getHeaderView(int columnIndex, ViewGroup parentView) {
         TextView textView = new TextView(getContext());
 
-        Log.d("Headers", "Length: " + headers.length);
         if(columnIndex < headers.length) {
-            Log.d("Index", "Index: " + columnIndex);
             textView.setText(headers[columnIndex]);
         }
 

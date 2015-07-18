@@ -8,7 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import de.codecrafters.sortabletableview.example.Car;
@@ -21,13 +23,13 @@ public class MainActivity extends Activity {
 
     static {
         CarProducer audi = new CarProducer(R.mipmap.audi, "Audi");
-        Car audiA1 = new Car(audi, "A1", 90, 25000);
+        Car audiA1 = new Car(audi, "A1", 150, 25000);
         Car audiA3 = new Car(audi, "A3", 120, 35000);
         Car audiA4 = new Car(audi, "A4", 210, 42000);
-        Car audiA5 = new Car(audi, "A5", 333, 60000);
+        Car audiA5 = new Car(audi, "S5", 333, 60000);
         Car audiA6 = new Car(audi, "A6", 250, 55000);
         Car audiA7 = new Car(audi, "A7", 420, 87000);
-        Car audiA8 = new Car(audi, "A8", 420, 110000);
+        Car audiA8 = new Car(audi, "A8", 320, 110000);
 
         CAR_LIST.add(audiA3);
         CAR_LIST.add(audiA1);
@@ -43,19 +45,48 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TableView<Car> tableView = (TableView) findViewById(R.id.tableView);
+        SortableTableView<Car> tableView = (SortableTableView) findViewById(R.id.tableView);
         tableView.setHeaderAdapter(new SimpleTableHeaderAdapter(this, "Hersteller", "Typ", "PS", "Preis"));
         tableView.setDataAdapter(new CarTableDataAdapter(this, CAR_LIST));
         tableView.setColumnWeight(0, 2);
-        tableView.setColumnWeight(1, 3);
+        tableView.setColumnWeight(1, 2);
         tableView.setColumnWeight(2, 1);
         tableView.setColumnWeight(3, 2);
+        tableView.setComparator(1, new CarNameComparator());
+        tableView.setComparator(2, new CarPsComparator());
+        tableView.setComparator(3, new CarPriceComparator());
+    }
 
+    private static class CarPsComparator implements Comparator<Car> {
+
+        @Override
+        public int compare(Car car1, Car car2) {
+            return car1.getPs() - car2.getPs();
+        }
+    }
+
+    private static class CarNameComparator implements Comparator<Car> {
+
+        @Override
+        public int compare(Car car1, Car car2) {
+            return car1.getName().compareTo(car2.getName());
+        }
+    }
+
+    private static class CarPriceComparator implements Comparator<Car> {
+
+        @Override
+        public int compare(Car car1, Car car2) {
+            if (car1.getPrice() < car2.getPrice()) return -1;
+            if (car1.getPrice() > car2.getPrice()) return 1;
+            return 0;
+        }
     }
 
     private static class CarTableDataAdapter extends TableDataAdapter<Car> {
 
         private static final int TEXT_SIZE = 14;
+        private static final NumberFormat PRICE_FORMATTER = NumberFormat.getNumberInstance();
 
         public CarTableDataAdapter(Context context, List<Car> data) {
             super(context, data);
@@ -67,21 +98,25 @@ public class MainActivity extends Activity {
             View renderedView = null;
 
             switch (columnIndex) {
-                case 0: renderedView = renderProducerLogo(data);
-                        break;
-                case 1: renderedView = renderCatName(data);
-                        break;
-                case 2: renderedView = renderPs(data);
-                        break;
-                case 3: renderedView = renderPrice(data);
-                        break;
+                case 0:
+                    renderedView = renderProducerLogo(data);
+                    break;
+                case 1:
+                    renderedView = renderCatName(data);
+                    break;
+                case 2:
+                    renderedView = renderPs(data);
+                    break;
+                case 3:
+                    renderedView = renderPrice(data);
+                    break;
             }
 
             return renderedView;
         }
 
         private View renderPrice(Car data) {
-            return renderString(String.valueOf(data.getPrice()) + "€");
+            return renderString(PRICE_FORMATTER.format(data.getPrice()) + " €");
         }
 
         private View renderPs(Car car) {

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -11,7 +12,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -27,7 +27,7 @@ public class TableView<T> extends LinearLayout {
     private TableColumnModel columnModel;
 
     private TableHeaderAdapter tableHeaderAdapter;
-    private TableDataAdapter<T> tableDataAdapter;
+    protected TableDataAdapter<T> tableDataAdapter;
 
 
     public TableView(Context context) {
@@ -42,29 +42,43 @@ public class TableView<T> extends LinearLayout {
         super(context, attrs, defStyleAttr);
         setOrientation(LinearLayout.VERTICAL);
         setAttributes(context, attrs);
+        setupTableHeaderView();
+        setupTableDataView();
+    }
 
+    private void setupTableHeaderView() {
         if(isInEditMode()) {
-            tableHeaderAdapter = new EditModeTableHeaderAdapter(context);
+            tableHeaderAdapter = new EditModeTableHeaderAdapter(getContext());
         } else {
-            tableHeaderAdapter = new DefaultTableHeaderAdapter(context);
+            tableHeaderAdapter = new DefaultTableHeaderAdapter(getContext());
         }
-        tableHeaderView = new TableHeaderView(context);
+        tableHeaderView = new TableHeaderView(getContext());
         tableHeaderView.setAdapter(tableHeaderAdapter);
 
+        addView(tableHeaderView);
+    }
+
+    private void setupTableDataView() {
         if(isInEditMode()) {
-            tableDataAdapter = new EditModeTableDataAdapter(context);
+            tableDataAdapter = new EditModeTableDataAdapter(getContext());
         } else {
-            tableDataAdapter = new DefaultTableDataAdapter(context);
+            tableDataAdapter = new DefaultTableDataAdapter(getContext());
         }
-        tableDataView = new ListView(context);
+        tableDataView = new ListView(getContext());
         tableDataView.setAdapter(tableDataAdapter);
 
         LayoutParams dataViewLayoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         tableDataView.setLayoutParams(dataViewLayoutParams);
 
-
-        addView(tableHeaderView);
         addView(tableDataView);
+    }
+
+    protected void setTableHeaderView(TableHeaderView headerView) {
+        this.tableHeaderView = headerView;
+        tableHeaderView.setAdapter(tableHeaderAdapter);
+        removeViewAt(0);
+        addView(tableHeaderView,0);
+        forceRefresh();
     }
 
     public void setHeaderAdapter(TableHeaderAdapter headerAdapter) {
@@ -172,6 +186,7 @@ public class TableView<T> extends LinearLayout {
 
         @Override
         public View getHeaderView(int columnIndex, ViewGroup parentView) {
+            Log.d("HeaderAdapter", "Header" + columnIndex);
             TextView textView = new TextView(getContext());
             textView.setText("Header " + columnIndex);
             textView.setPadding(20, 30, 20, 30);

@@ -15,8 +15,8 @@ import java.util.List;
  */
 class TableHeaderView extends LinearLayout {
 
-    private TableHeaderAdapter adapter;
-    private List<View> headerViews = new ArrayList<>();
+    protected TableHeaderAdapter adapter;
+    protected List<View> headerViews = new ArrayList<>();
 
     public TableHeaderView(Context context) {
         super(context);
@@ -27,9 +27,9 @@ class TableHeaderView extends LinearLayout {
         setGravity(Gravity.CENTER_VERTICAL);
     }
 
-    private void renderHeaderViews() {
+    protected void renderHeaderViews() {
         removeAllViews();
-        this.headerViews.clear();
+        headerViews.clear();
 
         for(int columnIndex=0; columnIndex<adapter.getColumnCount(); columnIndex++) {
             LayoutParams headerLayoutParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -39,7 +39,6 @@ class TableHeaderView extends LinearLayout {
             headerView.setLayoutParams(headerLayoutParams);
 
             headerViews.add(headerView);
-//            addView(headerView, columnIndex);
         }
     }
 

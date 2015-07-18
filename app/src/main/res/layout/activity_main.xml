@@ -5,7 +5,7 @@
                 android:layout_height="match_parent"
                 tools:context="de.codecrafters.sortabletableview.MainActivity">
 
-    <de.codecrafters.sortabletableview.TableView
+    <de.codecrafters.sortabletableview.SortableTableView
         android:id="@+id/tableView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
