@@ -6,8 +6,9 @@
                 tools:context="de.codecrafters.sortabletableview.MainActivity">
 
     <de.codecrafters.sortabletableview.TableView
+        android:id="@+id/tableView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        custom:columnCount="4"/>
+        custom:columnCount="3"/>
 
 </RelativeLayout>

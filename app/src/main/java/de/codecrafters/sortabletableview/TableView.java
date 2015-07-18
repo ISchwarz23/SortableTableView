@@ -2,29 +2,32 @@ package de.codecrafters.sortabletableview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.jar.Attributes;
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * Created by Ingo on 17.07.2015.
  */
-public class TableView extends LinearLayout {
+public class TableView<T> extends LinearLayout {
 
     private static final int DEFAULT_COLUMN_COUNT = 4;
 
     private TableHeaderView tableHeaderView;
+    private ListView tableDataView;
 
-    private Map<Integer, Integer> columnWeights = new HashMap<>();
-    private int columnCount = DEFAULT_COLUMN_COUNT;
+    private TableColumnModel columnModel;
 
-    private TableHeaderAdapter tableHeaderAdapter = new DefaultTableHeaderAdapter();
+    private TableHeaderAdapter tableHeaderAdapter;
+    private TableDataAdapter<T> tableDataAdapter;
 
 
     public TableView(Context context) {
@@ -40,27 +43,57 @@ public class TableView extends LinearLayout {
         setOrientation(LinearLayout.VERTICAL);
         setAttributes(context, attrs);
 
-        tableHeaderView = new TableHeaderView(context);
-
-        for(int columnIndex=0; columnIndex<columnCount; columnIndex++) {
-            LayoutParams headerLayoutParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            headerLayoutParams.weight = 1;
-
-            View headerView = tableHeaderAdapter.getHeaderView(context, columnIndex);
-            headerView.setLayoutParams(headerLayoutParams);
-
-            tableHeaderView.addView(headerView);
+        if(isInEditMode()) {
+            tableHeaderAdapter = new EditModeTableHeaderAdapter(context);
+        } else {
+            tableHeaderAdapter = new DefaultTableHeaderAdapter(context);
         }
+        tableHeaderView = new TableHeaderView(context);
+        tableHeaderView.setAdapter(tableHeaderAdapter);
+
+        if(isInEditMode()) {
+            tableDataAdapter = new EditModeTableDataAdapter(context);
+        } else {
+            tableDataAdapter = new DefaultTableDataAdapter(context);
+        }
+        tableDataView = new ListView(context);
+        tableDataView.setAdapter(tableDataAdapter);
+
+        LayoutParams dataViewLayoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        tableDataView.setLayoutParams(dataViewLayoutParams);
+
 
         addView(tableHeaderView);
+        addView(tableDataView);
+    }
+
+    public void setHeaderAdapter(TableHeaderAdapter headerAdapter) {
+        tableHeaderAdapter = headerAdapter;
+        tableHeaderAdapter.setColumnModel(columnModel);
+        tableHeaderView.setAdapter(tableHeaderAdapter);
+    }
+
+    public void setDataAdapter(TableDataAdapter<T> cellAdapter) {
+        tableDataAdapter = cellAdapter;
     }
 
     public void setColumnCount(int columnCount) {
-        this.columnCount = columnCount;
+        columnModel.setColumnCount(columnCount);
+        forceRefresh();
     }
 
     public void setColumnWeight(int columnIndex, int columnWeight) {
-        columnWeights.put(columnIndex, columnWeight);
+        columnModel.setColumnWeight(columnIndex, columnWeight);
+        forceRefresh();
+    }
+
+    public int getColumnWeight(int columnIndex) {
+        return columnModel.getColumnWeight(columnIndex);
+    }
+
+    private void forceRefresh() {
+        tableHeaderView.invalidate();
+        tableDataView.invalidate();
     }
 
     private void setAttributes(Context context, AttributeSet attributes) {
@@ -70,18 +103,76 @@ public class TableView extends LinearLayout {
             int attribute = styledAttributes.getIndex(i);
             switch (attribute) {
                 case R.styleable.TableView_columnCount:
-                    columnCount = styledAttributes.getInt(attribute, DEFAULT_COLUMN_COUNT);
+                    int columnCount = styledAttributes.getInt(attribute, DEFAULT_COLUMN_COUNT);
+                    columnModel = new TableColumnModel(columnCount);
                     break;
             }
         }
         styledAttributes.recycle();
     }
 
-    private static class DefaultTableHeaderAdapter implements TableHeaderAdapter {
+    private class DefaultTableDataAdapter extends TableDataAdapter<T> {
+
+        public DefaultTableDataAdapter(Context context) {
+            super(context, new ArrayList<T>(), columnModel);
+        }
+
         @Override
-        public View getHeaderView(Context context, int columnIndex) {
-            TextView textView = new TextView(context);
+        public View getCellView(int rowIndex, int columnIndex, ViewGroup parentView) {
+            return new TextView(getContext());
+        }
+    }
+
+    private class EditModeTableDataAdapter extends TableDataAdapter<T> {
+
+        private static final float TEXT_SIZE = 16;
+
+        public EditModeTableDataAdapter(Context context) {
+            super(context, null, columnModel);
+        }
+
+        @Override
+        public View getCellView(int rowIndex, int columnIndex, ViewGroup parent) {
+            TextView textView = new TextView(getContext());
+            textView.setText("Cell [" + columnIndex + ":" + rowIndex + "]");
+            textView.setPadding(20, 10, 20, 10);
+            textView.setTextSize(TEXT_SIZE);
+            return textView;
+        }
+
+        @Override
+        public int getCount() {
+            return 150;
+        }
+    }
+
+    private class DefaultTableHeaderAdapter extends TableHeaderAdapter {
+
+        public DefaultTableHeaderAdapter(Context context) {
+            super(context, columnModel);
+        }
+
+        @Override
+        public View getHeaderView(int columnIndex, ViewGroup parentView) {
+            return new TextView(getContext());
+        }
+    }
+
+    private class EditModeTableHeaderAdapter extends TableHeaderAdapter {
+
+        private static final float TEXT_SIZE = 18;
+
+        public EditModeTableHeaderAdapter(Context context) {
+            super(context, columnModel);
+        }
+
+        @Override
+        public View getHeaderView(int columnIndex, ViewGroup parentView) {
+            TextView textView = new TextView(getContext());
             textView.setText("Header " + columnIndex);
+            textView.setPadding(20, 30, 20, 30);
+            textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
+            textView.setTextSize(TEXT_SIZE);
             return textView;
         }
     }

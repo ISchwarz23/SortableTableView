@@ -2,6 +2,7 @@ package de.codecrafters.sortabletableview;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -12,6 +13,11 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        TableView<String> tableView = (TableView) findViewById(R.id.tableView);
+        tableView.setColumnWeight(0, 3);
+        tableView.setColumnWeight(1, 4);
+        tableView.setColumnWeight(2, 8);
     }
 
     @Override
