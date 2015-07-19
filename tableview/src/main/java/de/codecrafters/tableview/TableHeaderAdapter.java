@@ -1,6 +1,7 @@
 package de.codecrafters.tableview;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,19 +74,29 @@ public abstract class TableHeaderAdapter {
     }
 
     /**
+     * Gives the {@link Resources} of this adapter. (Hint: use this method in the
+     * {@code getHeaderView()}-method to resolve resources.)
+     *
+     * @return The {@link Resources} of the context of this adapter.
+     */
+    public Resources getResources() {
+        return getContext().getResources();
+    }
+
+    /**
      * Sets the {@link TableColumnModel} that will be used to render the table headers.
      *
      * @param columnModel
      *         The {@link TableColumnModel} that should be set.
      */
-    public void setColumnModel(TableColumnModel columnModel) {
+    protected void setColumnModel(TableColumnModel columnModel) {
         this.columnModel = columnModel;
     }
 
     /**
      * Gives the {@link TableColumnModel} that is currently used to render the table headers.
      */
-    public TableColumnModel getColumnModel() {
+    protected TableColumnModel getColumnModel() {
         return columnModel;
     }
 
@@ -95,7 +106,7 @@ public abstract class TableHeaderAdapter {
      * @param columnCount
      *         The column count that should be set.
      */
-    public void setColumnCount(int columnCount) {
+    protected void setColumnCount(int columnCount) {
         columnModel.setColumnCount(columnCount);
     }
 
@@ -104,7 +115,7 @@ public abstract class TableHeaderAdapter {
      *
      * @return The number of columns.
      */
-    public int getColumnCount() {
+    protected int getColumnCount() {
         return columnModel.getColumnCount();
     }
 
@@ -116,7 +127,7 @@ public abstract class TableHeaderAdapter {
      * @param columnWeight
      *         The weight that should be set to the column at the given index.
      */
-    public void setColumnWeight(int columnIndex, int columnWeight) {
+    protected void setColumnWeight(int columnIndex, int columnWeight) {
         columnModel.setColumnWeight(columnIndex, columnWeight);
     }
 
@@ -127,7 +138,7 @@ public abstract class TableHeaderAdapter {
      *         The index of the column to receive the column weight.
      * @return The column weight of the column at the given index.
      */
-    public int getColumnWeight(int columnIndex) {
+    protected int getColumnWeight(int columnIndex) {
         return columnModel.getColumnWeight(columnIndex);
     }
 
@@ -136,7 +147,7 @@ public abstract class TableHeaderAdapter {
      *
      * @return The collumn weight sum.
      */
-    public int getColumnWeightSum() {
+    protected int getColumnWeightSum() {
         return columnModel.getColumnWeightSum();
     }
 

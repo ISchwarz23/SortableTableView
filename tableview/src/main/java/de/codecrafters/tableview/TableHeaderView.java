@@ -31,10 +31,10 @@ class TableHeaderView extends LinearLayout {
     public TableHeaderView(Context context) {
         super(context);
         setOrientation(LinearLayout.HORIZONTAL);
+        setGravity(Gravity.CENTER_VERTICAL);
 
         LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         setLayoutParams(layoutParams);
-        setGravity(Gravity.CENTER_VERTICAL);
     }
 
     /**
@@ -53,10 +53,9 @@ class TableHeaderView extends LinearLayout {
      * This method renders the header views for every single column.
      */
     protected void renderHeaderViews() {
-        removeAllViews();
         headerViews.clear();
 
-        for (int columnIndex = 0; columnIndex < adapter.getColumnCount(); columnIndex++) {
+        for (int columnIndex = 0; columnIndex < 4; columnIndex++) {
             View headerView = adapter.getHeaderView(columnIndex, this);
             headerViews.add(headerView);
         }
@@ -68,7 +67,7 @@ class TableHeaderView extends LinearLayout {
 
         removeAllViews();
 
-        int widthUnit = (getWidth() / adapter.getColumnWeightSum());
+        int widthUnit = getWidth() / adapter.getColumnWeightSum();
 
         for (int columnIndex = 0; columnIndex < headerViews.size(); columnIndex++) {
             View headerView = headerViews.get(columnIndex);
@@ -78,8 +77,8 @@ class TableHeaderView extends LinearLayout {
 
             int width = widthUnit * adapter.getColumnWeight(columnIndex);
             LayoutParams headerLayoutParams = new LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT);
-
             headerView.setLayoutParams(headerLayoutParams);
+
             addView(headerView, columnIndex);
         }
     }

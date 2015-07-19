@@ -5,7 +5,6 @@ import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -92,7 +91,7 @@ public class TableView<T> extends LinearLayout {
      * @param headerView
      *         The new {@link TableHeaderView} that should be set.
      */
-    protected void setTableHeaderView(TableHeaderView headerView) {
+    protected void setHeaderView(TableHeaderView headerView) {
         this.tableHeaderView = headerView;
         tableHeaderView.setAdapter(tableHeaderAdapter);
         removeViewAt(0);
@@ -202,6 +201,15 @@ public class TableView<T> extends LinearLayout {
     }
 
     /**
+     * Gives the number of columns of this table.
+     *
+     * @return The current number of columns.
+     */
+    public int getColumnCount() {
+        return columnModel.getColumnCount();
+    }
+
+    /**
      * Sets the column weight (the relative width of the column) of the given column.
      *
      * @param columnIndex
@@ -251,24 +259,26 @@ public class TableView<T> extends LinearLayout {
             tableHeaderAdapter = new DefaultTableHeaderAdapter(getContext());
         }
         tableHeaderView = new TableHeaderView(getContext());
+        tableHeaderView.setBackgroundColor(0xFFCCCCCC);
         tableHeaderView.setAdapter(tableHeaderAdapter);
 
         addView(tableHeaderView);
     }
 
     private void setupTableDataView() {
+        LayoutParams dataViewLayoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
         if (isInEditMode()) {
             tableDataAdapter = new EditModeTableDataAdapter(getContext());
         } else {
             tableDataAdapter = new DefaultTableDataAdapter(getContext());
         }
         tableDataAdapter.setRowColoriser(dataRowColoriser);
-        tableDataView = new ListView(getContext());
-        tableDataView.setAdapter(tableDataAdapter);
-        tableDataView.setOnItemClickListener(new InternalDataClickListener());
 
-        LayoutParams dataViewLayoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        tableDataView = new ListView(getContext());
+        tableDataView.setOnItemClickListener(new InternalDataClickListener());
         tableDataView.setLayoutParams(dataViewLayoutParams);
+        tableDataView.setAdapter(tableDataAdapter);
 
         addView(tableDataView);
     }
@@ -315,7 +325,10 @@ public class TableView<T> extends LinearLayout {
 
         @Override
         public View getHeaderView(int columnIndex, ViewGroup parentView) {
-            return new TextView(getContext());
+            TextView view = new TextView(getContext());
+            view.setText(" ");
+            view.setPadding(20, 40, 20, 40);
+            return view;
         }
     }
 
@@ -352,14 +365,14 @@ public class TableView<T> extends LinearLayout {
 
         @Override
         public View getHeaderView(int columnIndex, ViewGroup parentView) {
-            Log.d("HeaderAdapter", "Header" + columnIndex);
             TextView textView = new TextView(getContext());
             textView.setText("Header " + columnIndex);
-            textView.setPadding(20, 30, 20, 30);
+            textView.setPadding(20, 40, 20, 40);
             textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
             textView.setTextSize(TEXT_SIZE);
             return textView;
         }
+
     }
 
     /**
@@ -372,7 +385,7 @@ public class TableView<T> extends LinearLayout {
         private static final float TEXT_SIZE = 16;
 
         public EditModeTableDataAdapter(Context context) {
-            super(context, columnModel, null);
+            super(context, columnModel, new ArrayList<T>());
         }
 
         @Override
@@ -386,7 +399,7 @@ public class TableView<T> extends LinearLayout {
 
         @Override
         public int getCount() {
-            return 150;
+            return 50;
         }
     }
 

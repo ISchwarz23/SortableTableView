@@ -26,7 +26,7 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
 
     private TableColumnModel columnModel;
     private final List<T> data;
-    private TableDataRowColoriser<? super T> rowColorizer;
+    private TableDataRowColoriser<? super T> rowColoriser;
 
 
     /**
@@ -97,7 +97,7 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
 
     /**
      * Gives the {@link Resources} of this adapter. (Hint: use this method in the
-     * {@code getHeaderView()}-method to resolve resources.)
+     * {@code getCellView()}-method to resolve resources.)
      *
      * @return The {@link Resources} of the context of this adapter.
      */
@@ -125,7 +125,14 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
         ListView.LayoutParams rowLayoutParams = new ListView.LayoutParams(ListView.LayoutParams.MATCH_PARENT, ListView.LayoutParams.WRAP_CONTENT);
         rowView.setLayoutParams(rowLayoutParams);
         rowView.setGravity(Gravity.CENTER_VERTICAL);
-        rowView.setBackgroundColor(rowColorizer.getRowColor(rowIndex, getItem(rowIndex)));
+
+        T rowData = null;
+        try {
+            rowData = getItem(rowIndex);
+        } catch (IndexOutOfBoundsException e) {
+            // call row coloriser with null
+        }
+        rowView.setBackgroundColor(rowColoriser.getRowColor(rowIndex, rowData));
 
         int widthUnit = (parent.getWidth() / columnModel.getColumnWeightSum());
 
@@ -153,7 +160,7 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
      *         The {@link TableDataRowColoriser} that shall be used.
      */
     protected void setRowColoriser(TableDataRowColoriser<? super T> rowColorizer) {
-        this.rowColorizer = rowColorizer;
+        this.rowColoriser = rowColorizer;
     }
 
     /**
