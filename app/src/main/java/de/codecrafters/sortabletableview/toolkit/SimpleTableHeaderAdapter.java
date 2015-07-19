@@ -1,4 +1,4 @@
-package de.codecrafters.sortabletableview.adapters;
+package de.codecrafters.sortabletableview.toolkit;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -25,6 +25,7 @@ public final class SimpleTableHeaderAdapter extends TableHeaderAdapter {
     private int paddingBottom = 30;
     private int textSize = 18;
     private int typeface = Typeface.BOLD;
+    private int textColor = 0x99000000;
 
     /**
      * Creates a new SimpleTableHeaderAdapter.
@@ -118,6 +119,16 @@ public final class SimpleTableHeaderAdapter extends TableHeaderAdapter {
         this.typeface = typeface;
     }
 
+    /**
+     * Sets the text color that will be used for all table headers.
+     *
+     * @param textColor
+     *         The text color that shall be used.
+     */
+    public void setTextColor(int textColor) {
+        this.textColor = textColor;
+    }
+
     @Override
     public View getHeaderView(int columnIndex, ViewGroup parentView) {
         TextView textView = new TextView(getContext());
@@ -129,6 +140,7 @@ public final class SimpleTableHeaderAdapter extends TableHeaderAdapter {
         textView.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
         textView.setTypeface(textView.getTypeface(), typeface);
         textView.setTextSize(textSize);
+        textView.setTextColor(textColor);
         textView.setSingleLine();
         textView.setEllipsize(TextUtils.TruncateAt.END);
 

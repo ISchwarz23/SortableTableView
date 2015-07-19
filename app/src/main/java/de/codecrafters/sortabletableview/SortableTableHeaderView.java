@@ -13,6 +13,8 @@ import java.util.Map;
 import java.util.Set;
 
 import de.codecrafters.sortabletableview.listeners.TableHeaderClickListener;
+import de.codecrafters.sortabletableview.providers.SortStateViewProvider;
+import de.codecrafters.sortabletableview.toolkit.SortStateViewProviders;
 
 
 /**
@@ -22,22 +24,11 @@ import de.codecrafters.sortabletableview.listeners.TableHeaderClickListener;
  */
 class SortableTableHeaderView extends TableHeaderView {
 
-    /**
-     * A enumeration containing all available SortView states of presentation.
-     *
-     * @author ISchwarz
-     */
-    public enum SortViewPresentation {
-        NONE,
-        SORTABLE,
-        SORT_UP,
-        SORT_DOWN
-    }
-
     private static final String LOG_TAG = SortableTableHeaderView.class.toString();
 
     private Set<TableHeaderClickListener> listeners = new HashSet<>();
     private Map<Integer, ImageView> sortViews = new HashMap<>();
+    private SortStateViewProvider sortStateViewProvider = SortStateViewProviders.darkArrows();
 
 
     /**
@@ -55,21 +46,21 @@ class SortableTableHeaderView extends TableHeaderView {
      */
     public void resetSortViews() {
         for (ImageView sortView : sortViews.values()) {
-            sortView.setImageResource(R.mipmap.ic_sortable);
+            sortView.setImageResource(sortStateViewProvider.getSortStateViewResource(SortState.SORTABLE));
         }
     }
 
     /**
-     * Sets the presentation of the SortView of the columnIndex with the given index.
+     * Sets the {@link SortState} of the SortView of the column with the given index.
      *
      * @param columnIndex
-     *         The index of the columnIndex to which the given {@link SortViewPresentation}
+     *         The index of the column for which the given {@link SortState}
      *         will be set.
-     * @param presentation
-     *         The presentation that shall be set to the SortView at the columnIndex with
+     * @param state
+     *         The {@link SortState} that shall be set to the sort view at the column with
      *         the given index.
      */
-    public void setSortViewPresentation(int columnIndex, SortViewPresentation presentation) {
+    public void setSortState(int columnIndex, SortState state) {
         ImageView sortView = sortViews.get(columnIndex);
 
         if (sortView == null) {
@@ -77,23 +68,8 @@ class SortableTableHeaderView extends TableHeaderView {
             return;
         }
 
-        switch (presentation) {
-            case NONE:
-                sortView.setVisibility(GONE);
-                break;
-            case SORTABLE:
-                sortView.setImageResource(R.mipmap.ic_sortable);
-                sortView.setVisibility(VISIBLE);
-                break;
-            case SORT_UP:
-                sortView.setImageResource(R.mipmap.ic_sort_up);
-                sortView.setVisibility(VISIBLE);
-                break;
-            case SORT_DOWN:
-                sortView.setImageResource(R.mipmap.ic_sort_down);
-                sortView.setVisibility(VISIBLE);
-                break;
-        }
+        sortView.setVisibility(VISIBLE);
+        sortView.setImageResource(sortStateViewProvider.getSortStateViewResource(state));
     }
 
     /**
@@ -114,6 +90,25 @@ class SortableTableHeaderView extends TableHeaderView {
      */
     public void removeHeaderClickListener(TableHeaderClickListener listener) {
         listeners.remove(listener);
+    }
+
+    /**
+     * Sets the given {@link SortStateViewProvider} to this SortableTableHeaderView.
+     *
+     * @param provider
+     *         The {@link SortStateViewProvider} that shall be used to render the sort views.
+     */
+    public void setSortStateViewProvider(SortStateViewProvider provider) {
+        sortStateViewProvider = provider;
+        resetSortViews();
+    }
+
+    /**
+     * Gives the current {@link SortStateViewProvider} of this SortableTableHeaderView.
+     * @return The {@link SortStateViewProvider} that is currently used to render the sort views.
+     */
+    public SortStateViewProvider getSortStateViewProvider() {
+        return sortStateViewProvider;
     }
 
     @Override

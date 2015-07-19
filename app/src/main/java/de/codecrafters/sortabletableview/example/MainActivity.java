@@ -15,10 +15,9 @@ import java.util.Comparator;
 import java.util.List;
 
 import de.codecrafters.sortabletableview.R;
-import de.codecrafters.sortabletableview.SortableTableView;
 import de.codecrafters.sortabletableview.TableDataAdapter;
-import de.codecrafters.sortabletableview.adapters.SimpleTableHeaderAdapter;
 import de.codecrafters.sortabletableview.listeners.TableDataClickListener;
+import de.codecrafters.sortabletableview.toolkit.SortStateViewProviders;
 
 
 public class MainActivity extends Activity {
@@ -78,6 +77,10 @@ public class MainActivity extends Activity {
         tableView.setColumnComparator(2, new CarPsComparator());
         tableView.setColumnComparator(3, new CarPriceComparator());
         tableView.addTableDataClickListener(new CarClickListener());
+
+        tableView.setHeaderBackgroundColor(0xFF3F51B5);
+        tableView.setHeaderElevation(10);
+        tableView.setHeaderSortStateViewProvider(SortStateViewProviders.brightArrows());
     }
 
 

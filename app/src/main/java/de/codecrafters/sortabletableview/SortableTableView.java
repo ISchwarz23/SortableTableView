@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import de.codecrafters.sortabletableview.listeners.TableHeaderClickListener;
+import de.codecrafters.sortabletableview.providers.SortStateViewProvider;
 
 /**
  * Extension of the {@link TableView} that gives the possibility to sort the table by every single
@@ -89,6 +90,24 @@ public class SortableTableView<T> extends TableView<T> {
     }
 
     /**
+     * Sets the given {@link SortStateViewProvider}.
+     *
+     * @param provider
+     *         The {@link SortStateViewProvider} that shall be used to render the sort views in the header.
+     */
+    public void setHeaderSortStateViewProvider(SortStateViewProvider provider) {
+        sortableTableHeaderView.setSortStateViewProvider(provider);
+    }
+
+    /**
+     * Gives the current {@link SortStateViewProvider}.
+     * @return The {@link SortStateViewProvider} that is currently used to render the sort views in the header.
+     */
+    public SortStateViewProvider getHeaderSortStateViewProvider() {
+        return sortableTableHeaderView.getSortStateViewProvider();
+    }
+
+    /**
      * Gives the {@link Comparator} of the column at the given index.
      *
      * @param columnIndex
@@ -105,7 +124,7 @@ public class SortableTableView<T> extends TableView<T> {
      * @param listener
      *         The listener that shall be added to this table.
      */
-    public void addTableHeaderListener(TableHeaderClickListener listener) {
+    public void addHeaderListener(TableHeaderClickListener listener) {
         sortableTableHeaderView.addHeaderClickListener(listener);
     }
 
@@ -115,7 +134,7 @@ public class SortableTableView<T> extends TableView<T> {
      * @param listener
      *         The listener that shall be removed from this table.
      */
-    public void removeTableHeaderListener(TableHeaderClickListener listener) {
+    public void removeHeaderListener(TableHeaderClickListener listener) {
         sortableTableHeaderView.removeHeaderClickListener(listener);
     }
 
@@ -172,9 +191,9 @@ public class SortableTableView<T> extends TableView<T> {
         private void setSortView(int columnIndex) {
             sortableTableHeaderView.resetSortViews();
             if (isSortedUp) {
-                sortableTableHeaderView.setSortViewPresentation(columnIndex, SortableTableHeaderView.SortViewPresentation.SORT_UP);
+                sortableTableHeaderView.setSortState(columnIndex, SortState.SORTED_ASC);
             } else {
-                sortableTableHeaderView.setSortViewPresentation(columnIndex, SortableTableHeaderView.SortViewPresentation.SORT_DOWN);
+                sortableTableHeaderView.setSortState(columnIndex, SortState.SORTED_DESC);
             }
         }
 
@@ -210,10 +229,10 @@ public class SortableTableView<T> extends TableView<T> {
         public void setComparator(int columnIndex, Comparator<T> columnComparator) {
             if (columnComparator == null) {
                 comparators.remove(columnIndex);
-                sortableTableHeaderView.setSortViewPresentation(columnIndex, SortableTableHeaderView.SortViewPresentation.NONE);
+                sortableTableHeaderView.setSortState(columnIndex, SortState.NOT_SORTABLE);
             } else {
                 comparators.put(columnIndex, columnComparator);
-                sortableTableHeaderView.setSortViewPresentation(columnIndex, SortableTableHeaderView.SortViewPresentation.SORTABLE);
+                sortableTableHeaderView.setSortState(columnIndex, SortState.SORTABLE);
             }
         }
 

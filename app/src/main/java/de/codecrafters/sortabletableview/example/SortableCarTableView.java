@@ -4,7 +4,8 @@ import android.content.Context;
 import android.util.AttributeSet;
 
 import de.codecrafters.sortabletableview.SortableTableView;
-import de.codecrafters.sortabletableview.adapters.SimpleTableHeaderAdapter;
+import de.codecrafters.sortabletableview.toolkit.SimpleTableHeaderAdapter;
+import de.codecrafters.sortabletableview.toolkit.SortStateViewProviders;
 
 /**
  * Created by Ingo on 18.07.2015.
@@ -22,13 +23,14 @@ public class SortableCarTableView extends SortableTableView<Car> {
     public SortableCarTableView(Context context, AttributeSet attributes, int styleAttributes) {
         super(context, attributes, styleAttributes);
 
-        setHeaderAdapter(new SimpleTableHeaderAdapter(context, "Hersteller", "Typ", "Leistung", "Preis"));
+        SimpleTableHeaderAdapter simpleTableHeaderAdapter = new SimpleTableHeaderAdapter(context, "Hersteller", "Typ", "Leistung", "Preis");
+        simpleTableHeaderAdapter.setTextColor(0xCCFFFFFF);
+        setHeaderAdapter(simpleTableHeaderAdapter);
+
         setColumnWeight(0, 2);
         setColumnWeight(1, 4);
         setColumnWeight(2, 2);
         setColumnWeight(3, 1);
 
-        setHeaderBackgroundColor(0xFFEEEEEE); //0xFF9696ff
-        setHeaderElevation(10);
     }
 }

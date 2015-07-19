@@ -1,0 +1,22 @@
+package de.codecrafters.sortabletableview.providers;
+
+import de.codecrafters.sortabletableview.SortState;
+
+
+/**
+ * Provider for images indication the sort status.
+ *
+ * @author ISchwarz
+ */
+public interface SortStateViewProvider {
+
+    /**
+     * Gives the drawable resource for the given {@link SortState}.
+     *
+     * @param state
+     *         The {@link SortState} to return the drawable resource for.
+     * @return The drawable resource for the given {@link SortState}.
+     */
+    int getSortStateViewResource(SortState state);
+
+}
