@@ -127,7 +127,7 @@ public class TableView<T> extends LinearLayout {
      * @param listener
      *         The listener that should be added.
      */
-    public void addTableDataClickListener(TableDataClickListener<T> listener) {
+    public void addDataClickListener(TableDataClickListener<T> listener) {
         dataClickListeners.add(listener);
     }
 

@@ -124,7 +124,7 @@ public class SortableTableView<T> extends TableView<T> {
      * @param listener
      *         The listener that shall be added to this table.
      */
-    public void addHeaderListener(TableHeaderClickListener listener) {
+    public void addHeaderClickListener(TableHeaderClickListener listener) {
         sortableTableHeaderView.addHeaderClickListener(listener);
     }
 

@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -54,10 +55,11 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
      * @param columnModel
      *         The column model to be used.
      */
+    @SuppressWarnings("unchecked")
     protected TableDataAdapter(Context context, TableColumnModel columnModel, List<T> data) {
-        super(context, -1, data);
+        super(context, -1, clone(data));
         this.columnModel = columnModel;
-        this.data = data;
+        this.data = (List<T>) getDataClone();
     }
 
     /**
@@ -196,5 +198,18 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
      * @return The created header view for the given column.
      */
     public abstract View getCellView(int rowIndex, int columnIndex, ViewGroup parentView);
+
+    
+    private static List<?> dataStore;
+
+    private static <X> List<X> clone(List<X> data) {
+        List<X> clonedData = new ArrayList<>(data);
+        dataStore = clonedData;
+        return clonedData;
+    }
+
+    private static List<?> getDataClone() {
+        return dataStore;
+    }
 
 }
