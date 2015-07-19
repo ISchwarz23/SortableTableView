@@ -1,4 +1,4 @@
-package de.codecrafters.sortabletableview;
+package de.codecrafters.tableview;
 
 import android.content.Context;
 import android.util.Log;
@@ -12,9 +12,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import de.codecrafters.sortabletableview.listeners.TableHeaderClickListener;
-import de.codecrafters.sortabletableview.providers.SortStateViewProvider;
-import de.codecrafters.sortabletableview.toolkit.SortStateViewProviders;
+import de.codecrafters.tableview.listeners.TableHeaderClickListener;
+import de.codecrafters.tableview.providers.SortStateViewProvider;
+import de.codecrafters.tableview.toolkit.SortStateViewProviders;
 
 
 /**

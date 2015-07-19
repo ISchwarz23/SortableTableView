@@ -1,9 +1,8 @@
-package de.codecrafters.sortabletableview;
+package de.codecrafters.tableview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -18,7 +17,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import de.codecrafters.sortabletableview.listeners.TableDataClickListener;
+import de.codecrafters.tableview.listeners.TableDataClickListener;
 
 
 /**
@@ -213,8 +212,7 @@ public class TableView<T> extends LinearLayout {
 
         for (int i = 0; i < styledAttributes.getIndexCount(); ++i) {
             int attribute = styledAttributes.getIndex(i);
-            switch (attribute) {
-                case R.styleable.TableView_columnCount:
+            if (attribute == R.styleable.TableView_columnCount ) {
                     int columnCount = styledAttributes.getInt(attribute, DEFAULT_COLUMN_COUNT);
                     columnModel = new TableColumnModel(columnCount);
                     break;

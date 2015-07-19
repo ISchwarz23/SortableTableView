@@ -1,4 +1,4 @@
-package de.codecrafters.sortabletableview.listeners;
+package de.codecrafters.tableview.listeners;
 
 /**
  * Created by Ingo on 18.07.2015.

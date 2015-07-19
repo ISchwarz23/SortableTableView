@@ -1,55 +1,72 @@
-package de.codecrafters.sortabletableview;
+package de.codecrafters.tableview;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import java.util.List;
 
 
 /**
- * The abstract implementation of an adapter used to bring data to a {@link TableHeaderView}.
+ * The abstract implementation of an adapter used to bring data to a {@link TableView}.
  *
  * @author ISchwarz
  */
-public abstract class TableHeaderAdapter {
+public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
 
     private TableColumnModel columnModel;
-    private final Context context;
+    private final List<T> data;
 
 
     /**
-     * Creates a new TableHeaderAdapter.
+     * Creates a new TableDataAdapter.
      *
      * @param context
      *         The context that shall be used.
      */
-    public TableHeaderAdapter(Context context) {
-        this(context, 0);
+    public TableDataAdapter(Context context, List<T> data) {
+        this(context, 0, data);
     }
 
     /**
-     * Creates a new TableHeaderAdapter. (internally used)
+     * Creates a new TableDataAdapter. (internally used)
      *
      * @param context
      *         The context that shall be used.
      * @param columnCount
      *         The number of columns.
      */
-    protected TableHeaderAdapter(Context context, int columnCount) {
-        this(context, new TableColumnModel(columnCount));
+    protected TableDataAdapter(Context context, int columnCount, List<T> data) {
+        this(context, new TableColumnModel(columnCount), data);
     }
 
     /**
-     * Creates a new TableHeaderAdapter. (internally used)
+     * Creates a new TableDataAdapter. (internally used)
      *
      * @param context
      *         The context that shall be used.
      * @param columnModel
      *         The column model to be used.
      */
-    protected TableHeaderAdapter(Context context, TableColumnModel columnModel) {
-        this.context = context;
+    protected TableDataAdapter(Context context, TableColumnModel columnModel, List<T> data) {
+        super(context, -1, data);
         this.columnModel = columnModel;
+        this.data = data;
+    }
+
+    /**
+     * Gives the data that is set to this adapter.
+     *
+     * @return The data this adapter is currently working with.
+     */
+    public List<T> getData() {
+        return data;
     }
 
     /**
@@ -59,7 +76,7 @@ public abstract class TableHeaderAdapter {
      * @return The {@link Context} of this adapter.
      */
     public Context getContext() {
-        return context;
+        return super.getContext();
     }
 
     /**
@@ -73,7 +90,7 @@ public abstract class TableHeaderAdapter {
     }
 
     /**
-     * Sets the {@link TableColumnModel} that will be used to render the table headers.
+     * Sets the {@link TableColumnModel} that will be used to render the table cells.
      *
      * @param columnModel
      *         The {@link TableColumnModel} that should be set.
@@ -140,15 +157,44 @@ public abstract class TableHeaderAdapter {
         return columnModel.getColumnWeightSum();
     }
 
+    @Override
+    public View getView(int rowIndex, View convertView, ViewGroup parent) {
+        LinearLayout rowView = new LinearLayout(getContext());
+
+        ListView.LayoutParams rowLayoutParams = new ListView.LayoutParams(ListView.LayoutParams.MATCH_PARENT, ListView.LayoutParams.WRAP_CONTENT);
+        rowView.setLayoutParams(rowLayoutParams);
+        rowView.setGravity(Gravity.CENTER_VERTICAL);
+
+        int widthUnit = (parent.getWidth() / columnModel.getColumnWeightSum());
+
+        for (int columnIndex = 0; columnIndex < getColumnCount(); columnIndex++) {
+            View cellView = getCellView(rowIndex, columnIndex, rowView);
+            if (cellView == null) {
+                cellView = new TextView(getContext());
+            }
+
+            int width = widthUnit * columnModel.getColumnWeight(columnIndex);
+
+            LinearLayout.LayoutParams cellLayoutParams = new LinearLayout.LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT);
+            cellLayoutParams.weight = columnModel.getColumnWeight(columnIndex);
+            cellView.setLayoutParams(cellLayoutParams);
+            rowView.addView(cellView);
+        }
+
+        return rowView;
+    }
+
     /**
-     * Method that gives the header views for the different columns.
+     * Method that gives the cell views for the different table cells.
      *
+     * @param rowIndex
+     *         The index of the row to return the table cell view.
      * @param columnIndex
-     *         The index of the column to return the header view.
+     *         The index of the column to return the table cell view.
      * @param parentView
      *         The view to which the returned view will be added.
      * @return The created header view for the given column.
      */
-    public abstract View getHeaderView(int columnIndex, ViewGroup parentView);
+    public abstract View getCellView(int rowIndex, int columnIndex, ViewGroup parentView);
 
 }

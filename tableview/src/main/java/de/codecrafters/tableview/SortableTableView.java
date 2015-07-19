@@ -1,4 +1,4 @@
-package de.codecrafters.sortabletableview;
+package de.codecrafters.tableview;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -10,8 +10,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import de.codecrafters.sortabletableview.listeners.TableHeaderClickListener;
-import de.codecrafters.sortabletableview.providers.SortStateViewProvider;
+import de.codecrafters.tableview.listeners.TableHeaderClickListener;
+import de.codecrafters.tableview.providers.SortStateViewProvider;
 
 /**
  * Extension of the {@link TableView} that gives the possibility to sort the table by every single

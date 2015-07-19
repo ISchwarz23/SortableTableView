@@ -3,9 +3,9 @@ package de.codecrafters.sortabletableview.example;
 import android.content.Context;
 import android.util.AttributeSet;
 
-import de.codecrafters.sortabletableview.SortableTableView;
-import de.codecrafters.sortabletableview.toolkit.SimpleTableHeaderAdapter;
-import de.codecrafters.sortabletableview.toolkit.SortStateViewProviders;
+import de.codecrafters.tableview.SortableTableView;
+import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
+
 
 /**
  * Created by Ingo on 18.07.2015.
@@ -31,6 +31,5 @@ public class SortableCarTableView extends SortableTableView<Car> {
         setColumnWeight(1, 4);
         setColumnWeight(2, 2);
         setColumnWeight(3, 1);
-
     }
 }

@@ -1,4 +1,4 @@
-package de.codecrafters.sortabletableview;
+package de.codecrafters.tableview;
 
 import java.util.HashMap;
 import java.util.Map;

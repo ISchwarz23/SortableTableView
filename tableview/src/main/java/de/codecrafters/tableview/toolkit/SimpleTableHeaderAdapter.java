@@ -1,4 +1,4 @@
-package de.codecrafters.sortabletableview.toolkit;
+package de.codecrafters.tableview.toolkit;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import de.codecrafters.sortabletableview.TableHeaderAdapter;
+import de.codecrafters.tableview.TableHeaderAdapter;
 
 
 /**

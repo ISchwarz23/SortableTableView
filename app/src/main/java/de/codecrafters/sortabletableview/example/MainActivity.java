@@ -15,9 +15,9 @@ import java.util.Comparator;
 import java.util.List;
 
 import de.codecrafters.sortabletableview.R;
-import de.codecrafters.sortabletableview.TableDataAdapter;
-import de.codecrafters.sortabletableview.listeners.TableDataClickListener;
-import de.codecrafters.sortabletableview.toolkit.SortStateViewProviders;
+import de.codecrafters.tableview.TableDataAdapter;
+import de.codecrafters.tableview.listeners.TableDataClickListener;
+import de.codecrafters.tableview.toolkit.SortStateViewProviders;
 
 
 public class MainActivity extends Activity {

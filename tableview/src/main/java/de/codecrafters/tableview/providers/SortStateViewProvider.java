@@ -1,6 +1,6 @@
-package de.codecrafters.sortabletableview.providers;
+package de.codecrafters.tableview.providers;
 
-import de.codecrafters.sortabletableview.SortState;
+import de.codecrafters.tableview.SortState;
 
 
 /**

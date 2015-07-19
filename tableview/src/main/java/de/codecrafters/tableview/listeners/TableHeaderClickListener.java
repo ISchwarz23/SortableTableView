@@ -1,4 +1,4 @@
-package de.codecrafters.sortabletableview.listeners;
+package de.codecrafters.tableview.listeners;
 
 /**
  * Listener interface to listen for clicks on table headers of a {@link SortableTableView}.

@@ -1,4 +1,4 @@
-package de.codecrafters.sortabletableview;
+package de.codecrafters.tableview;
 
 import android.content.Context;
 import android.view.Gravity;

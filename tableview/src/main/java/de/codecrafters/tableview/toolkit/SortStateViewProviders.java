@@ -1,8 +1,8 @@
-package de.codecrafters.sortabletableview.toolkit;
+package de.codecrafters.tableview.toolkit;
 
-import de.codecrafters.sortabletableview.R;
-import de.codecrafters.sortabletableview.SortState;
-import de.codecrafters.sortabletableview.providers.SortStateViewProvider;
+import de.codecrafters.tableview.R;
+import de.codecrafters.tableview.SortState;
+import de.codecrafters.tableview.providers.SortStateViewProvider;
 
 
 /**
