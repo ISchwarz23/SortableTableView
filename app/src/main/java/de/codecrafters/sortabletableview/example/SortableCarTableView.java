@@ -23,13 +23,15 @@ public class SortableCarTableView extends SortableTableView<Car> {
     public SortableCarTableView(Context context, AttributeSet attributes, int styleAttributes) {
         super(context, attributes, styleAttributes);
 
-        SimpleTableHeaderAdapter simpleTableHeaderAdapter = new SimpleTableHeaderAdapter(context, "Hersteller", "Typ", "Leistung", "Preis");
+        SimpleTableHeaderAdapter simpleTableHeaderAdapter = new SimpleTableHeaderAdapter(context, "Hersteller", "Bezeichung", "Leistung", "Preis");
         simpleTableHeaderAdapter.setTextColor(0xCCFFFFFF);
+        simpleTableHeaderAdapter.setPaddingTop(40);
+        simpleTableHeaderAdapter.setPaddingBottom(40);
         setHeaderAdapter(simpleTableHeaderAdapter);
 
         setColumnWeight(0, 2);
         setColumnWeight(1, 4);
-        setColumnWeight(2, 2);
-        setColumnWeight(3, 1);
+        setColumnWeight(2, 3);
+        setColumnWeight(3, 2);
     }
 }

@@ -169,9 +169,9 @@ public class MainActivity extends Activity {
             textView.setTextSize(TEXT_SIZE);
 
             if(car.getPrice() < 50000) {
-                textView.setTextColor(0xFF00FF00);
+                textView.setTextColor(0xFF2E7D32);
             } else if(car.getPrice() > 100000) {
-                textView.setTextColor(0xFFFF0000);
+                textView.setTextColor(0xFFC62828);
             }
 
             return textView;
