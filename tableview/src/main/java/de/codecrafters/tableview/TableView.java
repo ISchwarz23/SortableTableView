@@ -17,7 +17,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
+import de.codecrafters.tableview.colorizers.TableDataRowColoriser;
 import de.codecrafters.tableview.listeners.TableDataClickListener;
+import de.codecrafters.tableview.toolkit.TableDataRowColorisers;
 
 
 /**
@@ -38,6 +40,8 @@ public class TableView<T> extends LinearLayout {
 
     private TableHeaderAdapter tableHeaderAdapter;
     protected TableDataAdapter<T> tableDataAdapter;
+
+    private TableDataRowColoriser<? super T> dataRowColoriser = TableDataRowColorisers.similarRowColor(0x00000000);
 
 
     /**
@@ -98,7 +102,9 @@ public class TableView<T> extends LinearLayout {
 
     /**
      * Sets the given resource as background of the table header.
-     * @param resId The if of the resource tht shall be set as background of the table header.
+     *
+     * @param resId
+     *         The if of the resource tht shall be set as background of the table header.
      */
     public void setHeaderBackground(int resId) {
         tableHeaderView.setBackgroundResource(resId);
@@ -106,7 +112,9 @@ public class TableView<T> extends LinearLayout {
 
     /**
      * Sets the given color as background of the table header.
-     * @param color The color that shall be set as background of the table header.
+     *
+     * @param color
+     *         The color that shall be set as background of the table header.
      */
     public void setHeaderBackgroundColor(int color) {
         tableHeaderView.setBackgroundColor(color);
@@ -115,10 +123,24 @@ public class TableView<T> extends LinearLayout {
     /**
      * Sets the elevation level of the header view. If you are not able to see the elevation shadow
      * you should set a background(-color) to the header.
-     * @param elevation The elevation that shall be set to the table header.
+     *
+     * @param elevation
+     *         The elevation that shall be set to the table header.
      */
     public void setHeaderElevation(int elevation) {
         ViewCompat.setElevation(tableHeaderView, elevation);
+    }
+
+    /**
+     * Sets the given {@link TableDataRowColoriser} that will be used to define the background color for
+     * every table data row.
+     *
+     * @param coloriser
+     *         The {@link TableDataRowColoriser} that shall be used.
+     */
+    public void setDataRowColoriser(TableDataRowColoriser<? super T> coloriser) {
+        dataRowColoriser = coloriser;
+        tableDataAdapter.setRowColoriser(coloriser);
     }
 
     /**
@@ -163,6 +185,7 @@ public class TableView<T> extends LinearLayout {
     public void setDataAdapter(TableDataAdapter<T> dataAdapter) {
         tableDataAdapter = dataAdapter;
         tableDataAdapter.setColumnModel(columnModel);
+        tableDataAdapter.setRowColoriser(dataRowColoriser);
         tableDataView.setAdapter(tableDataAdapter);
         forceRefresh();
     }
@@ -212,10 +235,10 @@ public class TableView<T> extends LinearLayout {
 
         for (int i = 0; i < styledAttributes.getIndexCount(); ++i) {
             int attribute = styledAttributes.getIndex(i);
-            if (attribute == R.styleable.TableView_columnCount ) {
-                    int columnCount = styledAttributes.getInt(attribute, DEFAULT_COLUMN_COUNT);
-                    columnModel = new TableColumnModel(columnCount);
-                    break;
+            if (attribute == R.styleable.TableView_columnCount) {
+                int columnCount = styledAttributes.getInt(attribute, DEFAULT_COLUMN_COUNT);
+                columnModel = new TableColumnModel(columnCount);
+                break;
             }
         }
         styledAttributes.recycle();
@@ -239,6 +262,7 @@ public class TableView<T> extends LinearLayout {
         } else {
             tableDataAdapter = new DefaultTableDataAdapter(getContext());
         }
+        tableDataAdapter.setRowColoriser(dataRowColoriser);
         tableDataView = new ListView(getContext());
         tableDataView.setAdapter(tableDataAdapter);
         tableDataView.setOnItemClickListener(new InternalDataClickListener());
