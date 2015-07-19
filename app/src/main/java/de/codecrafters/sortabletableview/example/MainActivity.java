@@ -17,7 +17,6 @@ import java.util.List;
 import de.codecrafters.sortabletableview.R;
 import de.codecrafters.tableview.TableDataAdapter;
 import de.codecrafters.tableview.listeners.TableDataClickListener;
-import de.codecrafters.tableview.toolkit.SortStateViewProviders;
 
 
 public class MainActivity extends Activity {
@@ -76,11 +75,7 @@ public class MainActivity extends Activity {
         tableView.setColumnComparator(1, new CarNameComparator());
         tableView.setColumnComparator(2, new CarPsComparator());
         tableView.setColumnComparator(3, new CarPriceComparator());
-        tableView.addTableDataClickListener(new CarClickListener());
-
-        tableView.setHeaderBackgroundColor(0xFF3F51B5);
-        tableView.setHeaderElevation(10);
-        tableView.setHeaderSortStateViewProvider(SortStateViewProviders.brightArrows());
+        tableView.addDataClickListener(new CarClickListener());
     }
 
 
@@ -90,40 +85,6 @@ public class MainActivity extends Activity {
         public void onDataClicked(int rowIndex, Car clickedData) {
             String carString = clickedData.getProducer().getName() + " " + clickedData.getName();
             Toast.makeText(getApplicationContext(), carString, Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private static class CarProducerComparator implements Comparator<Car> {
-
-        @Override
-        public int compare(Car car1, Car car2) {
-            return car1.getProducer().getName().compareTo(car2.getProducer().getName());
-        }
-    }
-
-    private static class CarPsComparator implements Comparator<Car> {
-
-        @Override
-        public int compare(Car car1, Car car2) {
-            return car1.getPs() - car2.getPs();
-        }
-    }
-
-    private static class CarNameComparator implements Comparator<Car> {
-
-        @Override
-        public int compare(Car car1, Car car2) {
-            return car1.getName().compareTo(car2.getName());
-        }
-    }
-
-    private static class CarPriceComparator implements Comparator<Car> {
-
-        @Override
-        public int compare(Car car1, Car car2) {
-            if (car1.getPrice() < car2.getPrice()) return -1;
-            if (car1.getPrice() > car2.getPrice()) return 1;
-            return 0;
         }
     }
 
@@ -168,9 +129,9 @@ public class MainActivity extends Activity {
             textView.setPadding(20, 10, 20, 10);
             textView.setTextSize(TEXT_SIZE);
 
-            if(car.getPrice() < 50000) {
+            if (car.getPrice() < 50000) {
                 textView.setTextColor(0xFF2E7D32);
-            } else if(car.getPrice() > 100000) {
+            } else if (car.getPrice() > 100000) {
                 textView.setTextColor(0xFFC62828);
             }
 
@@ -207,6 +168,41 @@ public class MainActivity extends Activity {
             return textView;
         }
 
+    }
+
+
+    private static class CarProducerComparator implements Comparator<Car> {
+
+        @Override
+        public int compare(Car car1, Car car2) {
+            return car1.getProducer().getName().compareTo(car2.getProducer().getName());
+        }
+    }
+
+    private static class CarPsComparator implements Comparator<Car> {
+
+        @Override
+        public int compare(Car car1, Car car2) {
+            return car1.getPs() - car2.getPs();
+        }
+    }
+
+    private static class CarNameComparator implements Comparator<Car> {
+
+        @Override
+        public int compare(Car car1, Car car2) {
+            return car1.getName().compareTo(car2.getName());
+        }
+    }
+
+    private static class CarPriceComparator implements Comparator<Car> {
+
+        @Override
+        public int compare(Car car1, Car car2) {
+            if (car1.getPrice() < car2.getPrice()) return -1;
+            if (car1.getPrice() > car2.getPrice()) return 1;
+            return 0;
+        }
     }
 
 }

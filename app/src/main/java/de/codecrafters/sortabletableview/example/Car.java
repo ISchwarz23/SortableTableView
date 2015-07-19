@@ -3,7 +3,7 @@ package de.codecrafters.sortabletableview.example;
 /**
  * Created by Ingo on 18.07.2015.
  */
-public class Car {
+public class Car implements Chargable {
 
     private final CarProducer producer;
     private final String name;
