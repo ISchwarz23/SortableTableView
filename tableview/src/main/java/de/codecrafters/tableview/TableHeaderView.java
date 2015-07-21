@@ -55,7 +55,7 @@ class TableHeaderView extends LinearLayout {
     protected void renderHeaderViews() {
         headerViews.clear();
 
-        for (int columnIndex = 0; columnIndex < 4; columnIndex++) {
+        for (int columnIndex = 0; columnIndex < adapter.getColumnCount(); columnIndex++) {
             View headerView = adapter.getHeaderView(columnIndex, this);
             headerViews.add(headerView);
         }
