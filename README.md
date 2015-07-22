@@ -1,4 +1,4 @@
-# Android-SortableTableView
+# SortableTableView for Android
 An Android library providing a TableView and a SortableTableView. 
 
 Minimum SDK-Version: 11  
@@ -10,19 +10,30 @@ Current Version : 0.9
 **app** - contains an example application showing how to use the SortableTableView  
   
 ## Features
-#### Coloring
-Some description about coloring
-  
-#### Elevation
-Some description about elevation (Lollipop)  
-  
-## Usage  
-#### TableView  
-- layout XML  
-- adapter  
-  
-#### SortableTableView
-- comparator
+### Layouting
+#### Column Count
+ToDO
+#### Column Width
+ToDo
+
+### Showing Data
+#### Simple Data
+ToDo
+#### Custom Data
+ToDo
+#### Sorting Data
+ToDo
+
+### Interaction Listening
+#### Header Click Listening
+ToDo
+#### Data Click Listening
+ToDo
+
+### Styling
+#### Header Styling
+ToDo
+#### Data Row Styling
+ToDo
   
 ## References
-![Airbus Defence and Space](http://www2.geo-airbusds.com/files/pmedia/public/r30931_9_airbus_ds_logo.png)
