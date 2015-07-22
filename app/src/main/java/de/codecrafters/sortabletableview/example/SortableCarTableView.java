@@ -31,9 +31,6 @@ public class SortableCarTableView extends SortableTableView<Car> {
         simpleTableHeaderAdapter.setPaddingBottom(40);
         setHeaderAdapter(simpleTableHeaderAdapter);
 
-        setHeaderBackgroundColor(0xFF3F51B5);
-
-        setHeaderElevation(10);
         setHeaderSortStateViewProvider(SortStateViewProviders.brightArrows());
         setDataRowColoriser(TableDataRowColorisers.alternatingRows(0x00C5CAE9, 0x33C5CAE9));
 

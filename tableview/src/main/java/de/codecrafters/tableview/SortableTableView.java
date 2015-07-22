@@ -70,6 +70,7 @@ public class SortableTableView<T> extends TableView<T> {
         super(context, attributes, styleAttributes);
 
         sortableTableHeaderView = new SortableTableHeaderView(context);
+        sortableTableHeaderView.setBackgroundColor(0xFFCCCCCC);
         setHeaderView(sortableTableHeaderView);
 
         sortingController = new SortingController();

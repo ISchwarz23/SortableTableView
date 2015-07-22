@@ -1,10 +1,12 @@
 package de.codecrafters.tableview;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -30,6 +32,8 @@ import de.codecrafters.tableview.toolkit.TableDataRowColorisers;
 public class TableView<T> extends LinearLayout {
 
     private static final int DEFAULT_COLUMN_COUNT = 4;
+    private static final int DEFAULT_HEADER_ELEVATION = 1;
+    private static final int DEFAULT_HEADER_COLOR = 0xFFCCCCCC;
 
     private Set<TableDataClickListener<T>> dataClickListeners = new HashSet<>();
     private TableColumnModel columnModel;
@@ -41,6 +45,9 @@ public class TableView<T> extends LinearLayout {
     protected TableDataAdapter<T> tableDataAdapter;
 
     private TableDataRowColoriser<? super T> dataRowColoriser = TableDataRowColorisers.similarRowColor(0x00000000);
+
+    private int headerElevation;
+    private int headerColor;
 
 
     /**
@@ -93,9 +100,17 @@ public class TableView<T> extends LinearLayout {
      */
     protected void setHeaderView(TableHeaderView headerView) {
         this.tableHeaderView = headerView;
+
         tableHeaderView.setAdapter(tableHeaderAdapter);
-        removeViewAt(0);
+        tableHeaderView.setBackgroundColor(headerColor);
+
+        if(getChildCount() == 2) {
+            removeViewAt(0);
+        }
+
         addView(tableHeaderView, 0);
+        setHeaderElevation(headerElevation);
+
         forceRefresh();
     }
 
@@ -234,21 +249,23 @@ public class TableView<T> extends LinearLayout {
     }
 
     private void forceRefresh() {
-        tableHeaderView.invalidate();
-        tableDataView.invalidate();
+        if(tableHeaderView != null) {
+            tableHeaderView.invalidate();
+        }
+        if(tableDataView != null) {
+            tableDataView.invalidate();
+        }
     }
 
     private void setAttributes(Context context, AttributeSet attributes) {
         TypedArray styledAttributes = context.obtainStyledAttributes(attributes, R.styleable.TableView);
 
-        for (int i = 0; i < styledAttributes.getIndexCount(); ++i) {
-            int attribute = styledAttributes.getIndex(i);
-            if (attribute == R.styleable.TableView_columnCount) {
-                int columnCount = styledAttributes.getInt(attribute, DEFAULT_COLUMN_COUNT);
-                columnModel = new TableColumnModel(columnCount);
-                break;
-            }
-        }
+
+        headerColor = styledAttributes.getColor(R.styleable.TableView_headerColor, DEFAULT_HEADER_COLOR);
+        headerElevation = styledAttributes.getInt(R.styleable.TableView_headerElevation, DEFAULT_HEADER_ELEVATION);
+        int columnCount = styledAttributes.getInt(R.styleable.TableView_columnCount, DEFAULT_COLUMN_COUNT);
+        columnModel = new TableColumnModel(columnCount);
+
         styledAttributes.recycle();
     }
 
@@ -258,11 +275,9 @@ public class TableView<T> extends LinearLayout {
         } else {
             tableHeaderAdapter = new DefaultTableHeaderAdapter(getContext());
         }
-        tableHeaderView = new TableHeaderView(getContext());
-        tableHeaderView.setBackgroundColor(0xFFCCCCCC);
-        tableHeaderView.setAdapter(tableHeaderAdapter);
 
-        addView(tableHeaderView);
+        TableHeaderView tableHeaderView = new TableHeaderView(getContext());
+        setHeaderView(tableHeaderView);
     }
 
     private void setupTableDataView() {

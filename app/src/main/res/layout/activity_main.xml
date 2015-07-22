@@ -9,6 +9,8 @@
         android:id="@+id/tableView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        custom:columnCount="4"/>
+        custom:columnCount="4"
+        custom:headerElevation="10"
+        custom:headerColor="#FF3F51B5" />
 
 </RelativeLayout>
