@@ -4,6 +4,7 @@
     <style name="AppTheme" parent="android:Theme.Holo.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimaryDark">#283593</item>
+        <item name="colorPrimary">#FF3F51B5</item>
     </style>
 
 </resources>

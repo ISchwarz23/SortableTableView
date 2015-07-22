@@ -5,12 +5,20 @@
                 android:layout_height="match_parent"
                 tools:context="de.codecrafters.sortabletableview.example.MainActivity">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:theme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar" />
+
     <de.codecrafters.sortabletableview.example.SortableCarTableView
         android:id="@+id/tableView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
         custom:columnCount="4"
         custom:headerElevation="10"
-        custom:headerColor="#FF3F51B5" />
+        custom:headerColor="?attr/colorPrimary" />
 
 </RelativeLayout>
