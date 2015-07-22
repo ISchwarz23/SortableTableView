@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import de.codecrafters.tableview.colorizers.TableDataRowColoriser;
@@ -35,8 +36,18 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
      * @param context
      *         The context that shall be used.
      */
+    public TableDataAdapter(Context context, T[] data) {
+        this(context, 0, new ArrayList<>(Arrays.asList(data)));
+    }
+
+    /**
+     * Creates a new TableDataAdapter.
+     *
+     * @param context
+     *         The context that shall be used.
+     */
     public TableDataAdapter(Context context, List<T> data) {
-        this(context, 0, data);
+        this(context, 0, new ArrayList<T>(data));
     }
 
     /**
@@ -59,11 +70,10 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
      * @param columnModel
      *         The column model to be used.
      */
-    @SuppressWarnings("unchecked")
     protected TableDataAdapter(Context context, TableColumnModel columnModel, List<T> data) {
-        super(context, -1, clone(data));
+        super(context, -1, data);
         this.columnModel = columnModel;
-        this.data = (List<T>) getDataClone();
+        this.data = data;
     }
 
     /**
@@ -229,18 +239,6 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
      */
     protected int getColumnWeightSum() {
         return columnModel.getColumnWeightSum();
-    }
-
-    private static List<?> dataStore;
-
-    private static <X> List<X> clone(List<X> data) {
-        List<X> clonedData = new ArrayList<>(data);
-        dataStore = clonedData;
-        return clonedData;
-    }
-
-    private static List<?> getDataClone() {
-        return dataStore;
     }
 
 }
