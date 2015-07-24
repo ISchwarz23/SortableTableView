@@ -1,10 +1,8 @@
-package de.codecrafters.sortabletableview.example;
+package de.codecrafters.tableviewexample;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-
-import de.codecrafters.sortabletableview.R;
 
 
 public class MainActivity extends AppCompatActivity {

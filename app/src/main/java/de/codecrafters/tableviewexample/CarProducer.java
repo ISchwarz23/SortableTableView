@@ -1,4 +1,4 @@
-package de.codecrafters.sortabletableview.example;
+package de.codecrafters.tableviewexample;
 
 
 /**

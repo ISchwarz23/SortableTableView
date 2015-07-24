@@ -1,4 +1,4 @@
-package de.codecrafters.sortabletableview;
+package de.codecrafters.tableviewexample;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

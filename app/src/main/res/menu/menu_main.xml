@@ -1,6 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:tools="http://schemas.android.com/tools"
-      tools:context="de.codecrafters.sortabletableview.example.MainActivity">
+      tools:context="de.codecrafters.tableviewexample.MainActivity">
     <item android:id="@+id/action_settings"
           android:title="@string/action_settings"
           android:orderInCategory="100"

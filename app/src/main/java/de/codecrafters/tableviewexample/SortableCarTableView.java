@@ -1,7 +1,6 @@
-package de.codecrafters.sortabletableview.example;
+package de.codecrafters.tableviewexample;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import de.codecrafters.sortabletableview.R;
 import de.codecrafters.tableview.SortableTableView;
 import de.codecrafters.tableview.TableDataAdapter;
 import de.codecrafters.tableview.listeners.TableDataClickListener;
