@@ -77,6 +77,17 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
     }
 
     /**
+     * Gives the data object that shall be displayed in the row with the given index.
+     *
+     * @param rowIndex
+     *         The index of the row to get the data for.
+     * @return The data that shall be displayed in the row with the given index.
+     */
+    public T getRowData(int rowIndex) {
+        return getItem(rowIndex);
+    }
+
+    /**
      * Gives the data that is set to this adapter.
      *
      * @return The data this adapter is currently working with.
