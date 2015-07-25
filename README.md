@@ -1,5 +1,4 @@
-# SortableTableView for Android
-[![Build Status](https://travis-ci.org/ISchwarz23/SortableTableView.svg?branch=develop)](https://travis-ci.org/ISchwarz23/SortableTableView)  
+# SortableTableView for Android [![Build Status](https://travis-ci.org/ISchwarz23/SortableTableView.svg?branch=develop)](https://travis-ci.org/ISchwarz23/SortableTableView)  
 An Android library providing a TableView and a SortableTableView. 
 
 ![SortableTableView Example](https://raw.githubusercontent.com/ISchwarz23/SortableTableView/develop/README/SortableTableView-Example.gif)
@@ -104,7 +103,7 @@ If you need to make your data sortable, you should use the `SortableTableView` i
     protected void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
     	setContentView(R.layout.activity_main);
-        ...
+        // ...
         sortableTableView.setColumnComparator(0, new CarProducerComparator());
     }
 
@@ -130,7 +129,7 @@ to the specific column.
     protected void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
     	setContentView(R.layout.activity_main);
-        ...
+        // ...
         tableView.addDataClickListener(new CarClickListener());
     }
 
@@ -150,7 +149,7 @@ To listen for clicks on headers you can register a `TableHeaderClickListner`. Th
     protected void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
     	setContentView(R.layout.activity_main);
-        ...
+        // ...
         tableView.addHeaderClickListener(new MyHeaderClickListener());
     }
 
@@ -165,8 +164,79 @@ To listen for clicks on headers you can register a `TableHeaderClickListner`. Th
 
 ### Styling
 #### Header Styling
-ToDo
+The table view provides several possibilities to style its header. One possibility is to set a **colour** for the header. Therefore you can adapt the XML file or add it to your code.
+```xml
+    <!-- XML -->
+    <de.codecrafters.tableview.TableView
+        android:id="@+id/tableView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        custom:headerColor="@color/primary" />
+```
+```java
+    // Java
+    tableView.setHeaderBackgroundColor(getResources().getColor(R.color.primary));
+```
+For more complex header styles you can also set a **drawable** as header background using the following method.
+```java
+    // Java
+    tableView.setHeaderBackground(R.drawable.linear_gradient);
+```
+In addition you can set an **elevation** of the table header. To achieve this you have the possibility to set the elevation in XML or alternatively set it in your code. 
+```xml
+    <!-- XML -->
+    <de.codecrafters.tableview.TableView
+        android:id="@+id/tableView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        custom:headerElevation="10" />
+```
+```java
+    // Java
+    tableView.setHeaderElevation(10);
+```
+***NOTE:** This elevation is realized with the app-compat version of elevation. So it is also applicable on pre-lollipop devices*
+
 #### Data Row Styling
-ToDo
+In general you can do all your styling of data content in your custom `TableDataAdapter`. But if you want to add colouring of whole table rows you can use the `TableDataRowColoriser`. There are alreasy some implementations of the `TableDataRowColoriser` existing in the library. You can get the by using the Factory class `TableDataRowColorisers`.  
+This Factory contains for example an alternating-table-data-row coloriser that will colour rows with even index different from rows with odd index.
+```java
+	@Override
+    protected void onCreate(Bundle savedInstanceState) {
+    	super.onCreate(savedInstanceState);
+    	setContentView(R.layout.activity_main);
+        // ...
+    	int colorEvenRows = getResources().getColor(R.color.white);
+    	int colorOddRows = getResources().getColor(R.color.gray);
+    	tableView.setDataRowColoriser(TableDataRowColorisers.alternatingRows(colorEvenRows, colorOddRows));
+    }
+```
+If the implementations of `TableDataRowColoriser` contained in the `TableDataRowColorisers` factory don't fulfil you needs you can create your own implementation of `TableDataRowColoriser`. Here is a small example of how to do so.
+```java
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+    	super.onCreate(savedInstanceState);
+    	setContentView(R.layout.activity_main);
+        // ...
+        tableView.setDataRowColoriser(new CarPriceRowColoriser());
+    }
+    
+    private static class CarPriceRowColoriser implements TableDataRowColoriser<Car> {
+        @Override
+        public int getRowColor(int rowIndex, Car car) {
+            int rowColor = getResources(R.color.white);
+            
+            if(car.getPrice() < 50000) {
+                rowColor = getResources(R.color.light_green);
+            } else if(car.getPrice() > 100000) {
+                rowColor = getResources(R.color.light_red);
+            }
+                
+            return rowColor;
+        }
+    }
+```
+This coloriser will set the background colour of each row corresponding to the price of the car that is displayed at in this row. Cheap cars (less then 50,000) get a green background, expensive cars (more then 100,000) get a red background and all other cars get a white background.
   
 ## References
+![Airbus Defence and Space](https://upload.wikimedia.org/wikipedia/en/d/d6/Airbus_Defence_and_Space.png)
