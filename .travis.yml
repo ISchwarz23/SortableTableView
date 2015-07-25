@@ -19,5 +19,5 @@ android:
     # - sys-img-armeabi-v7a-android-19
     # - sys-img-x86-android-17
 	
-before_install:
+before_script:
     - chmod +x gradlew
