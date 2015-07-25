@@ -42,7 +42,8 @@ For displaying simple data like a 2D-String-Array you can use the `SimpleTableDa
 ```java
 	public class MainActivity extends AppCompatActivity {
     
-    	private static final String[][] DATA_TO_SHOW = { { "This", "is", "a", "test" }, { "and", "second", "test" } };
+    	private static final String[][] DATA_TO_SHOW = { { "This", "is", "a", "test" }, 
+                                                         { "and", "a", "second", "test" } };
         
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +104,6 @@ If you need to make your data sortable, you should use the `SortableTableView` i
     protected void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
     	setContentView(R.layout.activity_main);
-        
         ...
         sortableTableView.setColumnComparator(0, new CarProducerComparator());
     }
@@ -122,10 +122,46 @@ Setting data to the header views is identical to setting data to the table cells
 If all you want to display in the header is the column title as String (like in most cases) the `SimpleTableHeaderAdapter` will fulfil your needs.
 
 ### Interaction Listening
-#### Header Click Listening
-ToDo
 #### Data Click Listening
-ToDo
+To listen for clicks on data items you can register a `TableDataClickListener`. The`TableView` provides a method called `addDataClickListener()` to do so.
+to the specific column.
+```java
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+    	super.onCreate(savedInstanceState);
+    	setContentView(R.layout.activity_main);
+        ...
+        tableView.addDataClickListener(new CarClickListener());
+    }
+
+	private class CarClickListener implements TableDataClickListener<Car> {
+        @Override
+        public void onDataClicked(int rowIndex, Car clickedCar) {
+            String clickedCarString = clickedCar.getProducer().getName() + " " + clickedCar.getName();
+            Toast.makeText(getContext(), clickedCarString, Toast.LENGTH_SHORT).show();
+        }
+    }
+```
+
+#### Header Click Listening
+To listen for clicks on headers you can register a `TableHeaderClickListner`. The `TableView` provides a method called `addHeaderClickListener()` to do so.
+```java
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+    	super.onCreate(savedInstanceState);
+    	setContentView(R.layout.activity_main);
+        ...
+        tableView.addHeaderClickListener(new MyHeaderClickListener());
+    }
+
+	private class MyHeaderClickListener implements TableHeaderClickListener {
+        @Override
+        public void onHeaderClicked(int columnIndex) {
+            String notifyText = "clicked column " + (columnIndex+1);
+            Toast.makeText(getContext(), notifyText, Toast.LENGTH_SHORT).show();
+        }
+    }
+```
 
 ### Styling
 #### Header Styling
