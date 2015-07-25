@@ -120,26 +120,6 @@ public class SortableTableView<T> extends TableView<T> {
     }
 
     /**
-     * Adds the given {@link TableHeaderClickListener} to this table.
-     *
-     * @param listener
-     *         The listener that shall be added to this table.
-     */
-    public void addHeaderClickListener(TableHeaderClickListener listener) {
-        sortableTableHeaderView.addHeaderClickListener(listener);
-    }
-
-    /**
-     * Removes the given {@link TableHeaderClickListener} from this table.
-     *
-     * @param listener
-     *         The listener that shall be removed from this table.
-     */
-    public void removeHeaderListener(TableHeaderClickListener listener) {
-        sortableTableHeaderView.removeHeaderClickListener(listener);
-    }
-
-    /**
      * Sorts the table by the values of the column with the given index.\n
      * This method has the same effect like a click of the user to the table header of the given column. (This means
      * calling this method twice on the same column index will cause a descending ordering). Better practice for
