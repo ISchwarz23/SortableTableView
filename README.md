@@ -1,4 +1,5 @@
 # SortableTableView for Android
+[![Build Status](https://travis-ci.org/ISchwarz23/SortableTableView.svg?branch=develop)](https://travis-ci.org/ISchwarz23/SortableTableView)  
 An Android library providing a TableView and a SortableTableView. 
 
 ![SortableTableView Example](https://raw.githubusercontent.com/ISchwarz23/SortableTableView/develop/README/SortableTableView-Example.gif)
