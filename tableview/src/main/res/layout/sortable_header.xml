@@ -15,7 +15,8 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="5dp"
         android:layout_marginStart="5dp"
-        android:src="@mipmap/ic_dark_sortable"/>
+        android:src="@mipmap/ic_dark_sortable"
+        android:contentDescription="@string/sortable_indicator_content_description"/>
 
     <FrameLayout
         android:id="@+id/container"

@@ -124,21 +124,21 @@ public class SortableCarTableView extends SortableTableView<Car> {
 
         @Override
         public View getCellView(int rowIndex, int columnIndex, ViewGroup parentView) {
-            Car data = getItem(rowIndex);
+            Car car = getRowData(rowIndex);
             View renderedView = null;
 
             switch (columnIndex) {
                 case 0:
-                    renderedView = renderProducerLogo(data);
+                    renderedView = renderProducerLogo(car, parentView);
                     break;
                 case 1:
-                    renderedView = renderCatName(data);
+                    renderedView = renderCatName(car);
                     break;
                 case 2:
-                    renderedView = renderPower(data);
+                    renderedView = renderPower(car, parentView);
                     break;
                 case 3:
-                    renderedView = renderPrice(data);
+                    renderedView = renderPrice(car);
                     break;
             }
 
@@ -162,8 +162,8 @@ public class SortableCarTableView extends SortableTableView<Car> {
             return textView;
         }
 
-        private View renderPower(Car car) {
-            View view = getLayoutInflater().inflate(R.layout.table_cell_power, null, false);
+        private View renderPower(Car car, ViewGroup parentView) {
+            View view = getLayoutInflater().inflate(R.layout.table_cell_power, parentView, false);
             TextView kwView = (TextView) view.findViewById(R.id.kw_view);
             TextView psView = (TextView) view.findViewById(R.id.ps_view);
 
@@ -177,8 +177,8 @@ public class SortableCarTableView extends SortableTableView<Car> {
             return renderString(car.getName());
         }
 
-        private View renderProducerLogo(Car car) {
-            View view = getLayoutInflater().inflate(R.layout.table_cell_image, null, false);
+        private View renderProducerLogo(Car car, ViewGroup parentView) {
+            View view = getLayoutInflater().inflate(R.layout.table_cell_image, parentView, false);
             ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
             imageView.setImageResource(car.getProducer().getLogo());
             return view;

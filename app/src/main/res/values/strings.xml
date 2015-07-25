@@ -1,7 +1,10 @@
 <resources>
     <string name="app_name">SortableTableView Example</string>
-    <string name="title_activity_main">SortableTableView</string>
+    <string name="title_activity_main">SortableTableView Example</string>
 
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="default_text_ps">180PS</string>
+    <string name="separator">/</string>
+    <string name="default_text_kws">120kW</string>
+
+    <string name="car_producer_image_content_description">Car Producer</string>
 </resources>

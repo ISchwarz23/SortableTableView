@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TableView</string>
+    <string name="sortable_indicator_content_description">Sortable Indicator</string>
 </resources>

@@ -12,7 +12,7 @@ import java.util.List;
 import de.codecrafters.tableview.TableDataAdapter;
 
 /**
- * A simple {@link TableDataAdapter} that allows to display 2D-String-Arrays in a {@link TableView}.
+ * A simple {@link TableDataAdapter} that allows to display 2D-String-Arrays in a {@link de.codecrafters.tableview.TableView}.
  *
  * @author ISchwarz
  */

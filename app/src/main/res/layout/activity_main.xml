@@ -10,18 +10,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
-        android:theme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar"
-        android:elevation="10px"/>
+        android:theme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <de.codecrafters.tableview.TableView
+    <de.codecrafters.tableviewexample.SortableCarTableView
         android:id="@+id/tableView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/toolbar"
-        custom:columnCount="4" />
+        custom:columnCount="4"
+        custom:headerElevation="10"
+        custom:headerColor="?attr/colorPrimary" />
 
 
-    <!--custom:headerElevation="10"-->
-    <!--custom:headerColor="?attr/colorPrimary"-->
 
 </RelativeLayout>

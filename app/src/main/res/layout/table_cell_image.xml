@@ -10,6 +10,7 @@
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_margin="5dp"/>
+        android:layout_margin="5dp"
+        android:contentDescription="@string/car_producer_image_content_description"/>
 
 </RelativeLayout>
