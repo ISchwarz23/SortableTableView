@@ -1,7 +1,7 @@
 # SortableTableView for Android
 An Android library providing a TableView and a SortableTableView. 
 
-![SortableTableView Example](https://github.com/ISchwarz23/SortableTableView/README/SortableTableView-Example.gif)
+![SortableTableView Example](https://raw.githubusercontent.com/ISchwarz23/SortableTableView/develop/README/SortableTableView-Example.gif)
 
 Minimum SDK-Version: 11  
 Compile SDK-Version: 22  
@@ -14,7 +14,7 @@ Current Version : 0.9
 ## Features
 ### Layouting
 #### Column Count
-The provided TableView is very easy to adapt to your needs. To set the colomn count simple set the parameter inside your xml layout.  
+The provided TableView is very easy to adapt to your needs. To set the column count simple set the parameter inside your XML layout.  
 ```xml
 	<de.codecrafters.tableview.TableView
         android:id="@+id/tableView"
@@ -33,7 +33,7 @@ To define the relative width of your columns you can define a specific *weight* 
 ```java
 	tableView.setColumnWeight(0, 2);
 ```
-Because the width of an column is not given absolute but relative, the TableView will adapt to all screen sices.
+Because the width of an column is not given absolute but relative, the TableView will adapt to all screen sizes.
 
 ### Showing Data
 #### Simple Data
