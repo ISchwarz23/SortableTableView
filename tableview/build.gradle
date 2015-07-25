@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'maven'
 
 android {
     compileSdkVersion 22
@@ -8,7 +9,7 @@ android {
         minSdkVersion 11
         targetSdkVersion 22
         versionCode 1
-        versionName "0.9"
+        versionName "0.9.1"
     }
     buildTypes {
         release {
@@ -22,3 +23,23 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.2.1'
 }
+
+task createPom << {
+    pom {
+        project {
+            groupId 'de.codecrafters'
+            artifactId 'tableview'
+            version '0.9.1'
+
+            inceptionYear '2008'
+            licenses {
+                license {
+                    name 'The Apache Software License, Version 2.0'
+                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    distribution 'repo'
+                }
+            }
+        }
+    }.writeTo("tableview-0.9.1.pom")
+}
+
