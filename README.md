@@ -1,6 +1,8 @@
 # SortableTableView for Android
 An Android library providing a TableView and a SortableTableView. 
 
+![SortableTableView Example](https://github.com/ISchwarz23/SortableTableView/README/SortableTableView-Example.gif)
+
 Minimum SDK-Version: 11  
 Compile SDK-Version: 22  
 Current Version : 0.9  
@@ -35,7 +37,7 @@ Because the width of an column is not given absolute but relative, the TableView
 
 ### Showing Data
 #### Simple Data
-For displaying simple data like a 2D-String-Array you can use the SimpleTableDataAdapter. The SimpleTableHeader will turn the given Strings to TextViews and display them inside the TableView at the same position as previous in the 2D-String-Array.
+For displaying simple data like a 2D-String-Array you can use the `SimpleTableDataAdapter`. The `SimpleTableDataAdapter` will turn the given Strings to [TextViews](http://developer.android.com/reference/android/widget/TextView.html) and display them inside the TableView at the same position as previous in the 2D-String-Array.
 ```java
 	public class MainActivity extends AppCompatActivity {
     
@@ -53,12 +55,70 @@ For displaying simple data like a 2D-String-Array you can use the SimpleTableDat
 ```
 
 #### Custom Data
-For displaying more complex custom data you need to implement your own TableDataAdapter. Therefore you need to implement the `getCellView(int rowIndex, int columnIndex, ViewGroup parentView))` method. This method is called for every table cell and needs to returned the [View](http://developer.android.com/reference/android/view/View.html) that shall be displayed in the cell with the given *rowIndex* and *columnIndex*. Here is an example of an TableDataAdapter for a **Car** object.
+For displaying more complex custom data you need to implement your own `TableDataAdapter`. Therefore you need to implement the `getCellView(int rowIndex, int columnIndex, ViewGroup parentView)` method. This method is called for every table cell and needs to returned the [View](http://developer.android.com/reference/android/view/View.html) that shall be displayed in the cell with the given *rowIndex* and *columnIndex*. Here is an example of an TableDataAdapter for a **Car** object.
+```java
+	public class CarTableDataAdapter extends TableDataAdapter<Car> {
+
+        public CarTableDataAdapter(Context context, List<Car> data) {
+            super(context, data);
+        }
+
+        @Override
+        public View getCellView(int rowIndex, int columnIndex, ViewGroup parentView) {
+            Car car = getRowData(rowIndex);
+            View renderedView = null;
+
+            switch (columnIndex) {
+                case 0:
+                    renderedView = renderProducerLogo(car);
+                    break;
+                case 1:
+                    renderedView = renderCatName(car);
+                    break;
+                case 2:
+                    renderedView = renderPower(car);
+                    break;
+                case 3:
+                    renderedView = renderPrice(car);
+                    break;
+            }
+
+            return renderedView;
+        } 
+        
+        ...
+    }
+```
+The `TableDataAdapter` provides several easy access methods you need to render your cell views like:
+- `getRowData()`
+- `getContext()`
+- `getLayoutInflater()`
+- `getResources()`
 
 #### Sortable Data
-ToDo
+If you need to make your data sortable, you should use the `SortableTableView` instead of the ordinary `TableView`. To make a table sortable by a column, all you need to do is to implement a [Comparator](http://docs.oracle.com/javase/7/docs/api/java/util/Comparator.html) and set it to the specific column.
+```java
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+    	super.onCreate(savedInstanceState);
+    	setContentView(R.layout.activity_main);
+        
+        ...
+        sortableTableView.setColumnComparator(0, new CarProducerComparator());
+    }
+
+	private static class CarProducerComparator implements Comparator<Car> {
+      	@Override
+      	public int compare(Car car1, Car car2) {
+          	return car1.getProducer().getName().compareTo(car2.getProducer().getName());
+      	}
+	}
+```
+By doing so the `SortableTableView` will automatically display a sortable indicator next to the table header of the column with the index 0. By clicking this table header, the table is sorted ascending with the given Comparator. If the table header is clicked again, it will be sorted in descending order.
+
 #### Header Data
-ToDo
+Setting data to the header views is identical to setting data to the table cells. All you need to do is extending the `TableHeaderAdapter` which is also providing the easy access methods that are described for the `TableDataAdapter`.  
+If all you want to display in the header is the column title as String (like in most cases) the `SimpleTableHeaderAdapter` will fulfil your needs.
 
 ### Interaction Listening
 #### Header Click Listening
