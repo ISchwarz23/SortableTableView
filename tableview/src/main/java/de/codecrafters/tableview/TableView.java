@@ -20,6 +20,7 @@ import java.util.Set;
 
 import de.codecrafters.tableview.colorizers.TableDataRowColoriser;
 import de.codecrafters.tableview.listeners.TableDataClickListener;
+import de.codecrafters.tableview.listeners.TableHeaderClickListener;
 import de.codecrafters.tableview.toolkit.TableDataRowColorisers;
 
 
@@ -175,6 +176,26 @@ public class TableView<T> extends LinearLayout {
      */
     public void removeTableDataClickListener(TableDataClickListener<T> listener) {
         dataClickListeners.remove(listener);
+    }
+
+    /**
+     * Adds the given {@link TableHeaderClickListener} to this table.
+     *
+     * @param listener
+     *         The listener that shall be added to this table.
+     */
+    public void addHeaderClickListener(TableHeaderClickListener listener) {
+        tableHeaderView.addHeaderClickListener(listener);
+    }
+
+    /**
+     * Removes the given {@link TableHeaderClickListener} from this table.
+     *
+     * @param listener
+     *         The listener that shall be removed from this table.
+     */
+    public void removeHeaderListener(TableHeaderClickListener listener) {
+        tableHeaderView.removeHeaderClickListener(listener);
     }
 
     /**

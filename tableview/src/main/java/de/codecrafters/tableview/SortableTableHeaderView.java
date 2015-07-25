@@ -26,7 +26,6 @@ class SortableTableHeaderView extends TableHeaderView {
 
     private static final String LOG_TAG = SortableTableHeaderView.class.toString();
 
-    private Set<TableHeaderClickListener> listeners = new HashSet<>();
     private Map<Integer, ImageView> sortViews = new HashMap<>();
     private SortStateViewProvider sortStateViewProvider = SortStateViewProviders.darkArrows();
 
@@ -73,26 +72,6 @@ class SortableTableHeaderView extends TableHeaderView {
     }
 
     /**
-     * Adds the given {@link TableHeaderClickListener} to this SortableTableHeaderView.
-     *
-     * @param listener
-     *         The {@link TableHeaderClickListener} that shall be added.
-     */
-    public void addHeaderClickListener(TableHeaderClickListener listener) {
-        listeners.add(listener);
-    }
-
-    /**
-     * Removes the given {@link TableHeaderClickListener} from this SortableTableHeaderView.
-     *
-     * @param listener
-     *         The {@link TableHeaderClickListener} that shall be removed.
-     */
-    public void removeHeaderClickListener(TableHeaderClickListener listener) {
-        listeners.remove(listener);
-    }
-
-    /**
      * Sets the given {@link SortStateViewProvider} to this SortableTableHeaderView.
      *
      * @param provider
@@ -111,6 +90,7 @@ class SortableTableHeaderView extends TableHeaderView {
         return sortStateViewProvider;
     }
 
+
     @Override
     protected void renderHeaderViews() {
         removeAllViews();
@@ -118,7 +98,7 @@ class SortableTableHeaderView extends TableHeaderView {
 
         for (int columnIndex = 0; columnIndex < adapter.getColumnCount(); columnIndex++) {
             RelativeLayout headerContainerLayout = (RelativeLayout) adapter.getLayoutInflater().inflate(R.layout.sortable_header, this, false);
-            headerContainerLayout.setOnClickListener(new InternalHeaderClickListener(columnIndex));
+            headerContainerLayout.setOnClickListener(new InternalHeaderClickListener(columnIndex, getHeaderClickListeners()));
             headerViews.add(headerContainerLayout);
 
             View headerView = adapter.getHeaderView(columnIndex, headerContainerLayout);
@@ -129,39 +109,6 @@ class SortableTableHeaderView extends TableHeaderView {
             sortView.setVisibility(GONE);
             sortViews.put(columnIndex, sortView);
         }
-    }
-
-
-    /**
-     * A internal {@link View.OnClickListener} on the header views that will forward clicks to the
-     * registered {@link TableHeaderClickListener}.
-     *
-     * @author ISchwarz
-     */
-    private class InternalHeaderClickListener implements View.OnClickListener {
-
-        private int columnIndex;
-
-        public InternalHeaderClickListener(int columnIndex) {
-            this.columnIndex = columnIndex;
-        }
-
-        @Override
-        public void onClick(View view) {
-            informHeaderListeners();
-        }
-
-        private void informHeaderListeners() {
-            for (TableHeaderClickListener listener : listeners) {
-                try {
-                    listener.onHeaderClicked(columnIndex);
-                } catch (Throwable t) {
-                    t.printStackTrace();
-                    // continue calling listeners
-                }
-            }
-        }
-
     }
 
 }

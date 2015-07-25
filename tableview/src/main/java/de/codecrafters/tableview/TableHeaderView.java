@@ -8,7 +8,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import de.codecrafters.tableview.listeners.TableHeaderClickListener;
 
 
 /**
@@ -21,6 +25,8 @@ class TableHeaderView extends LinearLayout {
 
     protected TableHeaderAdapter adapter;
     protected List<View> headerViews = new ArrayList<>();
+
+    private Set<TableHeaderClickListener> listeners = new HashSet<>();
 
     /**
      * Creates a new TableHeaderView.
@@ -57,6 +63,7 @@ class TableHeaderView extends LinearLayout {
 
         for (int columnIndex = 0; columnIndex < adapter.getColumnCount(); columnIndex++) {
             View headerView = adapter.getHeaderView(columnIndex, this);
+            headerView.setOnClickListener(new InternalHeaderClickListener(columnIndex, getHeaderClickListeners()));
             headerViews.add(headerView);
         }
     }
@@ -81,6 +88,30 @@ class TableHeaderView extends LinearLayout {
 
             addView(headerView, columnIndex);
         }
+    }
+
+    protected Set<TableHeaderClickListener> getHeaderClickListeners() {
+        return listeners;
+    }
+
+    /**
+     * Adds the given {@link TableHeaderClickListener} to this SortableTableHeaderView.
+     *
+     * @param listener
+     *         The {@link TableHeaderClickListener} that shall be added.
+     */
+    public void addHeaderClickListener(TableHeaderClickListener listener) {
+        listeners.add(listener);
+    }
+
+    /**
+     * Removes the given {@link TableHeaderClickListener} from this SortableTableHeaderView.
+     *
+     * @param listener
+     *         The {@link TableHeaderClickListener} that shall be removed.
+     */
+    public void removeHeaderClickListener(TableHeaderClickListener listener) {
+        listeners.remove(listener);
     }
 
 }
