@@ -18,3 +18,6 @@ android:
     # Emulators for tests
     # - sys-img-armeabi-v7a-android-19
     # - sys-img-x86-android-17
+	
+before_install:
+    - chmod +x gradlew
