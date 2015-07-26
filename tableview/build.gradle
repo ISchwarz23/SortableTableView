@@ -6,11 +6,11 @@ ext {
     bintrayRepo = 'maven'
     bintrayName = 'SortableTableView'
 
-    publishedGroupId = 'de.codecrafters'
+    publishedGroupId = 'de.codecrafters.tableview'
     libraryName = 'TableView'
     artifact = 'tableview'
 
-    libraryDescription = 'An android library containing a simple TableView and a advanced ' +
+    libraryDescription = 'An Android library containing a simple TableView and a advanced ' +
             'SortableTableView providing a lot of customisation possibilities to fit all needs.'
 
     siteUrl = 'https://github.com/ISchwarz23/SortableTableView'

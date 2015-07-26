@@ -14,7 +14,7 @@ To use the this library in your project simply add the following dependency to y
 ```
     dependencies {
         ...
-        compile 'de.codecrafters:tableview:0.9.2'
+        compile 'de.codecrafters.tableview:tableview:0.9.2'
         ...
     }
 ```
