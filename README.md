@@ -3,13 +3,21 @@ An Android library providing a TableView and a SortableTableView.
 
 ![SortableTableView Example](https://raw.githubusercontent.com/ISchwarz23/SortableTableView/develop/README/SortableTableView-Example.gif)
 
-Minimum SDK-Version: 11  
-Compile SDK-Version: 22  
-Current Version : 0.9  
-  
+**Minimum SDK-Version:** 11  |  **Compile SDK-Version:** 22  |  **Latest Library Version:** 0.9.2  
+
 ## Repository Content
 **tableview** - contains the android library sources and resources  
 **app** - contains an example application showing how to use the SortableTableView  
+
+## Setup
+To use the this library in your project simply add the following dependency to your *build.gradle* file.
+```
+    dependencies {
+        ...
+        compile 'de.codecrafters:tableview:0.9.2'
+        ...
+    }
+```
   
 ## Features
 ### Layouting
