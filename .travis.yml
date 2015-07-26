@@ -29,3 +29,8 @@ env:
 before_script:
   - chmod +x gradlew
   # - android-wait-for-emulator
+  
+install: /bin/true
+
+script:
+  - ./gradlew build
