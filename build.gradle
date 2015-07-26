@@ -17,9 +17,4 @@ allprojects {
     repositories {
         jcenter()
     }
-    repositories {
-        maven {
-            url 'https://dl.bintray.com/ischwarz/maven'
-        }
-    }
 }
