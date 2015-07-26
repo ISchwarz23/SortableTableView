@@ -1,14 +1,14 @@
 package de.codecrafters.tableview.toolkit;
 
-import de.codecrafters.tableview.colorizers.TableDataRowColoriser;
+import de.codecrafters.tableview.colorizers.TableDataRowColorizer;
 
 
 /**
- * Factory for different {@link TableDataRowColoriser}.
+ * Factory for different {@link TableDataRowColorizer}.
  *
  * @author ISchwarz
  */
-public class TableDataRowColorisers {
+public class TableDataRowColorizers {
 
     /**
      * Gives an implementation of {link TableDataRowColoriser} that will return the given color
@@ -18,8 +18,8 @@ public class TableDataRowColorisers {
      *         The color that shall be applied to every table data row.
      * @return The described {link TableDataRowColoriser}.
      */
-    public static TableDataRowColoriser<Object> similarRowColor(int color) {
-        return new SimpleTableDataRowColoriser(color);
+    public static TableDataRowColorizer<Object> similarRowColor(int color) {
+        return new SimpleTableDataRowColorizer(color);
     }
 
     /**
@@ -32,8 +32,8 @@ public class TableDataRowColorisers {
      *         The color that will be returned for rows with an odd index.
      * @return The described {link TableDataRowColoriser}.
      */
-    public static TableDataRowColoriser<Object> alternatingRows(int color1, int color2) {
-        return new AlternatingTableDataRowColoriser(color1, color2);
+    public static TableDataRowColorizer<Object> alternatingRows(int color1, int color2) {
+        return new AlternatingTableDataRowColorizer(color1, color2);
     }
 
 
@@ -43,11 +43,11 @@ public class TableDataRowColorisers {
      *
      * @author ISchwarz
      */
-    private static class SimpleTableDataRowColoriser implements TableDataRowColoriser<Object> {
+    private static class SimpleTableDataRowColorizer implements TableDataRowColorizer<Object> {
 
         private int color;
 
-        public SimpleTableDataRowColoriser(int color) {
+        public SimpleTableDataRowColorizer(int color) {
             this.color = color;
         }
 
@@ -63,12 +63,12 @@ public class TableDataRowColorisers {
      *
      * @author ISchwarz
      */
-    private static class AlternatingTableDataRowColoriser implements TableDataRowColoriser<Object> {
+    private static class AlternatingTableDataRowColorizer implements TableDataRowColorizer<Object> {
 
         private final int firstColor;
         private final int secondColor;
 
-        public AlternatingTableDataRowColoriser(int firstColor, int secondColor) {
+        public AlternatingTableDataRowColorizer(int firstColor, int secondColor) {
             this.firstColor = firstColor;
             this.secondColor = secondColor;
         }

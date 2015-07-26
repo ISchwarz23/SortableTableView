@@ -1,4 +1,4 @@
-package de.codecrafters.tableviewexample;
+package de.codecrafters.tableviewexample.data;
 
 
 /**

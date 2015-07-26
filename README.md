@@ -3,13 +3,21 @@ An Android library providing a TableView and a SortableTableView.
 
 ![SortableTableView Example](https://raw.githubusercontent.com/ISchwarz23/SortableTableView/develop/README/SortableTableView-Example.gif)
 
-Minimum SDK-Version: 11  
-Compile SDK-Version: 22  
-Current Version : 0.9  
-  
+**Minimum SDK-Version:** 11  |  **Compile SDK-Version:** 22  |  **Latest Library Version:** 0.9.3  
+
 ## Repository Content
 **tableview** - contains the android library sources and resources  
 **app** - contains an example application showing how to use the SortableTableView  
+
+## Setup
+To use the this library in your project simply add the following dependency to your *build.gradle* file.
+```
+    dependencies {
+        ...
+        compile 'de.codecrafters.tableview:tableview:0.9.3'
+        ...
+    }
+```
   
 ## Features
 ### Layouting
@@ -166,7 +174,6 @@ To listen for clicks on headers you can register a `TableHeaderClickListner`. Th
 #### Header Styling
 The table view provides several possibilities to style its header. One possibility is to set a **colour** for the header. Therefore you can adapt the XML file or add it to your code.
 ```xml
-    <!-- XML -->
     <de.codecrafters.tableview.TableView
         android:id="@+id/tableView"
         android:layout_width="match_parent"
@@ -174,17 +181,14 @@ The table view provides several possibilities to style its header. One possibili
         custom:headerColor="@color/primary" />
 ```
 ```java
-    // Java
     tableView.setHeaderBackgroundColor(getResources().getColor(R.color.primary));
 ```
 For more complex header styles you can also set a **drawable** as header background using the following method.
 ```java
-    // Java
     tableView.setHeaderBackground(R.drawable.linear_gradient);
 ```
 In addition you can set an **elevation** of the table header. To achieve this you have the possibility to set the elevation in XML or alternatively set it in your code. 
 ```xml
-    <!-- XML -->
     <de.codecrafters.tableview.TableView
         android:id="@+id/tableView"
         android:layout_width="match_parent"
@@ -192,10 +196,40 @@ In addition you can set an **elevation** of the table header. To achieve this yo
         custom:headerElevation="10" />
 ```
 ```java
-    // Java
     tableView.setHeaderElevation(10);
 ```
-***NOTE:** This elevation is realized with the app-compat version of elevation. So it is also applicable on pre-lollipop devices*
+**NOTE:** *This elevation is realized with the app-compat version of elevation. So it is also applicable on pre-lollipop devices*
+  
+For SortableTableViews it is also possible to replace the default **sortable indicator icons** by your custom ones. To do so you need to implement the `SortStateViewProvider` and set it to your `SortableTableView`.
+```java
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+    	super.onCreate(savedInstanceState);
+    	setContentView(R.layout.activity_main);
+        // ...
+        sortbaleTableView.setHeaderSortStateViewProvider(new MySortStateViewProvider());
+    }
+
+	private static class MySortStateViewProvider implements SortStateViewProvider {
+
+        private static final int NO_IMAGE_RES = -1;
+
+        @Override
+        public int getSortStateViewResource(SortState state) {
+            switch (state) {
+                case SORTABLE:
+                    return R.mipmap.ic_sortable;
+                case SORTED_ASC:
+                    return R.mipmap.ic_sorted_asc;
+                case SORTED_DESC:
+                    return R.mipmap.ic_sorted_desc;
+                default:
+                    return NO_IMAGE_RES;
+            }
+        }
+    }
+```
+There is also a factory class existing called `SortStateViewProviders` where you can get some predefined implementations of the `SortStateViewProvider`.
 
 #### Data Row Styling
 In general you can do all your styling of data content in your custom `TableDataAdapter`. But if you want to add colouring of whole table rows you can use the `TableDataRowColoriser`. There are alreasy some implementations of the `TableDataRowColoriser` existing in the library. You can get the by using the Factory class `TableDataRowColorisers`.  

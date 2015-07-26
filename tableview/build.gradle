@@ -1,14 +1,41 @@
 apply plugin: 'com.android.library'
 
+def tableViewLibraryVersion = '0.9.3'
+
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'SortableTableView'
+
+    publishedGroupId = 'de.codecrafters.tableview'
+    libraryName = 'TableView'
+    artifact = 'tableview'
+
+    libraryDescription = 'An Android library containing a simple TableView and an advanced ' +
+            'SortableTableView providing a lot of customisation possibilities to fit all needs.'
+
+    siteUrl = 'https://github.com/ISchwarz23/SortableTableView'
+    gitUrl = 'https://github.com/ISchwarz23/SortableTableView.git'
+
+    libraryVersion = tableViewLibraryVersion
+
+    developerId = 'ischwarz'
+    developerName = 'Ingo Schwarz'
+    developerEmail = 'schwarz-ingo@web.de'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
 android {
     compileSdkVersion 22
-    buildToolsVersion "21.1.2"
+    buildToolsVersion "22.0.1"
 
     defaultConfig {
         minSdkVersion 11
         targetSdkVersion 22
         versionCode 1
-        versionName "0.9"
+        versionName tableViewLibraryVersion
     }
     buildTypes {
         release {
@@ -22,3 +49,6 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.2.1'
 }
+
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
