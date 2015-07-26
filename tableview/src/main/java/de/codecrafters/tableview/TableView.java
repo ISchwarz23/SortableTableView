@@ -1,12 +1,10 @@
 package de.codecrafters.tableview;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -18,10 +16,10 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import de.codecrafters.tableview.colorizers.TableDataRowColoriser;
+import de.codecrafters.tableview.colorizers.TableDataRowColorizer;
 import de.codecrafters.tableview.listeners.TableDataClickListener;
 import de.codecrafters.tableview.listeners.TableHeaderClickListener;
-import de.codecrafters.tableview.toolkit.TableDataRowColorisers;
+import de.codecrafters.tableview.toolkit.TableDataRowColorizers;
 
 
 /**
@@ -45,7 +43,7 @@ public class TableView<T> extends LinearLayout {
     private TableHeaderAdapter tableHeaderAdapter;
     protected TableDataAdapter<T> tableDataAdapter;
 
-    private TableDataRowColoriser<? super T> dataRowColoriser = TableDataRowColorisers.similarRowColor(0x00000000);
+    private TableDataRowColorizer<? super T> dataRowColoriser = TableDataRowColorizers.similarRowColor(0x00000000);
 
     private int headerElevation;
     private int headerColor;
@@ -147,13 +145,13 @@ public class TableView<T> extends LinearLayout {
     }
 
     /**
-     * Sets the given {@link TableDataRowColoriser} that will be used to define the background color for
+     * Sets the given {@link TableDataRowColorizer} that will be used to define the background color for
      * every table data row.
      *
      * @param coloriser
-     *         The {@link TableDataRowColoriser} that shall be used.
+     *         The {@link TableDataRowColorizer} that shall be used.
      */
-    public void setDataRowColoriser(TableDataRowColoriser<? super T> coloriser) {
+    public void setDataRowColoriser(TableDataRowColorizer<? super T> coloriser) {
         dataRowColoriser = coloriser;
         tableDataAdapter.setRowColoriser(coloriser);
     }

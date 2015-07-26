@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import de.codecrafters.tableview.colorizers.TableDataRowColoriser;
+import de.codecrafters.tableview.colorizers.TableDataRowColorizer;
 
 
 /**
@@ -27,7 +27,7 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
 
     private TableColumnModel columnModel;
     private final List<T> data;
-    private TableDataRowColoriser<? super T> rowColoriser;
+    private TableDataRowColorizer<? super T> rowColoriser;
 
 
     /**
@@ -175,12 +175,12 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
     }
 
     /**
-     * Sets the {@link TableDataRowColoriser} that will be used to colorise the table data rows.
+     * Sets the {@link TableDataRowColorizer} that will be used to colorise the table data rows.
      *
      * @param rowColorizer
-     *         The {@link TableDataRowColoriser} that shall be used.
+     *         The {@link TableDataRowColorizer} that shall be used.
      */
-    protected void setRowColoriser(TableDataRowColoriser<? super T> rowColorizer) {
+    protected void setRowColoriser(TableDataRowColorizer<? super T> rowColorizer) {
         this.rowColoriser = rowColorizer;
     }
 

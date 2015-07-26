@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 
-def tableViewLibraryVersion = '0.9.2'
+def tableViewLibraryVersion = '0.9.3'
 
 ext {
     bintrayRepo = 'maven'
@@ -10,7 +10,7 @@ ext {
     libraryName = 'TableView'
     artifact = 'tableview'
 
-    libraryDescription = 'An Android library containing a simple TableView and a advanced ' +
+    libraryDescription = 'An Android library containing a simple TableView and an advanced ' +
             'SortableTableView providing a lot of customisation possibilities to fit all needs.'
 
     siteUrl = 'https://github.com/ISchwarz23/SortableTableView'
