@@ -1,4 +1,5 @@
-# SortableTableView for Android [![Build Status](https://travis-ci.org/ISchwarz23/SortableTableView.svg?branch=develop)](https://travis-ci.org/ISchwarz23/SortableTableView)  
+[![Build Status](https://travis-ci.org/ISchwarz23/SortableTableView.svg?branch=develop)](https://travis-ci.org/ISchwarz23/SortableTableView)  
+# SortableTableView for Android
 An Android library providing a TableView and a SortableTableView. 
 
 ![SortableTableView Example](https://raw.githubusercontent.com/ISchwarz23/SortableTableView/develop/README/SortableTableView-Example.gif)
@@ -272,5 +273,3 @@ If the implementations of `TableDataRowColoriser` contained in the `TableDataRow
 ```
 This coloriser will set the background colour of each row corresponding to the price of the car that is displayed at in this row. Cheap cars (less then 50,000) get a green background, expensive cars (more then 100,000) get a red background and all other cars get a white background.
   
-## References
-![Airbus Defence and Space](https://upload.wikimedia.org/wikipedia/en/d/d6/Airbus_Defence_and_Space.png)
