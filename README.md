@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/ISchwarz23/SortableTableView.svg?branch=develop)](https://travis-ci.org/ISchwarz23/SortableTableView)  
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-SortableTableView-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/2200) [![API](https://img.shields.io/badge/API-11%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=11) [![Build Status](https://travis-ci.org/ISchwarz23/SortableTableView.svg?branch=develop)](https://travis-ci.org/ISchwarz23/SortableTableView)  
 # SortableTableView for Android
 An Android library providing a TableView and a SortableTableView. 
 
