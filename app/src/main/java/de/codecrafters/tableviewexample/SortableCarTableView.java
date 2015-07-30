@@ -42,55 +42,10 @@ public class SortableCarTableView extends SortableTableView<Car> {
         setColumnWeight(2, 3);
         setColumnWeight(3, 2);
 
-        setColumnComparator(0, new CarProducerComparator());
-        setColumnComparator(1, new CarNameComparator());
-        setColumnComparator(2, new CarPsComparator());
-        setColumnComparator(3, new CarPriceComparator());
-        addDataClickListener(new CarClickListener());
-    }
-
-
-    private class CarClickListener implements TableDataClickListener<Car> {
-
-        @Override
-        public void onDataClicked(int rowIndex, Car clickedData) {
-            String carString = clickedData.getProducer().getName() + " " + clickedData.getName();
-            Toast.makeText(getContext(), carString, Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private static class CarProducerComparator implements Comparator<Car> {
-
-        @Override
-        public int compare(Car car1, Car car2) {
-            return car1.getProducer().getName().compareTo(car2.getProducer().getName());
-        }
-    }
-
-    private static class CarPsComparator implements Comparator<Car> {
-
-        @Override
-        public int compare(Car car1, Car car2) {
-            return car1.getPs() - car2.getPs();
-        }
-    }
-
-    private static class CarNameComparator implements Comparator<Car> {
-
-        @Override
-        public int compare(Car car1, Car car2) {
-            return car1.getName().compareTo(car2.getName());
-        }
-    }
-
-    private static class CarPriceComparator implements Comparator<Car> {
-
-        @Override
-        public int compare(Car car1, Car car2) {
-            if (car1.getPrice() < car2.getPrice()) return -1;
-            if (car1.getPrice() > car2.getPrice()) return 1;
-            return 0;
-        }
+        setColumnComparator(0, CarComparators.getCarProducerComparator());
+        setColumnComparator(1, CarComparators.getCarNameComparator());
+        setColumnComparator(2, CarComparators.getCarPowerComparator());
+        setColumnComparator(3, CarComparators.getCarPriceComparator());
     }
 
 }

@@ -3,10 +3,12 @@ package de.codecrafters.tableviewexample;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import de.codecrafters.tableview.listeners.TableDataClickListener;
 import de.codecrafters.tableviewexample.data.Car;
 import de.codecrafters.tableviewexample.data.CarProducer;
 
@@ -28,6 +30,17 @@ public class MainActivity extends AppCompatActivity {
 
         SortableCarTableView carTableView = (SortableCarTableView) findViewById(R.id.tableView);
         carTableView.setDataAdapter(new CarTableDataAdapter(this, CAR_LIST));
+        carTableView.addDataClickListener(new CarClickListener());
+    }
+
+
+    private class CarClickListener implements TableDataClickListener<Car> {
+
+        @Override
+        public void onDataClicked(int rowIndex, Car clickedData) {
+            String carString = clickedData.getProducer().getName() + " " + clickedData.getName();
+            Toast.makeText(MainActivity.this, carString, Toast.LENGTH_SHORT).show();
+        }
     }
 
 

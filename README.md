@@ -1,4 +1,5 @@
-# SortableTableView for Android [![Build Status](https://travis-ci.org/ISchwarz23/SortableTableView.svg?branch=master)](https://travis-ci.org/ISchwarz23/SortableTableView)    
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-SortableTableView-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/2200) [![API](https://img.shields.io/badge/API-11%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=11) [![Build Status](https://travis-ci.org/ISchwarz23/SortableTableView.svg?branch=master)](https://travis-ci.org/ISchwarz23/SortableTableView)  
+# SortableTableView for Android
 An Android library providing a TableView and a SortableTableView. 
 
 ![SortableTableView Example](https://raw.githubusercontent.com/ISchwarz23/SortableTableView/develop/README/SortableTableView-Example.gif)
@@ -272,5 +273,13 @@ If the implementations of `TableDataRowColoriser` contained in the `TableDataRow
 ```
 This coloriser will set the background colour of each row corresponding to the price of the car that is displayed at in this row. Cheap cars (less then 50,000) get a green background, expensive cars (more then 100,000) get a red background and all other cars get a white background.
   
-## References
-![Airbus Defence and Space](https://upload.wikimedia.org/wikipedia/en/d/d6/Airbus_Defence_and_Space.png)
+## License
+*Copyright 2015 Ingo Schwarz*  
+  
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
+
+```
+   http://www.apache.org/licenses/LICENSE-2.0
+```
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
