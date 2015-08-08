@@ -279,8 +279,7 @@ public class TableView<T> extends LinearLayout {
     private void setAttributes(Context context, AttributeSet attributes) {
         TypedArray styledAttributes = context.obtainStyledAttributes(attributes, R.styleable.TableView);
 
-
-        headerColor = styledAttributes.getColor(R.styleable.TableView_headerColor, DEFAULT_HEADER_COLOR);
+        headerColor = styledAttributes.getInt(R.styleable.TableView_headerColor, DEFAULT_HEADER_COLOR);
         headerElevation = styledAttributes.getInt(R.styleable.TableView_headerElevation, DEFAULT_HEADER_ELEVATION);
         int columnCount = styledAttributes.getInt(R.styleable.TableView_columnCount, DEFAULT_COLUMN_COUNT);
         columnModel = new TableColumnModel(columnCount);
@@ -300,7 +299,7 @@ public class TableView<T> extends LinearLayout {
     }
 
     private void setupTableDataView() {
-        LayoutParams dataViewLayoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        LayoutParams dataViewLayoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 
         if (isInEditMode()) {
             tableDataAdapter = new EditModeTableDataAdapter(getContext());
