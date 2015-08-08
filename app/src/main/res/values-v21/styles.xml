@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimaryDark">#283593</item>
-        <item name="colorPrimary">#FF3F51B5</item>
+        <item name="colorPrimaryDark">@color/primaryDark</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="android:textColorHighlight">@color/primary</item>
+        <item name="android:textColorHighlightInverse">@color/primary</item>
+        <item name="toolbarStyle">@style/MyActionBar</item>
     </style>
+
 </resources>

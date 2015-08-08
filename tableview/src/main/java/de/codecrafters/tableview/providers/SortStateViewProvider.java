@@ -10,6 +10,8 @@ import de.codecrafters.tableview.SortState;
  */
 public interface SortStateViewProvider {
 
+    public static final int NO_IMAGE = 0;
+
     /**
      * Gives the drawable resource for the given {@link SortState}.
      *

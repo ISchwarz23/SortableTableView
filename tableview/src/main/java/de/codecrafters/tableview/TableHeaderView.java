@@ -24,7 +24,6 @@ import de.codecrafters.tableview.listeners.TableHeaderClickListener;
 class TableHeaderView extends LinearLayout {
 
     protected TableHeaderAdapter adapter;
-    protected List<View> headerViews = new ArrayList<>();
 
     private Set<TableHeaderClickListener> listeners = new HashSet<>();
 
@@ -52,41 +51,32 @@ class TableHeaderView extends LinearLayout {
     public void setAdapter(TableHeaderAdapter adapter) {
         this.adapter = adapter;
         renderHeaderViews();
-        invalidate();
+    }
+
+    @Override
+    public void invalidate() {
+        renderHeaderViews();
+        super.invalidate();
     }
 
     /**
      * This method renders the header views for every single column.
      */
     protected void renderHeaderViews() {
-        headerViews.clear();
+        removeAllViews();
 
         for (int columnIndex = 0; columnIndex < adapter.getColumnCount(); columnIndex++) {
             View headerView = adapter.getHeaderView(columnIndex, this);
-            headerView.setOnClickListener(new InternalHeaderClickListener(columnIndex, getHeaderClickListeners()));
-            headerViews.add(headerView);
-        }
-    }
-
-    @Override
-    protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        super.onLayout(changed, l, t, r, b);
-
-        removeAllViews();
-
-        int widthUnit = getWidth() / adapter.getColumnWeightSum();
-
-        for (int columnIndex = 0; columnIndex < headerViews.size(); columnIndex++) {
-            View headerView = headerViews.get(columnIndex);
             if (headerView == null) {
                 headerView = new TextView(getContext());
             }
+            headerView.setOnClickListener(new InternalHeaderClickListener(columnIndex, getHeaderClickListeners()));
 
-            int width = widthUnit * adapter.getColumnWeight(columnIndex);
-            LayoutParams headerLayoutParams = new LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT);
-            headerView.setLayoutParams(headerLayoutParams);
-
-            addView(headerView, columnIndex);
+            int width = 0;
+            int height = LayoutParams.WRAP_CONTENT;
+            int weight = adapter.getColumnWeight(columnIndex);
+            LayoutParams headerLayoutParams = new LayoutParams(width, height, weight);
+            addView(headerView, headerLayoutParams);
         }
     }
 

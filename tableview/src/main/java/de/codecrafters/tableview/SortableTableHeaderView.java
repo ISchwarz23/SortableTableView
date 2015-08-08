@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -27,6 +28,7 @@ class SortableTableHeaderView extends TableHeaderView {
     private static final String LOG_TAG = SortableTableHeaderView.class.toString();
 
     private Map<Integer, ImageView> sortViews = new HashMap<>();
+    private Map<Integer, SortState> sortStates = new HashMap<>();
     private SortStateViewProvider sortStateViewProvider = SortStateViewProviders.darkArrows();
 
 
@@ -44,8 +46,23 @@ class SortableTableHeaderView extends TableHeaderView {
      * Will set all sort views to state "sortable".
      */
     public void resetSortViews() {
-        for (ImageView sortView : sortViews.values()) {
-            sortView.setImageResource(sortStateViewProvider.getSortStateViewResource(SortState.SORTABLE));
+        for(int column : sortStates.keySet()) {
+            SortState columnSortState = sortStates.get(column);
+            if(columnSortState != SortState.NOT_SORTABLE) {
+                columnSortState = SortState.SORTABLE;
+            }
+            sortStates.put(column, columnSortState);
+        }
+        for (int column : sortStates.keySet()) {
+            ImageView sortView = sortViews.get(column);
+            SortState sortState = sortStates.get(column);
+            int imageRes = sortStateViewProvider.getSortStateViewResource(sortState);
+            sortView.setImageResource(imageRes);
+            if(imageRes == 0) {
+                sortView.setVisibility(GONE);
+            } else {
+                sortView.setVisibility(VISIBLE);
+            }
         }
     }
 
@@ -67,8 +84,14 @@ class SortableTableHeaderView extends TableHeaderView {
             return;
         }
 
-        sortView.setVisibility(VISIBLE);
-        sortView.setImageResource(sortStateViewProvider.getSortStateViewResource(state));
+        sortStates.put(columnIndex, state);
+        int imageRes = sortStateViewProvider.getSortStateViewResource(state);
+        sortView.setImageResource(imageRes);
+        if(imageRes == 0) {
+            sortView.setVisibility(GONE);
+        } else {
+            sortView.setVisibility(VISIBLE);
+        }
     }
 
     /**
@@ -90,25 +113,39 @@ class SortableTableHeaderView extends TableHeaderView {
         return sortStateViewProvider;
     }
 
-
     @Override
     protected void renderHeaderViews() {
         removeAllViews();
-        headerViews.clear();
 
         for (int columnIndex = 0; columnIndex < adapter.getColumnCount(); columnIndex++) {
             RelativeLayout headerContainerLayout = (RelativeLayout) adapter.getLayoutInflater().inflate(R.layout.sortable_header, this, false);
             headerContainerLayout.setOnClickListener(new InternalHeaderClickListener(columnIndex, getHeaderClickListeners()));
-            headerViews.add(headerContainerLayout);
 
             View headerView = adapter.getHeaderView(columnIndex, headerContainerLayout);
+            if (headerView == null) {
+                headerView = new TextView(getContext());
+            }
             FrameLayout headerContainer = (FrameLayout) headerContainerLayout.findViewById(R.id.container);
             headerContainer.addView(headerView);
 
+            int imageRes = sortStateViewProvider.getSortStateViewResource(SortState.NOT_SORTABLE);
             ImageView sortView = (ImageView) headerContainerLayout.findViewById(R.id.sort_view);
-            sortView.setVisibility(GONE);
+            sortView.setImageResource(imageRes);
+            if(imageRes == 0) {
+                sortView.setVisibility(GONE);
+            } else {
+                sortView.setVisibility(VISIBLE);
+            }
             sortViews.put(columnIndex, sortView);
+
+            int width = 0;
+            int height = LayoutParams.WRAP_CONTENT;
+            int weight = adapter.getColumnWeight(columnIndex);
+            LayoutParams headerLayoutParams = new LayoutParams(width, height, weight);
+            addView(headerContainerLayout, headerLayoutParams);
         }
+
+        resetSortViews();
     }
 
 }

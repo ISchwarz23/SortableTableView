@@ -28,6 +28,7 @@ public class SortableCarTableView extends SortableTableView<Car> {
     public SortableCarTableView(Context context, AttributeSet attributes, int styleAttributes) {
         super(context, attributes, styleAttributes);
 
+
         SimpleTableHeaderAdapter simpleTableHeaderAdapter = new SimpleTableHeaderAdapter(context, "Hersteller", "Bezeichung", "Leistung", "Preis");
         simpleTableHeaderAdapter.setTextColor(context.getResources().getColor(R.color.table_header_text));
         setHeaderAdapter(simpleTableHeaderAdapter);
@@ -38,7 +39,7 @@ public class SortableCarTableView extends SortableTableView<Car> {
         setHeaderSortStateViewProvider(SortStateViewProviders.brightArrows());
 
         setColumnWeight(0, 2);
-        setColumnWeight(1, 4);
+        setColumnWeight(1, 3);
         setColumnWeight(2, 3);
         setColumnWeight(3, 2);
 

@@ -34,8 +34,6 @@ public class SortStateViewProviders {
 
     private static class DarkSortStateViewProvider implements SortStateViewProvider {
 
-        private static final int NO_IMAGE_RES = -1;
-
         @Override
         public int getSortStateViewResource(SortState state) {
             switch (state) {
@@ -46,15 +44,13 @@ public class SortStateViewProviders {
                 case SORTED_DESC:
                     return R.mipmap.ic_dark_sorted_desc;
                 default:
-                    return NO_IMAGE_RES;
+                    return NO_IMAGE;
             }
         }
     }
 
 
     private static class BrightSortStateViewProvider implements SortStateViewProvider {
-
-        private static final int NO_IMAGE_RES = -1;
 
         @Override
         public int getSortStateViewResource(SortState state) {
@@ -66,7 +62,7 @@ public class SortStateViewProviders {
                 case SORTED_DESC:
                     return R.mipmap.ic_light_sorted_desc;
                 default:
-                    return NO_IMAGE_RES;
+                    return NO_IMAGE;
             }
         }
     }
