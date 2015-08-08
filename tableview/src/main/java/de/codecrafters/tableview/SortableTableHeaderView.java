@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -118,7 +119,7 @@ class SortableTableHeaderView extends TableHeaderView {
         removeAllViews();
 
         for (int columnIndex = 0; columnIndex < adapter.getColumnCount(); columnIndex++) {
-            RelativeLayout headerContainerLayout = (RelativeLayout) adapter.getLayoutInflater().inflate(R.layout.sortable_header, this, false);
+            LinearLayout headerContainerLayout = (LinearLayout) adapter.getLayoutInflater().inflate(R.layout.sortable_header, this, false);
             headerContainerLayout.setOnClickListener(new InternalHeaderClickListener(columnIndex, getHeaderClickListeners()));
 
             View headerView = adapter.getHeaderView(columnIndex, headerContainerLayout);
