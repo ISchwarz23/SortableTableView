@@ -24,7 +24,7 @@ public abstract class TableHeaderAdapter {
      * @param context
      *         The context that shall be used.
      */
-    public TableHeaderAdapter(Context context) {
+    public TableHeaderAdapter(final Context context) {
         this(context, 0);
     }
 
@@ -36,7 +36,7 @@ public abstract class TableHeaderAdapter {
      * @param columnCount
      *         The number of columns.
      */
-    protected TableHeaderAdapter(Context context, int columnCount) {
+    protected TableHeaderAdapter(final Context context, final int columnCount) {
         this(context, new TableColumnModel(columnCount));
     }
 
@@ -48,7 +48,7 @@ public abstract class TableHeaderAdapter {
      * @param columnModel
      *         The column model to be used.
      */
-    protected TableHeaderAdapter(Context context, TableColumnModel columnModel) {
+    protected TableHeaderAdapter(final Context context, final TableColumnModel columnModel) {
         this.context = context;
         this.columnModel = columnModel;
     }
@@ -89,7 +89,7 @@ public abstract class TableHeaderAdapter {
      * @param columnModel
      *         The {@link TableColumnModel} that should be set.
      */
-    protected void setColumnModel(TableColumnModel columnModel) {
+    protected void setColumnModel(final TableColumnModel columnModel) {
         this.columnModel = columnModel;
     }
 
@@ -106,7 +106,7 @@ public abstract class TableHeaderAdapter {
      * @param columnCount
      *         The column count that should be set.
      */
-    protected void setColumnCount(int columnCount) {
+    protected void setColumnCount(final int columnCount) {
         columnModel.setColumnCount(columnCount);
     }
 
@@ -127,7 +127,7 @@ public abstract class TableHeaderAdapter {
      * @param columnWeight
      *         The weight that should be set to the column at the given index.
      */
-    protected void setColumnWeight(int columnIndex, int columnWeight) {
+    protected void setColumnWeight(final int columnIndex, final int columnWeight) {
         columnModel.setColumnWeight(columnIndex, columnWeight);
     }
 
@@ -138,7 +138,7 @@ public abstract class TableHeaderAdapter {
      *         The index of the column to receive the column weight.
      * @return The column weight of the column at the given index.
      */
-    protected int getColumnWeight(int columnIndex) {
+    protected int getColumnWeight(final int columnIndex) {
         return columnModel.getColumnWeight(columnIndex);
     }
 

@@ -1,14 +1,16 @@
 package de.codecrafters.tableview;
 
+import static android.widget.LinearLayout.LayoutParams;
+
 import android.content.Context;
 import android.content.res.Resources;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -25,6 +27,8 @@ import de.codecrafters.tableview.colorizers.TableDataRowColorizer;
  */
 public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
 
+    private static final String LOG_TAG = TableDataAdapter.class.getName();
+
     private TableColumnModel columnModel;
     private final List<T> data;
     private TableDataRowColorizer<? super T> rowColoriser;
@@ -36,7 +40,7 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
      * @param context
      *         The context that shall be used.
      */
-    public TableDataAdapter(Context context, T[] data) {
+    public TableDataAdapter(final Context context, final T[] data) {
         this(context, 0, new ArrayList<>(Arrays.asList(data)));
     }
 
@@ -46,8 +50,8 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
      * @param context
      *         The context that shall be used.
      */
-    public TableDataAdapter(Context context, List<T> data) {
-        this(context, 0, new ArrayList<T>(data));
+    public TableDataAdapter(final Context context, final List<T> data) {
+        this(context, 0, new ArrayList<>(data));
     }
 
     /**
@@ -58,7 +62,7 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
      * @param columnCount
      *         The number of columns.
      */
-    protected TableDataAdapter(Context context, int columnCount, List<T> data) {
+    protected TableDataAdapter(final Context context, final int columnCount, final List<T> data) {
         this(context, new TableColumnModel(columnCount), data);
     }
 
@@ -70,7 +74,7 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
      * @param columnModel
      *         The column model to be used.
      */
-    protected TableDataAdapter(Context context, TableColumnModel columnModel, List<T> data) {
+    protected TableDataAdapter(final Context context, final TableColumnModel columnModel, final List<T> data) {
         super(context, -1, data);
         this.columnModel = columnModel;
         this.data = data;
@@ -83,7 +87,7 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
      *         The index of the row to get the data for.
      * @return The data that shall be displayed in the row with the given index.
      */
-    public T getRowData(int rowIndex) {
+    public T getRowData(final int rowIndex) {
         return getItem(rowIndex);
     }
 
@@ -140,22 +144,23 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
     public abstract View getCellView(int rowIndex, int columnIndex, ViewGroup parentView);
 
     @Override
-    public View getView(int rowIndex, View convertView, ViewGroup parent) {
-        LinearLayout rowView = new LinearLayout(getContext());
+    public View getView(final int rowIndex, final View convertView, final ViewGroup parent) {
+        final LinearLayout rowView = new LinearLayout(getContext());
 
-        ListView.LayoutParams rowLayoutParams = new ListView.LayoutParams(ListView.LayoutParams.MATCH_PARENT, ListView.LayoutParams.WRAP_CONTENT);
+        final LayoutParams rowLayoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         rowView.setLayoutParams(rowLayoutParams);
         rowView.setGravity(Gravity.CENTER_VERTICAL);
 
         T rowData = null;
         try {
             rowData = getItem(rowIndex);
-        } catch (IndexOutOfBoundsException e) {
-            // call row coloriser with null
+        } catch (final IndexOutOfBoundsException e) {
+            Log.w(LOG_TAG, "No row date available for row with index " + rowIndex + ". " +
+                    "Caught Exception: " + e.getMessage());
         }
         rowView.setBackgroundColor(rowColoriser.getRowColor(rowIndex, rowData));
 
-        int widthUnit = (parent.getWidth() / columnModel.getColumnWeightSum());
+        final int widthUnit = (parent.getWidth() / columnModel.getColumnWeightSum());
 
         for (int columnIndex = 0; columnIndex < getColumnCount(); columnIndex++) {
             View cellView = getCellView(rowIndex, columnIndex, rowView);
@@ -163,9 +168,9 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
                 cellView = new TextView(getContext());
             }
 
-            int width = widthUnit * columnModel.getColumnWeight(columnIndex);
+            final int width = widthUnit * columnModel.getColumnWeight(columnIndex);
 
-            LinearLayout.LayoutParams cellLayoutParams = new LinearLayout.LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT);
+            final LinearLayout.LayoutParams cellLayoutParams = new LinearLayout.LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT);
             cellLayoutParams.weight = columnModel.getColumnWeight(columnIndex);
             cellView.setLayoutParams(cellLayoutParams);
             rowView.addView(cellView);
@@ -180,7 +185,7 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
      * @param rowColorizer
      *         The {@link TableDataRowColorizer} that shall be used.
      */
-    protected void setRowColoriser(TableDataRowColorizer<? super T> rowColorizer) {
+    protected void setRowColoriser(final TableDataRowColorizer<? super T> rowColorizer) {
         this.rowColoriser = rowColorizer;
     }
 
@@ -190,7 +195,7 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
      * @param columnModel
      *         The {@link TableColumnModel} that should be set.
      */
-    protected void setColumnModel(TableColumnModel columnModel) {
+    protected void setColumnModel(final TableColumnModel columnModel) {
         this.columnModel = columnModel;
     }
 
@@ -207,7 +212,7 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
      * @param columnCount
      *         The column count that should be set.
      */
-    protected void setColumnCount(int columnCount) {
+    protected void setColumnCount(final int columnCount) {
         columnModel.setColumnCount(columnCount);
     }
 
@@ -228,7 +233,7 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
      * @param columnWeight
      *         The weight that should be set to the column at the given index.
      */
-    protected void setColumnWeight(int columnIndex, int columnWeight) {
+    protected void setColumnWeight(final int columnIndex, final int columnWeight) {
         columnModel.setColumnWeight(columnIndex, columnWeight);
     }
 
@@ -239,7 +244,7 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
      *         The index of the column to receive the column weight.
      * @return The column weight of the column at the given index.
      */
-    protected int getColumnWeight(int columnIndex) {
+    protected int getColumnWeight(final int columnIndex) {
         return columnModel.getColumnWeight(columnIndex);
     }
 

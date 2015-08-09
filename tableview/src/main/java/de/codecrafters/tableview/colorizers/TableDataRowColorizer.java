@@ -15,6 +15,6 @@ public interface TableDataRowColorizer<T> {
      *         The data presented in the row to return the background color for.
      * @return The background color that shall be used for the given row.
      */
-    int getRowColor(int rowIndex, T rowData);
+    int getRowColor(final int rowIndex, final T rowData);
 
 }

@@ -18,7 +18,7 @@ import de.codecrafters.tableview.TableHeaderAdapter;
  */
 public final class SimpleTableHeaderAdapter extends TableHeaderAdapter {
 
-    private String[] headers;
+    private final String[] headers;
     private int paddingLeft = 20;
     private int paddingTop = 30;
     private int paddingRight = 20;
@@ -35,7 +35,7 @@ public final class SimpleTableHeaderAdapter extends TableHeaderAdapter {
      * @param headers
      *         The header labels that shall be rendered.
      */
-    public SimpleTableHeaderAdapter(Context context, String... headers) {
+    public SimpleTableHeaderAdapter(final Context context, final String... headers) {
         super(context);
         this.headers = headers;
     }
@@ -52,7 +52,7 @@ public final class SimpleTableHeaderAdapter extends TableHeaderAdapter {
      * @param bottom
      *         The padding on the bottom side.
      */
-    public void setPaddings(int left, int top, int right, int bottom) {
+    public void setPaddings(final int left, final int top, final int right, final int bottom) {
         paddingLeft = left;
         paddingTop = top;
         paddingRight = right;
@@ -65,7 +65,7 @@ public final class SimpleTableHeaderAdapter extends TableHeaderAdapter {
      * @param paddingLeft
      *         The padding on the left side.
      */
-    public void setPaddingLeft(int paddingLeft) {
+    public void setPaddingLeft(final int paddingLeft) {
         this.paddingLeft = paddingLeft;
     }
 
@@ -75,7 +75,7 @@ public final class SimpleTableHeaderAdapter extends TableHeaderAdapter {
      * @param paddingTop
      *         The padding on the top side.
      */
-    public void setPaddingTop(int paddingTop) {
+    public void setPaddingTop(final int paddingTop) {
         this.paddingTop = paddingTop;
     }
 
@@ -85,7 +85,7 @@ public final class SimpleTableHeaderAdapter extends TableHeaderAdapter {
      * @param paddingRight
      *         The padding on the right side.
      */
-    public void setPaddingRight(int paddingRight) {
+    public void setPaddingRight(final int paddingRight) {
         this.paddingRight = paddingRight;
     }
 
@@ -95,7 +95,7 @@ public final class SimpleTableHeaderAdapter extends TableHeaderAdapter {
      * @param paddingBottom
      *         The padding on the bottom side.
      */
-    public void setPaddingBottom(int paddingBottom) {
+    public void setPaddingBottom(final int paddingBottom) {
         this.paddingBottom = paddingBottom;
     }
 
@@ -105,7 +105,7 @@ public final class SimpleTableHeaderAdapter extends TableHeaderAdapter {
      * @param textSize
      *         The text size that shall be used.
      */
-    public void setTextSize(int textSize) {
+    public void setTextSize(final int textSize) {
         this.textSize = textSize;
     }
 
@@ -115,7 +115,7 @@ public final class SimpleTableHeaderAdapter extends TableHeaderAdapter {
      * @param typeface
      *         The type face that shall be used.
      */
-    public void setTypeface(int typeface) {
+    public void setTypeface(final int typeface) {
         this.typeface = typeface;
     }
 
@@ -125,13 +125,13 @@ public final class SimpleTableHeaderAdapter extends TableHeaderAdapter {
      * @param textColor
      *         The text color that shall be used.
      */
-    public void setTextColor(int textColor) {
+    public void setTextColor(final int textColor) {
         this.textColor = textColor;
     }
 
     @Override
-    public View getHeaderView(int columnIndex, ViewGroup parentView) {
-        TextView textView = new TextView(getContext());
+    public View getHeaderView(final int columnIndex, final ViewGroup parentView) {
+        final TextView textView = new TextView(getContext());
 
         if (columnIndex < headers.length) {
             textView.setText(headers[columnIndex]);

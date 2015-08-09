@@ -26,7 +26,7 @@ public class TableColumnModel {
      * @param columnCount
      *         The number of columns.
      */
-    public TableColumnModel(int columnCount) {
+    public TableColumnModel(final int columnCount) {
         this.columnWeights = new HashMap<>();
         this.columnCount = columnCount;
     }
@@ -37,7 +37,7 @@ public class TableColumnModel {
      * @param columnCount
      *         The number of columns that shall be set.
      */
-    public void setColumnCount(int columnCount) {
+    public void setColumnCount(final int columnCount) {
         this.columnCount = columnCount;
     }
 
@@ -58,7 +58,7 @@ public class TableColumnModel {
      * @param columnWeight
      *         The weight that should be set to the column at the given index.
      */
-    public void setColumnWeight(int columnIndex, int columnWeight) {
+    public void setColumnWeight(final int columnIndex, final int columnWeight) {
         columnWeights.put(columnIndex, columnWeight);
     }
 
@@ -69,7 +69,7 @@ public class TableColumnModel {
      *         The index of the column to receive the column weight.
      * @return The column weight of the column at the given index.
      */
-    public int getColumnWeight(int columnIndex) {
+    public int getColumnWeight(final int columnIndex) {
         Integer columnWeight = columnWeights.get(columnIndex);
         if (columnWeight == null) {
             columnWeight = DEFAULT_COLUMN_WEIGHT;

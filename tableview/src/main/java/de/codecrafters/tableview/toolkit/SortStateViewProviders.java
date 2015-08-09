@@ -10,7 +10,7 @@ import de.codecrafters.tableview.providers.SortStateViewProvider;
  *
  * @author ISchwarz
  */
-public class SortStateViewProviders {
+public final class SortStateViewProviders {
 
 
     /**
@@ -35,7 +35,7 @@ public class SortStateViewProviders {
     private static class DarkSortStateViewProvider implements SortStateViewProvider {
 
         @Override
-        public int getSortStateViewResource(SortState state) {
+        public int getSortStateViewResource(final SortState state) {
             switch (state) {
                 case SORTABLE:
                     return R.mipmap.ic_dark_sortable;
@@ -53,7 +53,7 @@ public class SortStateViewProviders {
     private static class BrightSortStateViewProvider implements SortStateViewProvider {
 
         @Override
-        public int getSortStateViewResource(SortState state) {
+        public int getSortStateViewResource(final SortState state) {
             switch (state) {
                 case SORTABLE:
                     return R.mipmap.ic_light_sortable;

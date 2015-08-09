@@ -7,9 +7,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import de.codecrafters.tableview.listeners.TableHeaderClickListener;
@@ -23,9 +21,8 @@ import de.codecrafters.tableview.listeners.TableHeaderClickListener;
  */
 class TableHeaderView extends LinearLayout {
 
+    private final Set<TableHeaderClickListener> listeners = new HashSet<>();
     protected TableHeaderAdapter adapter;
-
-    private Set<TableHeaderClickListener> listeners = new HashSet<>();
 
     /**
      * Creates a new TableHeaderView.
@@ -33,12 +30,12 @@ class TableHeaderView extends LinearLayout {
      * @param context
      *         The context that shall be used.
      */
-    public TableHeaderView(Context context) {
+    public TableHeaderView(final Context context) {
         super(context);
         setOrientation(LinearLayout.HORIZONTAL);
         setGravity(Gravity.CENTER_VERTICAL);
 
-        LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        final LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         setLayoutParams(layoutParams);
     }
 
@@ -48,7 +45,7 @@ class TableHeaderView extends LinearLayout {
      * @param adapter
      *         The {@link TableHeaderAdapter} that should be set.
      */
-    public void setAdapter(TableHeaderAdapter adapter) {
+    public void setAdapter(final TableHeaderAdapter adapter) {
         this.adapter = adapter;
         renderHeaderViews();
     }
@@ -72,10 +69,10 @@ class TableHeaderView extends LinearLayout {
             }
             headerView.setOnClickListener(new InternalHeaderClickListener(columnIndex, getHeaderClickListeners()));
 
-            int width = 0;
-            int height = LayoutParams.WRAP_CONTENT;
-            int weight = adapter.getColumnWeight(columnIndex);
-            LayoutParams headerLayoutParams = new LayoutParams(width, height, weight);
+            final int width = 0;
+            final int height = LayoutParams.WRAP_CONTENT;
+            final int weight = adapter.getColumnWeight(columnIndex);
+            final LayoutParams headerLayoutParams = new LayoutParams(width, height, weight);
             addView(headerView, headerLayoutParams);
         }
     }
@@ -90,7 +87,7 @@ class TableHeaderView extends LinearLayout {
      * @param listener
      *         The {@link TableHeaderClickListener} that shall be added.
      */
-    public void addHeaderClickListener(TableHeaderClickListener listener) {
+    public void addHeaderClickListener(final TableHeaderClickListener listener) {
         listeners.add(listener);
     }
 
@@ -100,7 +97,7 @@ class TableHeaderView extends LinearLayout {
      * @param listener
      *         The {@link TableHeaderClickListener} that shall be removed.
      */
-    public void removeHeaderClickListener(TableHeaderClickListener listener) {
+    public void removeHeaderClickListener(final TableHeaderClickListener listener) {
         listeners.remove(listener);
     }
 

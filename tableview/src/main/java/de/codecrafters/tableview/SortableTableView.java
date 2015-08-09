@@ -28,8 +28,8 @@ public class SortableTableView<T> extends TableView<T> {
 
     private static final String LOG_TAG = SortableTableView.class.getName();
 
-    private SortableTableHeaderView sortableTableHeaderView;
-    private SortingController sortingController;
+    private final SortableTableHeaderView sortableTableHeaderView;
+    private final SortingController sortingController;
 
 
     /**
@@ -39,7 +39,7 @@ public class SortableTableView<T> extends TableView<T> {
      * @param context
      *         The context that shall be used.
      */
-    public SortableTableView(Context context) {
+    public SortableTableView(final Context context) {
         this(context, null);
     }
 
@@ -52,7 +52,7 @@ public class SortableTableView<T> extends TableView<T> {
      * @param attributes
      *         The attributes that shall be set to the view.
      */
-    public SortableTableView(Context context, AttributeSet attributes) {
+    public SortableTableView(final Context context, final AttributeSet attributes) {
         this(context, attributes, 0);
     }
 
@@ -66,7 +66,7 @@ public class SortableTableView<T> extends TableView<T> {
      * @param styleAttributes
      *         The style attributes that shall be set to the view.
      */
-    public SortableTableView(Context context, AttributeSet attributes, int styleAttributes) {
+    public SortableTableView(final Context context, final AttributeSet attributes, final int styleAttributes) {
         super(context, attributes, styleAttributes);
 
         sortableTableHeaderView = new SortableTableHeaderView(context);
@@ -86,8 +86,17 @@ public class SortableTableView<T> extends TableView<T> {
      * @param columnComparator
      *         The {@link Comparator} that shall be set to the column at the given index.
      */
-    public void setColumnComparator(int columnIndex, Comparator<T> columnComparator) {
+    public void setColumnComparator(final int columnIndex, final Comparator<T> columnComparator) {
         sortingController.setComparator(columnIndex, columnComparator);
+    }
+
+    /**
+     * Gives the current {@link SortStateViewProvider}.
+     *
+     * @return The {@link SortStateViewProvider} that is currently used to render the sort views in the header.
+     */
+    public SortStateViewProvider getHeaderSortStateViewProvider() {
+        return sortableTableHeaderView.getSortStateViewProvider();
     }
 
     /**
@@ -96,16 +105,8 @@ public class SortableTableView<T> extends TableView<T> {
      * @param provider
      *         The {@link SortStateViewProvider} that shall be used to render the sort views in the header.
      */
-    public void setHeaderSortStateViewProvider(SortStateViewProvider provider) {
+    public void setHeaderSortStateViewProvider(final SortStateViewProvider provider) {
         sortableTableHeaderView.setSortStateViewProvider(provider);
-    }
-
-    /**
-     * Gives the current {@link SortStateViewProvider}.
-     * @return The {@link SortStateViewProvider} that is currently used to render the sort views in the header.
-     */
-    public SortStateViewProvider getHeaderSortStateViewProvider() {
-        return sortableTableHeaderView.getSortStateViewProvider();
     }
 
     /**
@@ -115,7 +116,7 @@ public class SortableTableView<T> extends TableView<T> {
      *         The index of the column to receive the applied {@link Comparator}.
      * @return The {@link Comparator} of the column at the given index.
      */
-    public Comparator<T> getColumnComparator(int columnIndex) {
+    public Comparator<T> getColumnComparator(final int columnIndex) {
         return sortingController.getRawComparator(columnIndex);
     }
 
@@ -128,7 +129,7 @@ public class SortableTableView<T> extends TableView<T> {
      * @param columnIndex
      *         The index of the column on which the sorting shall be executed.
      */
-    public void sort(int columnIndex) {
+    public void sort(final int columnIndex) {
         sortingController.onHeaderClicked(columnIndex);
     }
 
@@ -138,7 +139,7 @@ public class SortableTableView<T> extends TableView<T> {
      * @param comparator
      *         The {@link Comparator} that shall be used to sort the table.
      */
-    public void sort(Comparator<T> comparator) {
+    public void sort(final Comparator<T> comparator) {
         sortingController.sortDataSFCT(comparator);
     }
 
@@ -150,26 +151,26 @@ public class SortableTableView<T> extends TableView<T> {
      */
     private class SortingController implements TableHeaderClickListener {
 
-        private Map<Integer, Comparator<T>> comparators = new HashMap<>();
+        private final Map<Integer, Comparator<T>> comparators = new HashMap<>();
         private int sortedColumnIndex = -1;
         private boolean isSortedUp;
 
         @Override
-        public void onHeaderClicked(int columnIndex) {
+        public void onHeaderClicked(final int columnIndex) {
 
             if (!comparators.containsKey(columnIndex)) {
                 Log.i(LOG_TAG, "Unable to sort column with index " + columnIndex + ". Reason: no comparator set.");
                 return;
             }
 
-            Comparator<T> comparator = getComparator(columnIndex);
+            final Comparator<T> comparator = getComparator(columnIndex);
             sortDataSFCT(comparator);
             setSortView(columnIndex);
 
             sortedColumnIndex = columnIndex;
         }
 
-        private void setSortView(int columnIndex) {
+        private void setSortView(final int columnIndex) {
             sortableTableHeaderView.resetSortViews();
             if (isSortedUp) {
                 sortableTableHeaderView.setSortState(columnIndex, SortState.SORTED_ASC);
@@ -178,20 +179,20 @@ public class SortableTableView<T> extends TableView<T> {
             }
         }
 
-        private void sortDataSFCT(Comparator<T> comparator) {
-            List<T> data = tableDataAdapter.getData();
+        private void sortDataSFCT(final Comparator<T> comparator) {
+            final List<T> data = tableDataAdapter.getData();
             Collections.sort(data, comparator);
             tableDataAdapter.notifyDataSetChanged();
         }
 
-        private Comparator<T> getRawComparator(int columnIndex) {
+        private Comparator<T> getRawComparator(final int columnIndex) {
             return comparators.get(columnIndex);
         }
 
-        private Comparator<T> getComparator(int columnIndex) {
-            Comparator<T> columnComparator = comparators.get(columnIndex);
+        private Comparator<T> getComparator(final int columnIndex) {
+            final Comparator<T> columnComparator = comparators.get(columnIndex);
 
-            Comparator<T> comparator;
+            final Comparator<T> comparator;
             if (sortedColumnIndex == columnIndex) {
                 if (isSortedUp) {
                     comparator = Collections.reverseOrder(columnComparator);
@@ -207,7 +208,7 @@ public class SortableTableView<T> extends TableView<T> {
             return comparator;
         }
 
-        public void setComparator(int columnIndex, Comparator<T> columnComparator) {
+        public void setComparator(final int columnIndex, final Comparator<T> columnComparator) {
             if (columnComparator == null) {
                 comparators.remove(columnIndex);
                 sortableTableHeaderView.setSortState(columnIndex, SortState.NOT_SORTABLE);

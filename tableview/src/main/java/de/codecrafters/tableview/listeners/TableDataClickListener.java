@@ -1,10 +1,20 @@
 package de.codecrafters.tableview.listeners;
 
 /**
- * Created by Ingo on 18.07.2015.
+ * A listener clicks on table data.
+ *
+ * @author ISchwarz
  */
 public interface TableDataClickListener<T> {
 
-    void onDataClicked(int rowIndex, T clickedData);
+    /**
+     * This method is called when there was a click on a certain table data.
+     *
+     * @param rowIndex
+     *         The index of the row that has been clicked.
+     * @param clickedData
+     *         The data that was clicked.
+     */
+    void onDataClicked(final int rowIndex, final T clickedData);
 
 }
