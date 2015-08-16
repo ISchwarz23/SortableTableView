@@ -51,7 +51,7 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
      *         The context that shall be used.
      */
     public TableDataAdapter(final Context context, final List<T> data) {
-        this(context, 0, new ArrayList<>(data));
+        this(context, 0, data);
     }
 
     /**

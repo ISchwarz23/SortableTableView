@@ -1,6 +1,7 @@
 package de.codecrafters.tableview;
 
 import android.content.Context;
+import android.database.DataSetObserver;
 import android.util.AttributeSet;
 import android.util.Log;
 
@@ -75,6 +76,12 @@ public class SortableTableView<T> extends TableView<T> {
 
         sortingController = new SortingController();
         sortableTableHeaderView.addHeaderClickListener(sortingController);
+    }
+
+    @Override
+    public void setDataAdapter(final TableDataAdapter<T> dataAdapter) {
+        dataAdapter.registerDataSetObserver(new RecapSortingDataSetObserver());
+        super.setDataAdapter(dataAdapter);
     }
 
     /**
@@ -153,18 +160,18 @@ public class SortableTableView<T> extends TableView<T> {
 
         private final Map<Integer, Comparator<T>> comparators = new HashMap<>();
         private int sortedColumnIndex = -1;
+        private Comparator<T> sortedColumnComparator;
         private boolean isSortedUp;
 
         @Override
         public void onHeaderClicked(final int columnIndex) {
-
             if (!comparators.containsKey(columnIndex)) {
-                Log.i(LOG_TAG, "Unable to sort column with index " + columnIndex + ". Reason: no comparator set.");
+                Log.i(LOG_TAG, "Unable to sort column with index " + columnIndex + ". Reason: no comparator set for this column.");
                 return;
             }
 
-            final Comparator<T> comparator = getComparator(columnIndex);
-            sortDataSFCT(comparator);
+            sortedColumnComparator = getComparator(columnIndex);
+            sortDataSFCT(sortedColumnComparator);
             setSortView(columnIndex);
 
             sortedColumnIndex = columnIndex;
@@ -179,10 +186,16 @@ public class SortableTableView<T> extends TableView<T> {
             }
         }
 
+        private void recapSorting() {
+            sortDataSFCT(sortedColumnComparator);
+        }
+
         private void sortDataSFCT(final Comparator<T> comparator) {
-            final List<T> data = tableDataAdapter.getData();
-            Collections.sort(data, comparator);
-            tableDataAdapter.notifyDataSetChanged();
+            if (comparator != null) {
+                final List<T> data = tableDataAdapter.getData();
+                Collections.sort(data, comparator);
+                tableDataAdapter.notifyDataSetChanged();
+            }
         }
 
         private Comparator<T> getRawComparator(final int columnIndex) {
@@ -215,6 +228,28 @@ public class SortableTableView<T> extends TableView<T> {
             } else {
                 comparators.put(columnIndex, columnComparator);
                 sortableTableHeaderView.setSortState(columnIndex, SortState.SORTABLE);
+            }
+        }
+
+    }
+
+
+    /**
+     * Implementation of {@link DataSetObserver} that will trigger the sorting of the data if the data has changed.
+     *
+     * @author ISchwarz
+     */
+    private class RecapSortingDataSetObserver extends DataSetObserver {
+
+        private boolean initializedByMyself = false;
+
+        @Override
+        public void onChanged() {
+            if (initializedByMyself) {
+                initializedByMyself = false;
+            } else {
+                initializedByMyself = true;
+                sortingController.recapSorting();
             }
         }
 
