@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -147,7 +148,7 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
     public View getView(final int rowIndex, final View convertView, final ViewGroup parent) {
         final LinearLayout rowView = new LinearLayout(getContext());
 
-        final LayoutParams rowLayoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        final AbsListView.LayoutParams rowLayoutParams = new AbsListView.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         rowView.setLayoutParams(rowLayoutParams);
         rowView.setGravity(Gravity.CENTER_VERTICAL);
 
