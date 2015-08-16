@@ -3,6 +3,7 @@ package de.codecrafters.tableview.toolkit;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -16,7 +17,9 @@ import de.codecrafters.tableview.TableDataAdapter;
  *
  * @author ISchwarz
  */
-public class SimpleTableDataAdapter extends TableDataAdapter<String[]> {
+public final class SimpleTableDataAdapter extends TableDataAdapter<String[]> {
+
+    private static final String LOG_TAG = SimpleTableDataAdapter.class.getName();
 
     private int paddingLeft = 20;
     private int paddingTop = 15;
@@ -27,17 +30,17 @@ public class SimpleTableDataAdapter extends TableDataAdapter<String[]> {
     private int textColor = 0x99000000;
 
 
-    public SimpleTableDataAdapter(Context context, String[][] data) {
+    public SimpleTableDataAdapter(final Context context, final String[][] data) {
         super(context, data);
     }
 
-    public SimpleTableDataAdapter(Context context, List<String[]> data) {
+    public SimpleTableDataAdapter(final Context context, final List<String[]> data) {
         super(context, data);
     }
 
     @Override
-    public View getCellView(int rowIndex, int columnIndex, ViewGroup parentView) {
-        TextView textView = new TextView(getContext());
+    public View getCellView(final int rowIndex, final int columnIndex, final ViewGroup parentView) {
+        final TextView textView = new TextView(getContext());
         textView.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
         textView.setTypeface(textView.getTypeface(), typeface);
         textView.setTextSize(textSize);
@@ -46,9 +49,11 @@ public class SimpleTableDataAdapter extends TableDataAdapter<String[]> {
         textView.setEllipsize(TextUtils.TruncateAt.END);
 
         try {
-            String textToShow = getItem(rowIndex)[columnIndex];
+            final String textToShow = getItem(rowIndex)[columnIndex];
             textView.setText(textToShow);
-        } catch(IndexOutOfBoundsException e) {
+        } catch(final IndexOutOfBoundsException e) {
+            Log.w(LOG_TAG, "No Sting given for row " + rowIndex + ", column " + columnIndex + ". "
+                    + "Caught exception: " + e.toString());
             // Show no text
         }
 
@@ -67,7 +72,7 @@ public class SimpleTableDataAdapter extends TableDataAdapter<String[]> {
      * @param bottom
      *         The padding on the bottom side.
      */
-    public void setPaddings(int left, int top, int right, int bottom) {
+    public void setPaddings(final int left, final int top, final int right, final int bottom) {
         paddingLeft = left;
         paddingTop = top;
         paddingRight = right;
@@ -80,7 +85,7 @@ public class SimpleTableDataAdapter extends TableDataAdapter<String[]> {
      * @param paddingLeft
      *         The padding on the left side.
      */
-    public void setPaddingLeft(int paddingLeft) {
+    public void setPaddingLeft(final int paddingLeft) {
         this.paddingLeft = paddingLeft;
     }
 
@@ -90,7 +95,7 @@ public class SimpleTableDataAdapter extends TableDataAdapter<String[]> {
      * @param paddingTop
      *         The padding on the top side.
      */
-    public void setPaddingTop(int paddingTop) {
+    public void setPaddingTop(final int paddingTop) {
         this.paddingTop = paddingTop;
     }
 
@@ -100,7 +105,7 @@ public class SimpleTableDataAdapter extends TableDataAdapter<String[]> {
      * @param paddingRight
      *         The padding on the right side.
      */
-    public void setPaddingRight(int paddingRight) {
+    public void setPaddingRight(final int paddingRight) {
         this.paddingRight = paddingRight;
     }
 
@@ -110,7 +115,7 @@ public class SimpleTableDataAdapter extends TableDataAdapter<String[]> {
      * @param paddingBottom
      *         The padding on the bottom side.
      */
-    public void setPaddingBottom(int paddingBottom) {
+    public void setPaddingBottom(final int paddingBottom) {
         this.paddingBottom = paddingBottom;
     }
 
@@ -120,7 +125,7 @@ public class SimpleTableDataAdapter extends TableDataAdapter<String[]> {
      * @param textSize
      *         The text size that shall be used.
      */
-    public void setTextSize(int textSize) {
+    public void setTextSize(final int textSize) {
         this.textSize = textSize;
     }
 
@@ -130,7 +135,7 @@ public class SimpleTableDataAdapter extends TableDataAdapter<String[]> {
      * @param typeface
      *         The type face that shall be used.
      */
-    public void setTypeface(int typeface) {
+    public void setTypeface(final int typeface) {
         this.typeface = typeface;
     }
 
@@ -140,7 +145,7 @@ public class SimpleTableDataAdapter extends TableDataAdapter<String[]> {
      * @param textColor
      *         The text color that shall be used.
      */
-    public void setTextColor(int textColor) {
+    public void setTextColor(final int textColor) {
         this.textColor = textColor;
     }
 

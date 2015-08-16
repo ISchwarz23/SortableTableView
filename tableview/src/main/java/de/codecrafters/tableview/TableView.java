@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -30,11 +31,13 @@ import de.codecrafters.tableview.toolkit.TableDataRowColorizers;
  */
 public class TableView<T> extends LinearLayout {
 
+    private static final String LOG_TAG = TableView.class.getName();
+
     private static final int DEFAULT_COLUMN_COUNT = 4;
     private static final int DEFAULT_HEADER_ELEVATION = 1;
     private static final int DEFAULT_HEADER_COLOR = 0xFFCCCCCC;
 
-    private Set<TableDataClickListener<T>> dataClickListeners = new HashSet<>();
+    private final Set<TableDataClickListener<T>> dataClickListeners = new HashSet<>();
     private TableColumnModel columnModel;
 
     private TableHeaderView tableHeaderView;
@@ -56,7 +59,7 @@ public class TableView<T> extends LinearLayout {
      * @param context
      *         The context that shall be used.
      */
-    public TableView(Context context) {
+    public TableView(final Context context) {
         this(context, null);
     }
 
@@ -69,7 +72,7 @@ public class TableView<T> extends LinearLayout {
      * @param attributes
      *         The attributes that shall be set to the view.
      */
-    public TableView(Context context, AttributeSet attributes) {
+    public TableView(final Context context, final AttributeSet attributes) {
         this(context, attributes, 0);
     }
 
@@ -83,7 +86,7 @@ public class TableView<T> extends LinearLayout {
      * @param styleAttributes
      *         The style attributes that shall be set to the view.
      */
-    public TableView(Context context, AttributeSet attributes, int styleAttributes) {
+    public TableView(final Context context, final AttributeSet attributes, final int styleAttributes) {
         super(context, attributes, styleAttributes);
         setOrientation(LinearLayout.VERTICAL);
         setAttributes(context, attributes);
@@ -97,7 +100,7 @@ public class TableView<T> extends LinearLayout {
      * @param headerView
      *         The new {@link TableHeaderView} that should be set.
      */
-    protected void setHeaderView(TableHeaderView headerView) {
+    protected void setHeaderView(final TableHeaderView headerView) {
         this.tableHeaderView = headerView;
 
         tableHeaderView.setAdapter(tableHeaderAdapter);
@@ -119,7 +122,7 @@ public class TableView<T> extends LinearLayout {
      * @param resId
      *         The if of the resource tht shall be set as background of the table header.
      */
-    public void setHeaderBackground(int resId) {
+    public void setHeaderBackground(final int resId) {
         tableHeaderView.setBackgroundResource(resId);
     }
 
@@ -129,7 +132,7 @@ public class TableView<T> extends LinearLayout {
      * @param color
      *         The color that shall be set as background of the table header.
      */
-    public void setHeaderBackgroundColor(int color) {
+    public void setHeaderBackgroundColor(final int color) {
         tableHeaderView.setBackgroundColor(color);
     }
 
@@ -140,7 +143,7 @@ public class TableView<T> extends LinearLayout {
      * @param elevation
      *         The elevation that shall be set to the table header.
      */
-    public void setHeaderElevation(int elevation) {
+    public void setHeaderElevation(final int elevation) {
         ViewCompat.setElevation(tableHeaderView, elevation);
     }
 
@@ -151,7 +154,7 @@ public class TableView<T> extends LinearLayout {
      * @param coloriser
      *         The {@link TableDataRowColorizer} that shall be used.
      */
-    public void setDataRowColoriser(TableDataRowColorizer<? super T> coloriser) {
+    public void setDataRowColoriser(final TableDataRowColorizer<? super T> coloriser) {
         dataRowColoriser = coloriser;
         tableDataAdapter.setRowColoriser(coloriser);
     }
@@ -162,7 +165,7 @@ public class TableView<T> extends LinearLayout {
      * @param listener
      *         The listener that should be added.
      */
-    public void addDataClickListener(TableDataClickListener<T> listener) {
+    public void addDataClickListener(final TableDataClickListener<T> listener) {
         dataClickListeners.add(listener);
     }
 
@@ -172,7 +175,7 @@ public class TableView<T> extends LinearLayout {
      * @param listener
      *         The listener that should be removed.
      */
-    public void removeTableDataClickListener(TableDataClickListener<T> listener) {
+    public void removeTableDataClickListener(final TableDataClickListener<T> listener) {
         dataClickListeners.remove(listener);
     }
 
@@ -182,7 +185,7 @@ public class TableView<T> extends LinearLayout {
      * @param listener
      *         The listener that shall be added to this table.
      */
-    public void addHeaderClickListener(TableHeaderClickListener listener) {
+    public void addHeaderClickListener(final TableHeaderClickListener listener) {
         tableHeaderView.addHeaderClickListener(listener);
     }
 
@@ -192,7 +195,7 @@ public class TableView<T> extends LinearLayout {
      * @param listener
      *         The listener that shall be removed from this table.
      */
-    public void removeHeaderListener(TableHeaderClickListener listener) {
+    public void removeHeaderListener(final TableHeaderClickListener listener) {
         tableHeaderView.removeHeaderClickListener(listener);
     }
 
@@ -202,7 +205,7 @@ public class TableView<T> extends LinearLayout {
      * @param headerAdapter
      *         The {@link TableHeaderAdapter} that should be set.
      */
-    public void setHeaderAdapter(TableHeaderAdapter headerAdapter) {
+    public void setHeaderAdapter(final TableHeaderAdapter headerAdapter) {
         tableHeaderAdapter = headerAdapter;
         tableHeaderAdapter.setColumnModel(columnModel);
         tableHeaderView.setAdapter(tableHeaderAdapter);
@@ -215,7 +218,7 @@ public class TableView<T> extends LinearLayout {
      * @param dataAdapter
      *         The {@link TableDataAdapter} that should be set.
      */
-    public void setDataAdapter(TableDataAdapter<T> dataAdapter) {
+    public void setDataAdapter(final TableDataAdapter<T> dataAdapter) {
         tableDataAdapter = dataAdapter;
         tableDataAdapter.setColumnModel(columnModel);
         tableDataAdapter.setRowColoriser(dataRowColoriser);
@@ -229,7 +232,7 @@ public class TableView<T> extends LinearLayout {
      * @param columnCount
      *         The number of columns.
      */
-    public void setColumnCount(int columnCount) {
+    public void setColumnCount(final int columnCount) {
         columnModel.setColumnCount(columnCount);
         forceRefresh();
     }
@@ -251,7 +254,7 @@ public class TableView<T> extends LinearLayout {
      * @param columnWeight
      *         The weight that should be set to the column.
      */
-    public void setColumnWeight(int columnIndex, int columnWeight) {
+    public void setColumnWeight(final int columnIndex, final int columnWeight) {
         columnModel.setColumnWeight(columnIndex, columnWeight);
         forceRefresh();
     }
@@ -263,7 +266,7 @@ public class TableView<T> extends LinearLayout {
      *         The index of the column the weight should be returned.
      * @return The weight of the given column index.
      */
-    public int getColumnWeight(int columnIndex) {
+    public int getColumnWeight(final int columnIndex) {
         return columnModel.getColumnWeight(columnIndex);
     }
 
@@ -276,12 +279,12 @@ public class TableView<T> extends LinearLayout {
         }
     }
 
-    private void setAttributes(Context context, AttributeSet attributes) {
-        TypedArray styledAttributes = context.obtainStyledAttributes(attributes, R.styleable.TableView);
+    private void setAttributes(final Context context, final AttributeSet attributes) {
+        final TypedArray styledAttributes = context.obtainStyledAttributes(attributes, R.styleable.TableView);
 
         headerColor = styledAttributes.getInt(R.styleable.TableView_headerColor, DEFAULT_HEADER_COLOR);
         headerElevation = styledAttributes.getInt(R.styleable.TableView_headerElevation, DEFAULT_HEADER_ELEVATION);
-        int columnCount = styledAttributes.getInt(R.styleable.TableView_columnCount, DEFAULT_COLUMN_COUNT);
+        final int columnCount = styledAttributes.getInt(R.styleable.TableView_columnCount, DEFAULT_COLUMN_COUNT);
         columnModel = new TableColumnModel(columnCount);
 
         styledAttributes.recycle();
@@ -294,12 +297,12 @@ public class TableView<T> extends LinearLayout {
             tableHeaderAdapter = new DefaultTableHeaderAdapter(getContext());
         }
 
-        TableHeaderView tableHeaderView = new TableHeaderView(getContext());
+        final TableHeaderView tableHeaderView = new TableHeaderView(getContext());
         setHeaderView(tableHeaderView);
     }
 
     private void setupTableDataView() {
-        LayoutParams dataViewLayoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+        final LayoutParams dataViewLayoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 
         if (isInEditMode()) {
             tableDataAdapter = new EditModeTableDataAdapter(getContext());
@@ -325,18 +328,18 @@ public class TableView<T> extends LinearLayout {
     private class InternalDataClickListener implements AdapterView.OnItemClickListener {
 
         @Override
-        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        public void onItemClick(final AdapterView<?> adapterView, final View view, final int i, final long l) {
             informAllListeners(i);
         }
 
-        private void informAllListeners(int rowIndex) {
-            T clickedObject = tableDataAdapter.getItem(rowIndex);
+        private void informAllListeners(final int rowIndex) {
+            final T clickedObject = tableDataAdapter.getItem(rowIndex);
 
-            for (TableDataClickListener<T> listener : dataClickListeners) {
+            for (final TableDataClickListener<T> listener : dataClickListeners) {
                 try {
                     listener.onDataClicked(rowIndex, clickedObject);
-                } catch (Throwable t) {
-                    t.printStackTrace();
+                } catch (final Throwable t) {
+                    Log.w(LOG_TAG, "Caught Throwable on listener notification: " + t.toString());
                     // continue calling listeners
                 }
             }
@@ -352,13 +355,13 @@ public class TableView<T> extends LinearLayout {
      */
     private class DefaultTableHeaderAdapter extends TableHeaderAdapter {
 
-        public DefaultTableHeaderAdapter(Context context) {
+        public DefaultTableHeaderAdapter(final Context context) {
             super(context, columnModel);
         }
 
         @Override
-        public View getHeaderView(int columnIndex, ViewGroup parentView) {
-            TextView view = new TextView(getContext());
+        public View getHeaderView(final int columnIndex, final ViewGroup parentView) {
+            final TextView view = new TextView(getContext());
             view.setText(" ");
             view.setPadding(20, 40, 20, 40);
             return view;
@@ -373,12 +376,12 @@ public class TableView<T> extends LinearLayout {
      */
     private class DefaultTableDataAdapter extends TableDataAdapter<T> {
 
-        public DefaultTableDataAdapter(Context context) {
+        public DefaultTableDataAdapter(final Context context) {
             super(context, columnModel, new ArrayList<T>());
         }
 
         @Override
-        public View getCellView(int rowIndex, int columnIndex, ViewGroup parentView) {
+        public View getCellView(final int rowIndex, final int columnIndex, final ViewGroup parentView) {
             return new TextView(getContext());
         }
     }
@@ -392,13 +395,13 @@ public class TableView<T> extends LinearLayout {
 
         private static final float TEXT_SIZE = 18;
 
-        public EditModeTableHeaderAdapter(Context context) {
+        public EditModeTableHeaderAdapter(final Context context) {
             super(context, columnModel);
         }
 
         @Override
-        public View getHeaderView(int columnIndex, ViewGroup parentView) {
-            TextView textView = new TextView(getContext());
+        public View getHeaderView(final int columnIndex, final ViewGroup parentView) {
+            final TextView textView = new TextView(getContext());
             textView.setText("Header " + columnIndex);
             textView.setPadding(20, 40, 20, 40);
             textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
@@ -417,13 +420,13 @@ public class TableView<T> extends LinearLayout {
 
         private static final float TEXT_SIZE = 16;
 
-        public EditModeTableDataAdapter(Context context) {
+        public EditModeTableDataAdapter(final Context context) {
             super(context, columnModel, new ArrayList<T>());
         }
 
         @Override
-        public View getCellView(int rowIndex, int columnIndex, ViewGroup parent) {
-            TextView textView = new TextView(getContext());
+        public View getCellView(final int rowIndex, final int columnIndex, final ViewGroup parent) {
+            final TextView textView = new TextView(getContext());
             textView.setText("Cell [" + columnIndex + ":" + rowIndex + "]");
             textView.setPadding(20, 10, 20, 10);
             textView.setTextSize(TEXT_SIZE);

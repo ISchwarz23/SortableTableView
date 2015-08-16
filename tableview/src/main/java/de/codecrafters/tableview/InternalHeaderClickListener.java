@@ -15,24 +15,24 @@ import de.codecrafters.tableview.listeners.TableHeaderClickListener;
  */
 class InternalHeaderClickListener implements View.OnClickListener {
 
-    private Set<TableHeaderClickListener> listeners;
-    private int columnIndex;
+    private final Set<TableHeaderClickListener> listeners;
+    private final int columnIndex;
 
-    public InternalHeaderClickListener(int columnIndex, Set<TableHeaderClickListener> listeners) {
+    public InternalHeaderClickListener(final int columnIndex, final Set<TableHeaderClickListener> listeners) {
         this.columnIndex = columnIndex;
         this.listeners = listeners;
     }
 
     @Override
-    public void onClick(View view) {
+    public void onClick(final View view) {
         informHeaderListeners();
     }
 
     private void informHeaderListeners() {
-        for (TableHeaderClickListener listener : listeners) {
+        for (final TableHeaderClickListener listener : listeners) {
             try {
                 listener.onHeaderClicked(columnIndex);
-            } catch (Throwable t) {
+            } catch (final Throwable t) {
                 t.printStackTrace();
                 // continue calling listeners
             }

@@ -4,7 +4,7 @@ An Android library providing a TableView and a SortableTableView.
 
 ![SortableTableView Example](https://raw.githubusercontent.com/ISchwarz23/SortableTableView/develop/README/SortableTableView-Example.gif)
 
-**Minimum SDK-Version:** 11  |  **Compile SDK-Version:** 22  |  **Latest Library Version:** 0.9.4  
+**Minimum SDK-Version:** 11  |  **Compile SDK-Version:** 22  |  **Latest Library Version:** 0.9.5  
 
 ## Repository Content
 **tableview** - contains the android library sources and resources  
@@ -14,9 +14,7 @@ An Android library providing a TableView and a SortableTableView.
 To use the this library in your project simply add the following dependency to your *build.gradle* file.
 ```
     dependencies {
-        ...
-        compile 'de.codecrafters.tableview:tableview:0.9.4'
-        ...
+        compile 'de.codecrafters.tableview:tableview:0.9.5'
     }
 ```
   
@@ -26,10 +24,11 @@ To use the this library in your project simply add the following dependency to y
 The provided TableView is very easy to adapt to your needs. To set the column count simple set the parameter inside your XML layout.  
 ```xml
 	<de.codecrafters.tableview.TableView
+		xmlns:table="http://schemas.android.com/apk/res-auto"
         android:id="@+id/tableView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        custom:columnCount="4" />
+        table:columnCount="4" />
 ```
 A second possibility to define the column count of your TableView is to set it directly in the code.
 ```java
@@ -176,10 +175,11 @@ To listen for clicks on headers you can register a `TableHeaderClickListner`. Th
 The table view provides several possibilities to style its header. One possibility is to set a **colour** for the header. Therefore you can adapt the XML file or add it to your code.
 ```xml
     <de.codecrafters.tableview.TableView
+		xmlns:table="http://schemas.android.com/apk/res-auto"
         android:id="@+id/tableView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        custom:headerColor="@color/primary" />
+        table:headerColor="@color/primary" />
 ```
 ```java
     tableView.setHeaderBackgroundColor(getResources().getColor(R.color.primary));
@@ -191,10 +191,11 @@ For more complex header styles you can also set a **drawable** as header backgro
 In addition you can set an **elevation** of the table header. To achieve this you have the possibility to set the elevation in XML or alternatively set it in your code. 
 ```xml
     <de.codecrafters.tableview.TableView
+		xmlns:table="http://schemas.android.com/apk/res-auto"
         android:id="@+id/tableView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        custom:headerElevation="10" />
+        table:headerElevation="10" />
 ```
 ```java
     tableView.setHeaderElevation(10);

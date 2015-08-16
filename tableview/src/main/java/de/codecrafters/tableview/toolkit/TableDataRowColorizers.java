@@ -8,7 +8,7 @@ import de.codecrafters.tableview.colorizers.TableDataRowColorizer;
  *
  * @author ISchwarz
  */
-public class TableDataRowColorizers {
+public final class TableDataRowColorizers {
 
     /**
      * Gives an implementation of {link TableDataRowColoriser} that will return the given color
@@ -18,7 +18,7 @@ public class TableDataRowColorizers {
      *         The color that shall be applied to every table data row.
      * @return The described {link TableDataRowColoriser}.
      */
-    public static TableDataRowColorizer<Object> similarRowColor(int color) {
+    public static TableDataRowColorizer<Object> similarRowColor(final int color) {
         return new SimpleTableDataRowColorizer(color);
     }
 
@@ -26,14 +26,14 @@ public class TableDataRowColorizers {
      * Gives an implementation of {link TableDataRowColoriser} that will return alternately the two
      * given colors.
      *
-     * @param color1
+     * @param colorEvenRows
      *         The color that will be returned for rows with an even index.
-     * @param color2
+     * @param colorOddRows
      *         The color that will be returned for rows with an odd index.
      * @return The described {link TableDataRowColoriser}.
      */
-    public static TableDataRowColorizer<Object> alternatingRows(int color1, int color2) {
-        return new AlternatingTableDataRowColorizer(color1, color2);
+    public static TableDataRowColorizer<Object> alternatingRows(final int colorEvenRows, final int colorOddRows) {
+        return new AlternatingTableDataRowColorizer(colorEvenRows, colorOddRows);
     }
 
 
@@ -45,14 +45,14 @@ public class TableDataRowColorizers {
      */
     private static class SimpleTableDataRowColorizer implements TableDataRowColorizer<Object> {
 
-        private int color;
+        private final int color;
 
-        public SimpleTableDataRowColorizer(int color) {
+        public SimpleTableDataRowColorizer(final int color) {
             this.color = color;
         }
 
         @Override
-        public int getRowColor(int rowIndex, Object rowData) {
+        public int getRowColor(final int rowIndex, final Object rowData) {
             return color;
         }
     }
@@ -65,20 +65,20 @@ public class TableDataRowColorizers {
      */
     private static class AlternatingTableDataRowColorizer implements TableDataRowColorizer<Object> {
 
-        private final int firstColor;
-        private final int secondColor;
+        private final int colorEven;
+        private final int colorOdd;
 
-        public AlternatingTableDataRowColorizer(int firstColor, int secondColor) {
-            this.firstColor = firstColor;
-            this.secondColor = secondColor;
+        public AlternatingTableDataRowColorizer(final int colorEven, final int colorOdd) {
+            this.colorEven = colorEven;
+            this.colorOdd = colorOdd;
         }
 
         @Override
-        public int getRowColor(int rowIndex, Object rowData) {
+        public int getRowColor(final int rowIndex, final Object rowData) {
             if (rowIndex % 2 == 0) {
-                return firstColor;
+                return colorEven;
             }
-            return secondColor;
+            return colorOdd;
         }
     }
 
