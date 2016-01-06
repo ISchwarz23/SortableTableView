@@ -89,9 +89,9 @@ public class TableView<T> extends LinearLayout {
     public TableView(final Context context, final AttributeSet attributes, final int styleAttributes) {
         super(context, attributes, styleAttributes);
         setOrientation(LinearLayout.VERTICAL);
-        setAttributes(context, attributes);
+        setAttributes(attributes);
         setupTableHeaderView();
-        setupTableDataView();
+        setupTableDataView(attributes, styleAttributes);
     }
 
     /**
@@ -279,8 +279,8 @@ public class TableView<T> extends LinearLayout {
         }
     }
 
-    private void setAttributes(final Context context, final AttributeSet attributes) {
-        final TypedArray styledAttributes = context.obtainStyledAttributes(attributes, R.styleable.TableView);
+    private void setAttributes(final AttributeSet attributes) {
+        final TypedArray styledAttributes = getContext().obtainStyledAttributes(attributes, R.styleable.TableView);
 
         headerColor = styledAttributes.getInt(R.styleable.TableView_headerColor, DEFAULT_HEADER_COLOR);
         headerElevation = styledAttributes.getInt(R.styleable.TableView_headerElevation, DEFAULT_HEADER_ELEVATION);
@@ -301,7 +301,7 @@ public class TableView<T> extends LinearLayout {
         setHeaderView(tableHeaderView);
     }
 
-    private void setupTableDataView() {
+    private void setupTableDataView(final AttributeSet attributes, final int styleAttributes) {
         final LayoutParams dataViewLayoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 
         if (isInEditMode()) {
@@ -311,7 +311,7 @@ public class TableView<T> extends LinearLayout {
         }
         tableDataAdapter.setRowColoriser(dataRowColoriser);
 
-        tableDataView = new ListView(getContext());
+        tableDataView = new ListView(getContext(), attributes, styleAttributes);
         tableDataView.setOnItemClickListener(new InternalDataClickListener());
         tableDataView.setLayoutParams(dataViewLayoutParams);
         tableDataView.setAdapter(tableDataAdapter);
