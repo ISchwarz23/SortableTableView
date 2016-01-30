@@ -34,7 +34,7 @@ android {
     defaultConfig {
         minSdkVersion 11
         targetSdkVersion 22
-        versionCode 2
+        versionCode 6
         versionName tableViewLibraryVersion
     }
     buildTypes {
