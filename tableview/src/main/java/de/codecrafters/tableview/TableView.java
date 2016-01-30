@@ -33,6 +33,8 @@ public class TableView<T> extends LinearLayout {
 
     private static final String LOG_TAG = TableView.class.getName();
 
+    private static final int ID_DATA_VIEW = 101010;
+
     private static final int DEFAULT_COLUMN_COUNT = 4;
     private static final int DEFAULT_HEADER_ELEVATION = 1;
     private static final int DEFAULT_HEADER_COLOR = 0xFFCCCCCC;
@@ -105,6 +107,7 @@ public class TableView<T> extends LinearLayout {
 
         tableHeaderView.setAdapter(tableHeaderAdapter);
         tableHeaderView.setBackgroundColor(headerColor);
+        tableHeaderView.setId(R.id.table_header_view);
 
         if(getChildCount() == 2) {
             removeViewAt(0);
@@ -315,6 +318,7 @@ public class TableView<T> extends LinearLayout {
         tableDataView.setOnItemClickListener(new InternalDataClickListener());
         tableDataView.setLayoutParams(dataViewLayoutParams);
         tableDataView.setAdapter(tableDataAdapter);
+        tableDataView.setId(R.id.table_data_view);
 
         addView(tableDataView);
     }
@@ -402,7 +406,7 @@ public class TableView<T> extends LinearLayout {
         @Override
         public View getHeaderView(final int columnIndex, final ViewGroup parentView) {
             final TextView textView = new TextView(getContext());
-            textView.setText("Header " + columnIndex);
+            textView.setText(getResources().getString(R.string.default_header, columnIndex));
             textView.setPadding(20, 40, 20, 40);
             textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
             textView.setTextSize(TEXT_SIZE);
@@ -427,7 +431,7 @@ public class TableView<T> extends LinearLayout {
         @Override
         public View getCellView(final int rowIndex, final int columnIndex, final ViewGroup parent) {
             final TextView textView = new TextView(getContext());
-            textView.setText("Cell [" + columnIndex + ":" + rowIndex + "]");
+            textView.setText(getResources().getString(R.string.default_cell, columnIndex, rowIndex));
             textView.setPadding(20, 10, 20, 10);
             textView.setTextSize(TEXT_SIZE);
             return textView;
