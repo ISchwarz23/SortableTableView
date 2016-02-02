@@ -10,7 +10,7 @@ android:
     # The BuildTools version used by this project
     - build-tools-23.0.2
     # The SDK version used to compile this project
-    - android-22
+    - android-23
     # Additional components	
     - extra-android-support
     - extra-android-m2repository
