@@ -238,8 +238,8 @@ For SortableTableViews it is also possible to replace the default **sortable ind
 There is also a factory class existing called `SortStateViewProviders` where you can get some predefined implementations of the `SortStateViewProvider`.
 
 #### Data Row Styling
-In general you can do all your styling of data content in your custom `TableDataAdapter`. But if you want to add colouring of whole table rows you can use the `TableDataRowColoriser`. There are alreasy some implementations of the `TableDataRowColoriser` existing in the library. You can get the by using the Factory class `TableDataRowColorisers`.  
-This Factory contains for example an alternating-table-data-row coloriser that will colour rows with even index different from rows with odd index.
+In general you can do all your styling of data content in your custom `TableDataAdapter`. But if you want to add colouring of whole table rows you can use the `TableDataRowColorizer`. There are alreasy some implementations of the `TableDataRowColorizer` existing in the library. You can get the by using the Factory class `TableDataRowColorizers`.  
+This Factory contains for example an alternating-table-data-row colorizer that will colour rows with even index different from rows with odd index.
 ```java
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -248,20 +248,20 @@ This Factory contains for example an alternating-table-data-row coloriser that w
         // ...
     	int colorEvenRows = getResources().getColor(R.color.white);
     	int colorOddRows = getResources().getColor(R.color.gray);
-    	tableView.setDataRowColoriser(TableDataRowColorisers.alternatingRows(colorEvenRows, colorOddRows));
+    	tableView.setDataRowColoriser(TableDataRowColorizers.alternatingRows(colorEvenRows, colorOddRows));
     }
 ```
-If the implementations of `TableDataRowColoriser` contained in the `TableDataRowColorisers` factory don't fulfil you needs you can create your own implementation of `TableDataRowColoriser`. Here is a small example of how to do so.
+If the implementations of `TableDataRowColorizer` contained in the `TableDataRowColorizers` factory don't fulfil you needs you can create your own implementation of `TableDataRowColorizer`. Here is a small example of how to do so.
 ```java
     @Override
     protected void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
     	setContentView(R.layout.activity_main);
         // ...
-        tableView.setDataRowColoriser(new CarPriceRowColoriser());
+        tableView.setDataRowColoriser(new CarPriceRowColorizer());
     }
     
-    private static class CarPriceRowColoriser implements TableDataRowColoriser<Car> {
+    private static class CarPriceRowColorizer implements TableDataRowColorizer<Car> {
         @Override
         public int getRowColor(int rowIndex, Car car) {
             int rowColor = getResources(R.color.white);
@@ -276,7 +276,7 @@ If the implementations of `TableDataRowColoriser` contained in the `TableDataRow
         }
     }
 ```
-This coloriser will set the background colour of each row corresponding to the price of the car that is displayed at in this row. Cheap cars (less then 50,000) get a green background, expensive cars (more then 100,000) get a red background and all other cars get a white background.
+This colorizer will set the background colour of each row corresponding to the price of the car that is displayed at in this row. Cheap cars (less then 50,000) get a green background, expensive cars (more then 100,000) get a red background and all other cars get a white background.
   
 ## License
 *Copyright 2015 Ingo Schwarz*  
