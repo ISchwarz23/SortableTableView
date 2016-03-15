@@ -128,6 +128,29 @@ public class SortableTableView<T> extends TableView<T> {
     }
 
     /**
+     * Gives the index of the currently sorted column. The first column is 0.
+     * If no column has been sorted returns -1.
+     *
+     * @return The currently sorted column, -1 if no column is sorted.
+     */
+    public int getSortedColumnIndex(){
+        return sortingController.getSortedColumnIndex();
+    }
+
+    /**
+     * Will be true if the currently sorted column is sorted in ascending order, false
+     * if the currently sorted column is sorted in descending order.
+     *
+     * If no column has been sorted then the result will be true by default. Use in combination
+     * with {@code getSortedColumnIndex} to check if the result is for a currently sorted column.
+     *
+     * @return False if the column is sorted descending, True if sorted ascending or no column is sorted.
+     */
+    public boolean isSortedAscending(){
+        return sortingController.isSortedUp();
+    }
+
+    /**
      * Sorts the table by the values of the column with the given index.\n
      * This method has the same effect like a click of the user to the table header of the given column. (This means
      * calling this method twice on the same column index will cause a descending ordering). Better practice for
@@ -140,20 +163,23 @@ public class SortableTableView<T> extends TableView<T> {
         sortingController.onHeaderClicked(columnIndex);
     }
 
-    public void sort(final int columnIndex, boolean sortAscending){
+    /**
+     * Sorts the table by the values of the column with the given index in the given direction.\n
+     * This will update the direction of the header sort views.
+     *
+     * @param columnIndex
+     *          The index of the column on which the sorting shall be executed.
+     * @param sortAscending
+     *          True to sort the given column in ascending order, False for descending order.
+     */
+    public void sort(final int columnIndex, final boolean sortAscending){
         sortingController.sort(columnIndex, sortAscending);
     }
 
-    public int getSortedColumn(){
-        return sortingController.sortedColumnIndex;
-    }
-
-    public boolean isSortedUp(){
-        return sortingController.isSortedUp;
-    }
-
     /**
-     * Sorts the table using the given {@link Comparator}.
+     * Sorts the table using the given {@link Comparator}.\n
+     * Calling this method will not update the sort state views in the header.
+     * The {@code getSortedColumnIndex} and {@code isSortedAscending} will not be updated after a call to this method.
      *
      * @param comparator
      *         The {@link Comparator} that shall be used to sort the table.
