@@ -140,6 +140,18 @@ public class SortableTableView<T> extends TableView<T> {
         sortingController.onHeaderClicked(columnIndex);
     }
 
+    public void sort(final int columnIndex, boolean sortAscending){
+        sortingController.sort(columnIndex, sortAscending);
+    }
+
+    public int getSortedColumn(){
+        return sortingController.sortedColumnIndex;
+    }
+
+    public boolean isSortedUp(){
+        return sortingController.isSortedUp;
+    }
+
     /**
      * Sorts the table using the given {@link Comparator}.
      *
@@ -175,6 +187,20 @@ public class SortableTableView<T> extends TableView<T> {
             setSortView(columnIndex);
 
             sortedColumnIndex = columnIndex;
+        }
+
+        private void sort(final int columnIndex, boolean sortAscending){
+            isSortedUp = !sortAscending;
+            sortedColumnIndex = columnIndex;
+            onHeaderClicked(columnIndex);
+        }
+
+        public int getSortedColumnIndex(){
+            return sortedColumnIndex;
+        }
+
+        public boolean isSortedUp(){
+            return isSortedUp;
         }
 
         private void setSortView(final int columnIndex) {
