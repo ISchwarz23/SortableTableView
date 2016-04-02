@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         SortableCarTableView carTableView = (SortableCarTableView) findViewById(R.id.tableView);
         carTableView.setDataAdapter(new CarTableDataAdapter(this, CAR_LIST));
         carTableView.addDataClickListener(new CarClickListener());
+        carTableView.setSaveEnabled(false);
     }
 
 

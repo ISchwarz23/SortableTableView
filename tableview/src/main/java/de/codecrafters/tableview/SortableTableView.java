@@ -2,6 +2,8 @@ package de.codecrafters.tableview;
 
 import android.content.Context;
 import android.database.DataSetObserver;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.util.Log;
 
@@ -27,8 +29,10 @@ import de.codecrafters.tableview.providers.SortStateViewProvider;
  */
 public class SortableTableView<T> extends TableView<T> {
 
+    public static final String SAVED_STATE_SUPER_STATE = "SAVED_STATE_SUPER";
+    public static final String SAVED_STATE_SORTED_DIRECTION = "SAVED_STATE_SORTED_DIRECTION";
+    public static final String SAVED_STATE_SORTED_COLUMN = "SAVED_STATE_SORTED_COLUMN";
     private static final String LOG_TAG = SortableTableView.class.getName();
-
     private final SortableTableHeaderView sortableTableHeaderView;
     private final SortingController sortingController;
 
@@ -141,6 +145,18 @@ public class SortableTableView<T> extends TableView<T> {
     }
 
     /**
+     * Sorts the table by the values of the column of the given index.
+     *
+     * @param columnIndex
+     *         The index of the column for which the sorting shall be executed.
+     * @param sortAscending
+     *         Indicates whether the table was sorted ascending {@code TRUE} or descending {@code FALSE}.
+     */
+    public void sort(final int columnIndex, final boolean sortAscending) {
+        sortingController.sort(columnIndex, sortAscending);
+    }
+
+    /**
      * Sorts the table using the given {@link Comparator}.
      *
      * @param comparator
@@ -150,6 +166,27 @@ public class SortableTableView<T> extends TableView<T> {
         sortingController.sortDataSFCT(comparator);
     }
 
+    @Override
+    protected Parcelable onSaveInstanceState() {
+        final Bundle state = new Bundle();
+        state.putParcelable(SAVED_STATE_SUPER_STATE, super.onSaveInstanceState());
+        state.putBoolean(SAVED_STATE_SORTED_DIRECTION, sortingController.isSortedUp);
+        state.putInt(SAVED_STATE_SORTED_COLUMN, sortingController.sortedColumnIndex);
+        return state;
+    }
+
+    @Override
+    protected void onRestoreInstanceState(final Parcelable state) {
+        if (state instanceof Bundle) {
+            final Bundle savedState = (Bundle) state;
+            final Parcelable superState = savedState.getParcelable(SAVED_STATE_SUPER_STATE);
+            final boolean wasSortedUp = savedState.getBoolean(SAVED_STATE_SORTED_DIRECTION, false);
+            final int sortedColumnIndex = savedState.getInt(SAVED_STATE_SORTED_COLUMN, -1);
+
+            super.onRestoreInstanceState(superState);
+            sortingController.sort(sortedColumnIndex, wasSortedUp);
+        }
+    }
 
     /**
      * A controller managing all actions that are in the context of sorting.
@@ -175,6 +212,25 @@ public class SortableTableView<T> extends TableView<T> {
             setSortView(columnIndex);
 
             sortedColumnIndex = columnIndex;
+        }
+
+        public void sort(final int columnIndex, final boolean sortUp) {
+            if (!comparators.containsKey(columnIndex)) {
+                Log.i(LOG_TAG, "Unable to sort column with index " + columnIndex + ". Reason: no comparator set for this column.");
+                return;
+            }
+
+            Comparator<T> columnComparator = comparators.get(columnIndex);
+            if (!sortUp) {
+                columnComparator = Collections.reverseOrder(columnComparator);
+            }
+
+            sortedColumnComparator = columnComparator;
+            sortedColumnIndex = columnIndex;
+            isSortedUp = sortUp;
+
+            sortDataSFCT(columnComparator);
+            setSortView(columnIndex);
         }
 
         private void setSortView(final int columnIndex) {
