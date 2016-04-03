@@ -20,13 +20,11 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/separator"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@id/kw_view"
         android:layout_toEndOf="@id/kw_view"
-        android:textSize="30sp"
-        android:textColor="@android:color/secondary_text_dark"/>
+        android:textSize="30sp"/>
 
     <TextView
         android:id="@+id/ps_view"

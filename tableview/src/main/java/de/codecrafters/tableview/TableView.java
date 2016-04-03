@@ -273,6 +273,13 @@ public class TableView<T> extends LinearLayout {
         return columnModel.getColumnWeight(columnIndex);
     }
 
+    @Override
+    public void setSaveEnabled(final boolean enabled) {
+        super.setSaveEnabled(enabled);
+        tableHeaderView.setSaveEnabled(enabled);
+        tableDataView.setSaveEnabled(enabled);
+    }
+
     private void forceRefresh() {
         if(tableHeaderView != null) {
             tableHeaderView.invalidate();
