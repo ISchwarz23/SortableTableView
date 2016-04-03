@@ -4,7 +4,7 @@ An Android library providing a TableView and a SortableTableView.
 
 ![SortableTableView Example](https://raw.githubusercontent.com/ISchwarz23/SortableTableView/develop/README/SortableTableView-Example.gif)
 
-**Minimum SDK-Version:** 11  |  **Compile SDK-Version:** 23  |  **Latest Library Version:** 1.0.1  
+**Minimum SDK-Version:** 11  |  **Compile SDK-Version:** 23  |  **Latest Library Version:** 1.1.0  
 
 ## Repository Content
 **tableview** - contains the android library sources and resources  
@@ -17,7 +17,7 @@ To use the this library in your project simply add the following dependency to y
 ```
     dependencies {
         ...
-        compile 'de.codecrafters.tableview:tableview:1.0.1'
+        compile 'de.codecrafters.tableview:tableview:1.1.0'
         ...
     }
 ```
@@ -277,6 +277,12 @@ If the implementations of `TableDataRowColorizer` contained in the `TableDataRow
     }
 ```
 This colorizer will set the background colour of each row corresponding to the price of the car that is displayed at in this row. Cheap cars (less then 50,000) get a green background, expensive cars (more then 100,000) get a red background and all other cars get a white background.
+  
+### State Persistence
+The TableView as well as the SortableTableView will persist its state automatically (e.g. on orientation change). If you want to disable this behaviour you can do so using the following code snipped.
+```java
+    tableView.setSaveEnabled( false );
+```  
   
 ## License
 *Copyright 2015 Ingo Schwarz*  
