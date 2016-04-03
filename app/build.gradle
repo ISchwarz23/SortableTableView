@@ -8,7 +8,7 @@ android {
         applicationId "de.codecrafters.tableviewexample"
         minSdkVersion 13
         targetSdkVersion 23
-        versionCode 2
+        versionCode 3
         versionName "1.1"
     }
     buildTypes {
