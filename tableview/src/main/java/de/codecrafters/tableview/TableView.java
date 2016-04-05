@@ -92,7 +92,7 @@ public class TableView<T> extends LinearLayout {
         super(context, attributes, styleAttributes);
         setOrientation(LinearLayout.VERTICAL);
         setAttributes(attributes);
-        setupTableHeaderView();
+        setupTableHeaderView(attributes);
         setupTableDataView(attributes, styleAttributes);
     }
 
@@ -300,7 +300,7 @@ public class TableView<T> extends LinearLayout {
         styledAttributes.recycle();
     }
 
-    private void setupTableHeaderView() {
+    private void setupTableHeaderView(final AttributeSet attributes) {
         if (isInEditMode()) {
             tableHeaderAdapter = new EditModeTableHeaderAdapter(getContext());
         } else {
@@ -312,7 +312,7 @@ public class TableView<T> extends LinearLayout {
     }
 
     private void setupTableDataView(final AttributeSet attributes, final int styleAttributes) {
-        final LayoutParams dataViewLayoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+        final LayoutParams dataViewLayoutParams = new LayoutParams(getWidthAttribute(attributes), LayoutParams.MATCH_PARENT);
 
         if (isInEditMode()) {
             tableDataAdapter = new EditModeTableDataAdapter(getContext());
@@ -330,6 +330,12 @@ public class TableView<T> extends LinearLayout {
         addView(tableDataView);
     }
 
+    private int getWidthAttribute(final AttributeSet attributes) {
+        final TypedArray ta = getContext().obtainStyledAttributes(attributes, new int[]{ android.R.attr.layout_width });
+        final int layoutWidth = ta.getLayoutDimension(0, ViewGroup.LayoutParams.MATCH_PARENT);
+        ta.recycle();
+        return layoutWidth;
+    }
 
     /**
      * Internal management of clicks on the data view.
