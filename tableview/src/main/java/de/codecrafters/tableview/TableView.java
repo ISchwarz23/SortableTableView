@@ -40,14 +40,11 @@ public class TableView<T> extends LinearLayout {
     private static final int DEFAULT_HEADER_COLOR = 0xFFCCCCCC;
 
     private final Set<TableDataClickListener<T>> dataClickListeners = new HashSet<>();
+    protected TableDataAdapter<T> tableDataAdapter;
     private TableColumnModel columnModel;
-
     private TableHeaderView tableHeaderView;
     private ListView tableDataView;
-
     private TableHeaderAdapter tableHeaderAdapter;
-    protected TableDataAdapter<T> tableDataAdapter;
-
     private TableDataRowColorizer<? super T> dataRowColoriser = TableDataRowColorizers.similarRowColor(0x00000000);
 
     private int headerElevation;
@@ -92,7 +89,7 @@ public class TableView<T> extends LinearLayout {
         super(context, attributes, styleAttributes);
         setOrientation(LinearLayout.VERTICAL);
         setAttributes(attributes);
-        setupTableHeaderView();
+        setupTableHeaderView(attributes);
         setupTableDataView(attributes, styleAttributes);
     }
 
@@ -109,7 +106,7 @@ public class TableView<T> extends LinearLayout {
         tableHeaderView.setBackgroundColor(headerColor);
         tableHeaderView.setId(R.id.table_header_view);
 
-        if(getChildCount() == 2) {
+        if (getChildCount() == 2) {
             removeViewAt(0);
         }
 
@@ -203,6 +200,15 @@ public class TableView<T> extends LinearLayout {
     }
 
     /**
+     * Gives the {@link TableHeaderAdapter} that is used to render the header views for each column.
+     *
+     * @return The {@link TableHeaderAdapter} that is currently set.
+     */
+    public TableHeaderAdapter getHeaderAdapter() {
+        return tableHeaderAdapter;
+    }
+
+    /**
      * Sets the {@link TableHeaderAdapter} that is used to render the header views for each column.
      *
      * @param headerAdapter
@@ -213,6 +219,15 @@ public class TableView<T> extends LinearLayout {
         tableHeaderAdapter.setColumnModel(columnModel);
         tableHeaderView.setAdapter(tableHeaderAdapter);
         forceRefresh();
+    }
+
+    /**
+     * Gives the {@link TableDataAdapter} that is used to render the data view for each cell.
+     *
+     * @return The {@link TableDataAdapter} that is currently set.
+     */
+    public TableDataAdapter<T> getDataAdapter() {
+        return tableDataAdapter;
     }
 
     /**
@@ -230,6 +245,15 @@ public class TableView<T> extends LinearLayout {
     }
 
     /**
+     * Gives the number of columns of this table.
+     *
+     * @return The current number of columns.
+     */
+    public int getColumnCount() {
+        return columnModel.getColumnCount();
+    }
+
+    /**
      * Sets the number of columns of this table.
      *
      * @param columnCount
@@ -238,15 +262,6 @@ public class TableView<T> extends LinearLayout {
     public void setColumnCount(final int columnCount) {
         columnModel.setColumnCount(columnCount);
         forceRefresh();
-    }
-
-    /**
-     * Gives the number of columns of this table.
-     *
-     * @return The current number of columns.
-     */
-    public int getColumnCount() {
-        return columnModel.getColumnCount();
     }
 
     /**
@@ -281,10 +296,10 @@ public class TableView<T> extends LinearLayout {
     }
 
     private void forceRefresh() {
-        if(tableHeaderView != null) {
+        if (tableHeaderView != null) {
             tableHeaderView.invalidate();
         }
-        if(tableDataView != null) {
+        if (tableDataView != null) {
             tableDataView.invalidate();
         }
     }
@@ -300,7 +315,7 @@ public class TableView<T> extends LinearLayout {
         styledAttributes.recycle();
     }
 
-    private void setupTableHeaderView() {
+    private void setupTableHeaderView(final AttributeSet attributes) {
         if (isInEditMode()) {
             tableHeaderAdapter = new EditModeTableHeaderAdapter(getContext());
         } else {
@@ -312,7 +327,7 @@ public class TableView<T> extends LinearLayout {
     }
 
     private void setupTableDataView(final AttributeSet attributes, final int styleAttributes) {
-        final LayoutParams dataViewLayoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+        final LayoutParams dataViewLayoutParams = new LayoutParams(getWidthAttribute(attributes), LayoutParams.MATCH_PARENT);
 
         if (isInEditMode()) {
             tableDataAdapter = new EditModeTableDataAdapter(getContext());
@@ -330,6 +345,12 @@ public class TableView<T> extends LinearLayout {
         addView(tableDataView);
     }
 
+    private int getWidthAttribute(final AttributeSet attributes) {
+        final TypedArray ta = getContext().obtainStyledAttributes(attributes, new int[]{android.R.attr.layout_width});
+        final int layoutWidth = ta.getLayoutDimension(0, ViewGroup.LayoutParams.MATCH_PARENT);
+        ta.recycle();
+        return layoutWidth;
+    }
 
     /**
      * Internal management of clicks on the data view.

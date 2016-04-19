@@ -145,7 +145,7 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
     public abstract View getCellView(int rowIndex, int columnIndex, ViewGroup parentView);
 
     @Override
-    public View getView(final int rowIndex, final View convertView, final ViewGroup parent) {
+    public final View getView(final int rowIndex, final View convertView, final ViewGroup parent) {
         final LinearLayout rowView = new LinearLayout(getContext());
 
         final AbsListView.LayoutParams rowLayoutParams = new AbsListView.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
@@ -171,7 +171,7 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
 
             final int width = widthUnit * columnModel.getColumnWeight(columnIndex);
 
-            final LinearLayout.LayoutParams cellLayoutParams = new LinearLayout.LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT);
+            final LinearLayout.LayoutParams cellLayoutParams = new LinearLayout.LayoutParams(width, LinearLayout.LayoutParams.WRAP_CONTENT);
             cellLayoutParams.weight = columnModel.getColumnWeight(columnIndex);
             cellView.setLayoutParams(cellLayoutParams);
             rowView.addView(cellView);
