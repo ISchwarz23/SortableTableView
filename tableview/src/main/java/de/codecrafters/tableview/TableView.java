@@ -307,9 +307,9 @@ public class TableView<T> extends LinearLayout {
     private void setAttributes(final AttributeSet attributes) {
         final TypedArray styledAttributes = getContext().obtainStyledAttributes(attributes, R.styleable.TableView);
 
-        headerColor = styledAttributes.getInt(R.styleable.TableView_headerColor, DEFAULT_HEADER_COLOR);
-        headerElevation = styledAttributes.getInt(R.styleable.TableView_headerElevation, DEFAULT_HEADER_ELEVATION);
-        final int columnCount = styledAttributes.getInt(R.styleable.TableView_columnCount, DEFAULT_COLUMN_COUNT);
+        headerColor = styledAttributes.getInt(R.styleable.TableView_tableView_headerColor, DEFAULT_HEADER_COLOR);
+        headerElevation = styledAttributes.getInt(R.styleable.TableView_tableView_headerElevation, DEFAULT_HEADER_ELEVATION);
+        final int columnCount = styledAttributes.getInt(R.styleable.TableView_tableView_columnCount, DEFAULT_COLUMN_COUNT);
         columnModel = new TableColumnModel(columnCount);
 
         styledAttributes.recycle();

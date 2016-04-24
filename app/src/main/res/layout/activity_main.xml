@@ -18,8 +18,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/toolbar"
-        custom:columnCount="4"
-        custom:headerElevation="10"
-        custom:headerColor="@color/primary" />
+        custom:tableView_columnCount="4"
+        custom:tableView_headerElevation="10"
+        custom:tableView_headerColor="@color/primary" />
 
 </RelativeLayout>
