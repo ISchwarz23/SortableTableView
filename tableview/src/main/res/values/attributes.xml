@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="TableView">
-        <attr name="columnCount" format="integer"/>
-        <attr name="headerElevation" format="integer"/>
-        <attr name="headerColor" format="color"/>
+        <attr name="tableView_columnCount" format="integer"/>
+        <attr name="tableView_headerElevation" format="integer"/>
+        <attr name="tableView_headerColor" format="color"/>
     </declare-styleable>
 </resources>
 

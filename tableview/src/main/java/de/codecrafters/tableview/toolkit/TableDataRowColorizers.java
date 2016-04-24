@@ -11,26 +11,26 @@ import de.codecrafters.tableview.colorizers.TableDataRowColorizer;
 public final class TableDataRowColorizers {
 
     /**
-     * Gives an implementation of {link TableDataRowColoriser} that will return the given color
+     * Gives an implementation of {@link TableDataRowColorizer} that will return the given color
      * for every row.
      *
      * @param color
      *         The color that shall be applied to every table data row.
-     * @return The described {link TableDataRowColoriser}.
+     * @return The described {@link TableDataRowColorizer}.
      */
     public static TableDataRowColorizer<Object> similarRowColor(final int color) {
         return new SimpleTableDataRowColorizer(color);
     }
 
     /**
-     * Gives an implementation of {link TableDataRowColoriser} that will return alternately the two
+     * Gives an implementation of {@link TableDataRowColorizer} that will return alternately the two
      * given colors.
      *
      * @param colorEvenRows
      *         The color that will be returned for rows with an even index.
      * @param colorOddRows
      *         The color that will be returned for rows with an odd index.
-     * @return The described {link TableDataRowColoriser}.
+     * @return The described {@link TableDataRowColorizer}.
      */
     public static TableDataRowColorizer<Object> alternatingRows(final int colorEvenRows, final int colorOddRows) {
         return new AlternatingTableDataRowColorizer(colorEvenRows, colorOddRows);
@@ -38,7 +38,7 @@ public final class TableDataRowColorizers {
 
 
     /**
-     * An implementation of {link TableDataRowColoriser} that will return the given color
+     * An implementation of {@link TableDataRowColorizer} that will return the given color
      * for every row.
      *
      * @author ISchwarz
@@ -58,7 +58,7 @@ public final class TableDataRowColorizers {
     }
 
     /**
-     * An implementation of {link TableDataRowColoriser} that will return alternately the two
+     * An implementation of {@link TableDataRowColorizer} that will return alternately the two
      * given colors.
      *
      * @author ISchwarz

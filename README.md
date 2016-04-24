@@ -4,7 +4,7 @@ An Android library providing a TableView and a SortableTableView.
 
 ![SortableTableView Example](https://raw.githubusercontent.com/ISchwarz23/SortableTableView/develop/README/SortableTableView-Example.gif)
 
-**Minimum SDK-Version:** 11  |  **Compile SDK-Version:** 23  |  **Latest Library Version:** 1.1.1  
+**Minimum SDK-Version:** 11  |  **Compile SDK-Version:** 23  |  **Latest Library Version:** 2.0.0  
 
 ## Repository Content
 **tableview** - contains the android library sources and resources  
@@ -17,7 +17,7 @@ To use the this library in your project simply add the following dependency to y
 ```
     dependencies {
         ...
-        compile 'de.codecrafters.tableview:tableview:1.1.1'
+        compile 'de.codecrafters.tableview:tableview:2.0.0'
         ...
     }
 ```
@@ -32,7 +32,7 @@ The provided TableView is very easy to adapt to your needs. To set the column co
         android:id="@+id/tableView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        table:columnCount="4" />
+        table:tableView_columnCount="4" />
 ```
 A second possibility to define the column count of your TableView is to set it directly in the code.
 ```java
@@ -183,7 +183,7 @@ The table view provides several possibilities to style its header. One possibili
         android:id="@+id/tableView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        table:headerColor="@color/primary" />
+        table:tableView_headerColor="@color/primary" />
 ```
 ```java
     tableView.setHeaderBackgroundColor(getResources().getColor(R.color.primary));
@@ -199,7 +199,7 @@ In addition you can set an **elevation** of the table header. To achieve this yo
         android:id="@+id/tableView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        table:headerElevation="10" />
+        table:tableView_headerElevation="10" />
 ```
 ```java
     tableView.setHeaderElevation(10);
@@ -213,7 +213,7 @@ For SortableTableViews it is also possible to replace the default **sortable ind
     	super.onCreate(savedInstanceState);
     	setContentView(R.layout.activity_main);
         // ...
-        sortbaleTableView.setHeaderSortStateViewProvider(new MySortStateViewProvider());
+        sortableTableView.setHeaderSortStateViewProvider(new MySortStateViewProvider());
     }
 
 	private static class MySortStateViewProvider implements SortStateViewProvider {
@@ -248,7 +248,7 @@ This Factory contains for example an alternating-table-data-row colorizer that w
         // ...
     	int colorEvenRows = getResources().getColor(R.color.white);
     	int colorOddRows = getResources().getColor(R.color.gray);
-    	tableView.setDataRowColoriser(TableDataRowColorizers.alternatingRows(colorEvenRows, colorOddRows));
+    	tableView.setDataRowColorizer(TableDataRowColorizers.alternatingRows(colorEvenRows, colorOddRows));
     }
 ```
 If the implementations of `TableDataRowColorizer` contained in the `TableDataRowColorizers` factory don't fulfil you needs you can create your own implementation of `TableDataRowColorizer`. Here is a small example of how to do so.
@@ -258,7 +258,7 @@ If the implementations of `TableDataRowColorizer` contained in the `TableDataRow
     	super.onCreate(savedInstanceState);
     	setContentView(R.layout.activity_main);
         // ...
-        tableView.setDataRowColoriser(new CarPriceRowColorizer());
+        tableView.setDataRowColorizer(new CarPriceRowColorizer());
     }
     
     private static class CarPriceRowColorizer implements TableDataRowColorizer<Car> {

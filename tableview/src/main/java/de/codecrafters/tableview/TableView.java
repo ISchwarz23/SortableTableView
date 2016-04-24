@@ -45,7 +45,7 @@ public class TableView<T> extends LinearLayout {
     private TableHeaderView tableHeaderView;
     private ListView tableDataView;
     private TableHeaderAdapter tableHeaderAdapter;
-    private TableDataRowColorizer<? super T> dataRowColoriser = TableDataRowColorizers.similarRowColor(0x00000000);
+    private TableDataRowColorizer<? super T> dataRowColorizer = TableDataRowColorizers.similarRowColor(0x00000000);
 
     private int headerElevation;
     private int headerColor;
@@ -151,12 +151,12 @@ public class TableView<T> extends LinearLayout {
      * Sets the given {@link TableDataRowColorizer} that will be used to define the background color for
      * every table data row.
      *
-     * @param coloriser
+     * @param colorizer
      *         The {@link TableDataRowColorizer} that shall be used.
      */
-    public void setDataRowColoriser(final TableDataRowColorizer<? super T> coloriser) {
-        dataRowColoriser = coloriser;
-        tableDataAdapter.setRowColoriser(coloriser);
+    public void setDataRowColorizer(final TableDataRowColorizer<? super T> colorizer) {
+        dataRowColorizer = colorizer;
+        tableDataAdapter.setRowColorizer(colorizer);
     }
 
     /**
@@ -239,7 +239,7 @@ public class TableView<T> extends LinearLayout {
     public void setDataAdapter(final TableDataAdapter<T> dataAdapter) {
         tableDataAdapter = dataAdapter;
         tableDataAdapter.setColumnModel(columnModel);
-        tableDataAdapter.setRowColoriser(dataRowColoriser);
+        tableDataAdapter.setRowColorizer(dataRowColorizer);
         tableDataView.setAdapter(tableDataAdapter);
         forceRefresh();
     }
@@ -307,9 +307,9 @@ public class TableView<T> extends LinearLayout {
     private void setAttributes(final AttributeSet attributes) {
         final TypedArray styledAttributes = getContext().obtainStyledAttributes(attributes, R.styleable.TableView);
 
-        headerColor = styledAttributes.getInt(R.styleable.TableView_headerColor, DEFAULT_HEADER_COLOR);
-        headerElevation = styledAttributes.getInt(R.styleable.TableView_headerElevation, DEFAULT_HEADER_ELEVATION);
-        final int columnCount = styledAttributes.getInt(R.styleable.TableView_columnCount, DEFAULT_COLUMN_COUNT);
+        headerColor = styledAttributes.getInt(R.styleable.TableView_tableView_headerColor, DEFAULT_HEADER_COLOR);
+        headerElevation = styledAttributes.getInt(R.styleable.TableView_tableView_headerElevation, DEFAULT_HEADER_ELEVATION);
+        final int columnCount = styledAttributes.getInt(R.styleable.TableView_tableView_columnCount, DEFAULT_COLUMN_COUNT);
         columnModel = new TableColumnModel(columnCount);
 
         styledAttributes.recycle();
@@ -334,7 +334,7 @@ public class TableView<T> extends LinearLayout {
         } else {
             tableDataAdapter = new DefaultTableDataAdapter(getContext());
         }
-        tableDataAdapter.setRowColoriser(dataRowColoriser);
+        tableDataAdapter.setRowColorizer(dataRowColorizer);
 
         tableDataView = new ListView(getContext(), attributes, styleAttributes);
         tableDataView.setOnItemClickListener(new InternalDataClickListener());
