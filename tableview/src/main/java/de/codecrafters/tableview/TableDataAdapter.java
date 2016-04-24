@@ -32,7 +32,7 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
 
     private TableColumnModel columnModel;
     private final List<T> data;
-    private TableDataRowColorizer<? super T> rowColoriser;
+    private TableDataRowColorizer<? super T> rowColorizer;
 
 
     /**
@@ -159,7 +159,7 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
             Log.w(LOG_TAG, "No row date available for row with index " + rowIndex + ". " +
                     "Caught Exception: " + e.getMessage());
         }
-        rowView.setBackgroundColor(rowColoriser.getRowColor(rowIndex, rowData));
+        rowView.setBackgroundColor(rowColorizer.getRowColor(rowIndex, rowData));
 
         final int widthUnit = (parent.getWidth() / columnModel.getColumnWeightSum());
 
@@ -181,13 +181,13 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
     }
 
     /**
-     * Sets the {@link TableDataRowColorizer} that will be used to colorise the table data rows.
+     * Sets the {@link TableDataRowColorizer} that will be used to colorize the table data rows.
      *
      * @param rowColorizer
      *         The {@link TableDataRowColorizer} that shall be used.
      */
-    protected void setRowColoriser(final TableDataRowColorizer<? super T> rowColorizer) {
-        this.rowColoriser = rowColorizer;
+    protected void setRowColorizer(final TableDataRowColorizer<? super T> rowColorizer) {
+        this.rowColorizer = rowColorizer;
     }
 
     /**

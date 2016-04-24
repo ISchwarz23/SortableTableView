@@ -2,12 +2,8 @@ package de.codecrafters.tableviewexample;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.widget.Toast;
-
-import java.util.Comparator;
 
 import de.codecrafters.tableview.SortableTableView;
-import de.codecrafters.tableview.listeners.TableDataClickListener;
 import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
 import de.codecrafters.tableview.toolkit.SortStateViewProviders;
 import de.codecrafters.tableview.toolkit.TableDataRowColorizers;
@@ -35,7 +31,7 @@ public class SortableCarTableView extends SortableTableView<Car> {
 
         int rowColorEven = context.getResources().getColor(R.color.table_data_row_even);
         int rowColorOdd = context.getResources().getColor(R.color.table_data_row_odd);
-        setDataRowColoriser(TableDataRowColorizers.alternatingRows(rowColorEven, rowColorOdd));
+        setDataRowColorizer(TableDataRowColorizers.alternatingRows(rowColorEven, rowColorOdd));
         setHeaderSortStateViewProvider(SortStateViewProviders.brightArrows());
 
         setColumnWeight(0, 2);

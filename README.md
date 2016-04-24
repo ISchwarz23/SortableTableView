@@ -248,7 +248,7 @@ This Factory contains for example an alternating-table-data-row colorizer that w
         // ...
     	int colorEvenRows = getResources().getColor(R.color.white);
     	int colorOddRows = getResources().getColor(R.color.gray);
-    	tableView.setDataRowColoriser(TableDataRowColorizers.alternatingRows(colorEvenRows, colorOddRows));
+    	tableView.setDataRowColorizer(TableDataRowColorizers.alternatingRows(colorEvenRows, colorOddRows));
     }
 ```
 If the implementations of `TableDataRowColorizer` contained in the `TableDataRowColorizers` factory don't fulfil you needs you can create your own implementation of `TableDataRowColorizer`. Here is a small example of how to do so.
@@ -258,7 +258,7 @@ If the implementations of `TableDataRowColorizer` contained in the `TableDataRow
     	super.onCreate(savedInstanceState);
     	setContentView(R.layout.activity_main);
         // ...
-        tableView.setDataRowColoriser(new CarPriceRowColorizer());
+        tableView.setDataRowColorizer(new CarPriceRowColorizer());
     }
     
     private static class CarPriceRowColorizer implements TableDataRowColorizer<Car> {
