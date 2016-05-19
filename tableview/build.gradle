@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 
-def final tableViewLibraryVersion = '2.0.1'
+def final tableViewLibraryVersion = '2.0.2'
 
 ext {
     bintrayRepo = 'maven'
@@ -47,13 +47,8 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:23.3.0'
+    compile 'com.android.support:appcompat-v7:23.4.0'
 
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:1.9.5'
 }
-
-
-// For releasing do a "gradlew install" followed by a "gradlew bintrayUpload"
-// apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
-// apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
