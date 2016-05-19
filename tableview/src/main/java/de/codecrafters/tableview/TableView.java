@@ -53,7 +53,7 @@ public class TableView<T> extends LinearLayout {
 
     /**
      * Creates a new TableView with the given context.\n
-     * (Has same effect like calling {@code new TableView(context, null, 0})
+     * (Has same effect like calling {@code new TableView(context, null, android.R.attr.listViewStyle})
      *
      * @param context
      *         The context that shall be used.
@@ -64,7 +64,7 @@ public class TableView<T> extends LinearLayout {
 
     /**
      * Creates a new TableView with the given context.\n
-     * (Has same effect like calling {@code new TableView(context, attrs, 0})
+     * (Has same effect like calling {@code new TableView(context, attrs, android.R.attr.listViewStyle})
      *
      * @param context
      *         The context that shall be used.
@@ -72,7 +72,7 @@ public class TableView<T> extends LinearLayout {
      *         The attributes that shall be set to the view.
      */
     public TableView(final Context context, final AttributeSet attributes) {
-        this(context, attributes, 0);
+        this(context, attributes, android.R.attr.listViewStyle);
     }
 
     /**

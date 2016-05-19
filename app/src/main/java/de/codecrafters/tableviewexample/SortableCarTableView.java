@@ -18,7 +18,7 @@ public class SortableCarTableView extends SortableTableView<Car> {
     }
 
     public SortableCarTableView(Context context, AttributeSet attributes) {
-        this(context, attributes, 0);
+        this(context, attributes, android.R.attr.listViewStyle);
     }
 
     public SortableCarTableView(Context context, AttributeSet attributes, int styleAttributes) {
