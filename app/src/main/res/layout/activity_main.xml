@@ -1,6 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
                 xmlns:custom="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:context="de.codecrafters.tableviewexample.MainActivity">
@@ -10,16 +10,47 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/primary"
-        custom:title="@string/title_activity_main"
-        custom:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+        custom:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        custom:title="@string/title_activity_main"/>
 
-    <de.codecrafters.tableviewexample.SortableCarTableView
-        android:id="@+id/tableView"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/toolbar"
-        custom:tableView_columnCount="4"
-        custom:tableView_headerElevation="10"
-        custom:tableView_headerColor="@color/primary" />
+        android:layout_below="@id/toolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <de.codecrafters.tableviewexample.SortableCarTableView
+                android:id="@+id/tableView1"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                custom:tableView_columnCount="4"
+                custom:tableView_headerColor="@color/primary"
+                custom:tableView_headerElevation="10"/>
+
+            <de.codecrafters.tableviewexample.SortableCarTableView
+                android:id="@+id/tableView2"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                custom:tableView_columnCount="4"
+                custom:tableView_headerColor="@color/primary"
+                custom:tableView_headerElevation="10"/>
+
+            <de.codecrafters.tableviewexample.SortableCarTableView
+                android:id="@+id/tableView3"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                custom:tableView_columnCount="4"
+                custom:tableView_headerColor="@color/primary"
+                custom:tableView_headerElevation="10"/>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </RelativeLayout>
+
+
