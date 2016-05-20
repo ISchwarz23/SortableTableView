@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
             setSupportActionBar(toolbar);
         }
 
-        final SortableCarTableView carTableView = (SortableCarTableView) findViewById(R.id.tableView1);
+        final SortableCarTableView carTableView = (SortableCarTableView) findViewById(R.id.tableView);
         carTableView.setDataAdapter(new CarTableDataAdapter(this, createAndGiveCarList()));
         carTableView.addDataClickListener(new CarClickListener());
     }
