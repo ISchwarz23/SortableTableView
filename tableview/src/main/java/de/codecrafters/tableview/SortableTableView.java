@@ -39,7 +39,7 @@ public class SortableTableView<T> extends TableView<T> {
 
     /**
      * Creates a new SortableTableView with the given context.\n
-     * (Has same effect like calling {@code new SortableTableView(context, null, 0})
+     * (Has same effect like calling {@code new SortableTableView(context, null, android.R.attr.listViewStyle})
      *
      * @param context
      *         The context that shall be used.
@@ -50,7 +50,7 @@ public class SortableTableView<T> extends TableView<T> {
 
     /**
      * Creates a new SortableTableView with the given context.\n
-     * (Has same effect like calling {@code new SortableTableView(context, attrs, 0})
+     * (Has same effect like calling {@code new SortableTableView(context, attrs, android.R.attr.listViewStyle})
      *
      * @param context
      *         The context that shall be used.
@@ -58,7 +58,7 @@ public class SortableTableView<T> extends TableView<T> {
      *         The attributes that shall be set to the view.
      */
     public SortableTableView(final Context context, final AttributeSet attributes) {
-        this(context, attributes, 0);
+        this(context, attributes, android.R.attr.listViewStyle);
     }
 
     /**
