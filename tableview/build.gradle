@@ -52,3 +52,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:1.9.5'
 }
+
+// For releasing do a "gradlew install" followed by a "gradlew bintrayUpload"
+// apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+// apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
