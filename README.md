@@ -278,6 +278,19 @@ If the implementations of `TableDataRowColorizer` contained in the `TableDataRow
 ```
 This colorizer will set the background colour of each row corresponding to the price of the car that is displayed at in this row. Cheap cars (less then 50,000) get a green background, expensive cars (more then 100,000) get a red background and all other cars get a white background.
   
+#### Seperator Styling  
+If you want to have a seperator between the data rows you can do so by specifying it in the XML like known from the `ListView`.
+```java
+    <de.codecrafters.tableview.TableView
+        android:id="@+id/tableView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@color/black"
+        android:dividerHeight="1dip"
+        ...  /> 
+```
+As for the `ListView` you can specify `divider` as a drawable and `dividerHeight` as the vertical size of the divider.  
+  
 ### State Persistence
 The TableView as well as the SortableTableView will persist its state automatically (e.g. on orientation change). If you want to disable this behaviour you can do so using the following code snipped.
 ```java
