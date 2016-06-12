@@ -12,6 +12,9 @@ import de.codecrafters.tableview.providers.SortStateViewProvider;
  */
 public final class SortStateViewProviders {
 
+    private SortStateViewProviders() {
+        //no instance
+    }
 
     /**
      * Gives a {@link SortStateViewProvider} that will provide dark (transparent black) arrows.
