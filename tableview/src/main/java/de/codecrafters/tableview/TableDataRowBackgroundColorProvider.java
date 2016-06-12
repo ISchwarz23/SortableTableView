@@ -9,9 +9,13 @@ import de.codecrafters.tableview.providers.TableDataRowBackgroundProvider;
 
 /**
  * A wrapper for a {@link TableDataRowColorizer} that implements the {@link TableDataRowBackgroundProvider} interface.
+ * <p/>
+ * The {@link TableDataRowBackgroundColorProvider} is deprecated as it is only used to map a
+ * {@link TableDataRowColorizer} to a {@link TableDataRowBackgroundProvider}.
  *
  * @author ISchwarz
  */
+@Deprecated
 class TableDataRowBackgroundColorProvider<T> implements TableDataRowBackgroundProvider<T> {
 
     private final TableDataRowColorizer<T> colorizer;

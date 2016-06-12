@@ -11,7 +11,7 @@ import de.codecrafters.tableview.providers.TableDataRowBackgroundProvider;
  *
  * @author ISchwarz
  */
-public class TableDataRowBackgroundProviders {
+public final class TableDataRowBackgroundProviders {
 
     private TableDataRowBackgroundProviders() {
         //no instance
