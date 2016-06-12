@@ -153,8 +153,7 @@ public class TableView<T> extends LinearLayout {
     /**
      * Sets the given {@link TableDataRowColorizer} that will be used to define the background color for
      * every table data row.
-     *<p/>
-     * This method is deprecated. Use {@link TableView#setDataRowBackgroundProvider} instead.
+     * @deprecated This method is deprecated. Use {@link TableView#setDataRowBackgroundProvider} instead.
      *
      * @param colorizer
      *         The {@link TableDataRowColorizer} that shall be used.

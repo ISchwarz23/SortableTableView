@@ -3,8 +3,7 @@ package de.codecrafters.tableview.colorizers;
 /**
  * A interface for a table data row background color provider. This enables easy coloring of
  * the rows of a {@link de.codecrafters.tableview.TableView}.
- * <p/>
- * The {@link TableDataRowColorizer} is deprecated. Use
+ * @deprecated The {@link TableDataRowColorizer} is deprecated. Use
  * {@link de.codecrafters.tableview.providers.TableDataRowBackgroundProvider} instead.
  *
  * @author ISchwarz

@@ -4,8 +4,7 @@ import de.codecrafters.tableview.colorizers.TableDataRowColorizer;
 
 /**
  * Factory for different {@link TableDataRowColorizer}.
- * <p>/>
- * The {@link TableDataRowColorizers} is deprecated. Use the {@link TableDataRowBackgroundProviders} instead.
+ * @deprecated The {@link TableDataRowColorizers} is deprecated. Use the {@link TableDataRowBackgroundProviders} instead.
  *
  * @author ISchwarz
  */
