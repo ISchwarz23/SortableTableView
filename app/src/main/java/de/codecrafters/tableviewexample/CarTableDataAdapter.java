@@ -3,16 +3,17 @@ package de.codecrafters.tableviewexample;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 import de.codecrafters.tableview.TableDataAdapter;
 import de.codecrafters.tableviewexample.data.Car;
+
+import static java.lang.String.format;
 
 
 public class CarTableDataAdapter extends TableDataAdapter<Car> {
@@ -70,8 +71,8 @@ public class CarTableDataAdapter extends TableDataAdapter<Car> {
         final TextView kwView = (TextView) view.findViewById(R.id.kw_view);
         final TextView psView = (TextView) view.findViewById(R.id.ps_view);
 
-        kwView.setText(car.getKw() + " kW");
-        psView.setText(car.getPs() + " PS");
+        kwView.setText(format(Locale.ENGLISH, "%d %s", car.getKw(), getContext().getString(R.string.kw)));
+        psView.setText(format(Locale.ENGLISH, "%d %s", car.getPs(), getContext().getString(R.string.ps)));
 
         return view;
     }

@@ -1,7 +1,10 @@
 package de.codecrafters.tableviewexample.data;
 
+
 /**
- * Created by Ingo on 18.07.2015.
+ * Data object representing a car.
+ *
+ * @author ISchwarz
  */
 public class Car implements Chargable {
 
@@ -10,7 +13,7 @@ public class Car implements Chargable {
     private final int ps;
     private final double price;
 
-    public Car(CarProducer producer, String name, int ps, double price) {
+    public Car(final CarProducer producer, final String name, final int ps, final double price) {
         this.producer = producer;
         this.name = name;
         this.ps = ps;
@@ -30,7 +33,7 @@ public class Car implements Chargable {
     }
 
     public int getKw() {
-        return (int)(ps / 1.36);
+        return (int) (ps / 1.36);
     }
 
     public double getPrice() {
