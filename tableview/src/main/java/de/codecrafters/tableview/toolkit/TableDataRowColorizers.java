@@ -10,6 +10,10 @@ import de.codecrafters.tableview.colorizers.TableDataRowColorizer;
  */
 public final class TableDataRowColorizers {
 
+    private TableDataRowColorizers() {
+        //no instance
+    }
+
     /**
      * Gives an implementation of {@link TableDataRowColorizer} that will return the given color
      * for every row.
