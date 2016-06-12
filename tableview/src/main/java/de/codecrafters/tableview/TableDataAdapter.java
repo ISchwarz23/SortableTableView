@@ -4,6 +4,7 @@ import static android.widget.LinearLayout.LayoutParams;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -159,7 +160,13 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
             Log.w(LOG_TAG, "No row date available for row with index " + rowIndex + ". " +
                     "Caught Exception: " + e.getMessage());
         }
-        rowView.setBackgroundColor(rowColorizer.getRowColor(rowIndex, rowData));
+
+        if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+            rowView.setBackgroundDrawable(new ColorDrawable(rowColorizer.getRowColor(rowIndex, rowData)));
+        } else {
+            rowView.setBackground(new ColorDrawable(rowColorizer.getRowColor(rowIndex, rowData)));
+        }
+
 
         final int widthUnit = (parent.getWidth() / columnModel.getColumnWeightSum());
 

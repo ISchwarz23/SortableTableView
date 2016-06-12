@@ -20,6 +20,7 @@ import java.util.Set;
 import de.codecrafters.tableview.colorizers.TableDataRowColorizer;
 import de.codecrafters.tableview.listeners.TableDataClickListener;
 import de.codecrafters.tableview.listeners.TableHeaderClickListener;
+import de.codecrafters.tableview.providers.TableDataRowBackgroundProvider;
 import de.codecrafters.tableview.toolkit.TableDataRowColorizers;
 
 
@@ -45,7 +46,8 @@ public class TableView<T> extends LinearLayout {
     private TableHeaderView tableHeaderView;
     private ListView tableDataView;
     private TableHeaderAdapter tableHeaderAdapter;
-    private TableDataRowColorizer<? super T> dataRowColorizer = TableDataRowColorizers.similarRowColor(0x00000000);
+    private TableDataRowBackgroundProvider<? super T> dataRowBackgroundProvider =
+            new TableDataRowBackgroundColorProvider<>(TableDataRowColorizers.similarRowColor(0x00000000));
 
     private int headerElevation;
     private int headerColor;
@@ -149,14 +151,28 @@ public class TableView<T> extends LinearLayout {
 
     /**
      * Sets the given {@link TableDataRowColorizer} that will be used to define the background color for
-     * every table data row.
+     * every table data row.<br/>
+     * <i>Hint: Setting the {@link TableDataRowColorizer} will replace the set {@link TableDataRowBackgroundProvider}.</i>
      *
      * @param colorizer
      *         The {@link TableDataRowColorizer} that shall be used.
      */
     public void setDataRowColorizer(final TableDataRowColorizer<? super T> colorizer) {
-        dataRowColorizer = colorizer;
-        tableDataAdapter.setRowColorizer(colorizer);
+        dataRowBackgroundProvider = new TableDataRowBackgroundColorProvider<>(colorizer);
+        tableDataAdapter.setRowColorizer(dataRowBackgroundProvider);
+    }
+
+    /**
+     * Sets the given {@link TableDataRowBackgroundProvider} that will be used to define the background color for
+     * every table data row.<br/>
+     * <i>Hint: Setting the {@link TableDataRowBackgroundProvider} will replace the set {@link TableDataRowColorizer}.</i>
+     *
+     * @param backgroundProvider
+     *         The {@link TableDataRowBackgroundProvider} that shall be used.
+     */
+    public void setDataRowBackgroundProvider(final TableDataRowBackgroundProvider<? super T> backgroundProvider) {
+        dataRowBackgroundProvider = backgroundProvider;
+        tableDataAdapter.setRowColorizer(dataRowBackgroundProvider);
     }
 
     /**
@@ -239,7 +255,7 @@ public class TableView<T> extends LinearLayout {
     public void setDataAdapter(final TableDataAdapter<T> dataAdapter) {
         tableDataAdapter = dataAdapter;
         tableDataAdapter.setColumnModel(columnModel);
-        tableDataAdapter.setRowColorizer(dataRowColorizer);
+        tableDataAdapter.setRowColorizer(dataRowBackgroundProvider);
         tableDataView.setAdapter(tableDataAdapter);
         forceRefresh();
     }
@@ -334,7 +350,7 @@ public class TableView<T> extends LinearLayout {
         } else {
             tableDataAdapter = new DefaultTableDataAdapter(getContext());
         }
-        tableDataAdapter.setRowColorizer(dataRowColorizer);
+        tableDataAdapter.setRowColorizer(dataRowBackgroundProvider);
 
         tableDataView = new ListView(getContext(), attributes, styleAttributes);
         tableDataView.setOnItemClickListener(new InternalDataClickListener());
