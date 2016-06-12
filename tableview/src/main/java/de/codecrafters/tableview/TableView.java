@@ -159,7 +159,7 @@ public class TableView<T> extends LinearLayout {
      */
     public void setDataRowColorizer(final TableDataRowColorizer<? super T> colorizer) {
         dataRowBackgroundProvider = new TableDataRowBackgroundColorProvider<>(colorizer);
-        tableDataAdapter.setRowColorizer(dataRowBackgroundProvider);
+        tableDataAdapter.setRowBackgroundProvider(dataRowBackgroundProvider);
     }
 
     /**
@@ -172,7 +172,7 @@ public class TableView<T> extends LinearLayout {
      */
     public void setDataRowBackgroundProvider(final TableDataRowBackgroundProvider<? super T> backgroundProvider) {
         dataRowBackgroundProvider = backgroundProvider;
-        tableDataAdapter.setRowColorizer(dataRowBackgroundProvider);
+        tableDataAdapter.setRowBackgroundProvider(dataRowBackgroundProvider);
     }
 
     /**
@@ -255,7 +255,7 @@ public class TableView<T> extends LinearLayout {
     public void setDataAdapter(final TableDataAdapter<T> dataAdapter) {
         tableDataAdapter = dataAdapter;
         tableDataAdapter.setColumnModel(columnModel);
-        tableDataAdapter.setRowColorizer(dataRowBackgroundProvider);
+        tableDataAdapter.setRowBackgroundProvider(dataRowBackgroundProvider);
         tableDataView.setAdapter(tableDataAdapter);
         forceRefresh();
     }
@@ -350,7 +350,7 @@ public class TableView<T> extends LinearLayout {
         } else {
             tableDataAdapter = new DefaultTableDataAdapter(getContext());
         }
-        tableDataAdapter.setRowColorizer(dataRowBackgroundProvider);
+        tableDataAdapter.setRowBackgroundProvider(dataRowBackgroundProvider);
 
         tableDataView = new ListView(getContext(), attributes, styleAttributes);
         tableDataView.setOnItemClickListener(new InternalDataClickListener());

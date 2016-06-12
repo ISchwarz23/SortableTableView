@@ -1,10 +1,7 @@
 package de.codecrafters.tableview;
 
-import static android.widget.LinearLayout.LayoutParams;
-
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -19,7 +16,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import de.codecrafters.tableview.colorizers.TableDataRowColorizer;
+import de.codecrafters.tableview.providers.TableDataRowBackgroundProvider;
+
+import static android.widget.LinearLayout.LayoutParams;
 
 
 /**
@@ -30,10 +29,9 @@ import de.codecrafters.tableview.colorizers.TableDataRowColorizer;
 public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
 
     private static final String LOG_TAG = TableDataAdapter.class.getName();
-
-    private TableColumnModel columnModel;
     private final List<T> data;
-    private TableDataRowColorizer<? super T> rowColorizer;
+    private TableColumnModel columnModel;
+    private TableDataRowBackgroundProvider<? super T> rowBackgroundProvider;
 
 
     /**
@@ -161,10 +159,10 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
                     "Caught Exception: " + e.getMessage());
         }
 
-        if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-            rowView.setBackgroundDrawable(new ColorDrawable(rowColorizer.getRowColor(rowIndex, rowData)));
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+            rowView.setBackgroundDrawable(rowBackgroundProvider.getRowBackground(rowIndex, rowData));
         } else {
-            rowView.setBackground(new ColorDrawable(rowColorizer.getRowColor(rowIndex, rowData)));
+            rowView.setBackground(rowBackgroundProvider.getRowBackground(rowIndex, rowData));
         }
 
 
@@ -188,13 +186,20 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
     }
 
     /**
-     * Sets the {@link TableDataRowColorizer} that will be used to colorize the table data rows.
+     * Sets the {@link TableDataRowBackgroundProvider} that will be used to define the table data rows background.
      *
-     * @param rowColorizer
-     *         The {@link TableDataRowColorizer} that shall be used.
+     * @param rowbackgroundProvider
+     *         The {@link TableDataRowBackgroundProvider} that shall be used.
      */
-    protected void setRowColorizer(final TableDataRowColorizer<? super T> rowColorizer) {
-        this.rowColorizer = rowColorizer;
+    protected void setRowBackgroundProvider(final TableDataRowBackgroundProvider<? super T> rowbackgroundProvider) {
+        this.rowBackgroundProvider = rowbackgroundProvider;
+    }
+
+    /**
+     * Gives the {@link TableColumnModel} that is currently used to render the table headers.
+     */
+    protected TableColumnModel getColumnModel() {
+        return columnModel;
     }
 
     /**
@@ -208,10 +213,12 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
     }
 
     /**
-     * Gives the {@link TableColumnModel} that is currently used to render the table headers.
+     * Gives the column count that is currently used to render the table headers.
+     *
+     * @return The number of columns.
      */
-    protected TableColumnModel getColumnModel() {
-        return columnModel;
+    protected int getColumnCount() {
+        return columnModel.getColumnCount();
     }
 
     /**
@@ -222,15 +229,6 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
      */
     protected void setColumnCount(final int columnCount) {
         columnModel.setColumnCount(columnCount);
-    }
-
-    /**
-     * Gives the column count that is currently used to render the table headers.
-     *
-     * @return The number of columns.
-     */
-    protected int getColumnCount() {
-        return columnModel.getColumnCount();
     }
 
     /**
