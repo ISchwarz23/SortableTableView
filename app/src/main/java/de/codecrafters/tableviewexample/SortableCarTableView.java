@@ -1,37 +1,41 @@
 package de.codecrafters.tableviewexample;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 
 import de.codecrafters.tableview.SortableTableView;
 import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
 import de.codecrafters.tableview.toolkit.SortStateViewProviders;
-import de.codecrafters.tableview.toolkit.TableDataRowColorizers;
+import de.codecrafters.tableview.toolkit.TableDataRowBackgroundProviders;
 import de.codecrafters.tableviewexample.data.Car;
 
 
+/**
+ * An extension of the {@link SortableTableView} that handles {@link Car}s.
+ *
+ * @author ISchwarz
+ */
 public class SortableCarTableView extends SortableTableView<Car> {
 
-
-    public SortableCarTableView(Context context) {
+    public SortableCarTableView(final Context context) {
         this(context, null);
     }
 
-    public SortableCarTableView(Context context, AttributeSet attributes) {
+    public SortableCarTableView(final Context context, final AttributeSet attributes) {
         this(context, attributes, android.R.attr.listViewStyle);
     }
 
-    public SortableCarTableView(Context context, AttributeSet attributes, int styleAttributes) {
+    public SortableCarTableView(final Context context, final AttributeSet attributes, final int styleAttributes) {
         super(context, attributes, styleAttributes);
 
-
-        SimpleTableHeaderAdapter simpleTableHeaderAdapter = new SimpleTableHeaderAdapter(context, "Hersteller", "Bezeichung", "Leistung", "Preis");
-        simpleTableHeaderAdapter.setTextColor(context.getResources().getColor(R.color.table_header_text));
+        final SimpleTableHeaderAdapter simpleTableHeaderAdapter = new SimpleTableHeaderAdapter(context, R.string.brand, R.string.model, R.string.power, R.string.price);
+        simpleTableHeaderAdapter.setTextColor(ContextCompat.getColor(context, R.color.table_header_text));
         setHeaderAdapter(simpleTableHeaderAdapter);
 
-        int rowColorEven = context.getResources().getColor(R.color.table_data_row_even);
-        int rowColorOdd = context.getResources().getColor(R.color.table_data_row_odd);
-        setDataRowColorizer(TableDataRowColorizers.alternatingRows(rowColorEven, rowColorOdd));
+        final int rowColorEven = ContextCompat.getColor(context, R.color.table_data_row_even);
+        final int rowColorOdd = ContextCompat.getColor(context, R.color.table_data_row_odd);
+        setDataRowBackgroundProvider(TableDataRowBackgroundProviders.alternatingRowColors(rowColorEven, rowColorOdd));
         setHeaderSortStateViewProvider(SortStateViewProviders.brightArrows());
 
         setColumnWeight(0, 2);

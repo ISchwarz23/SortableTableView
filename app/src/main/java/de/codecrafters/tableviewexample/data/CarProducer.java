@@ -2,14 +2,16 @@ package de.codecrafters.tableviewexample.data;
 
 
 /**
- * Created by Ingo on 18.07.2015.
+ * Data object representing a car producer.
+ *
+ * @author ISchwarz
  */
 public class CarProducer {
 
     private final String name;
-    private int logoRes;
+    private final int logoRes;
 
-    public CarProducer(int logoRes, String name) {
+    public CarProducer(final int logoRes, final String name) {
         this.logoRes = logoRes;
         this.name = name;
     }

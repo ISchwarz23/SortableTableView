@@ -4,7 +4,7 @@ An Android library providing a TableView and a SortableTableView.
 
 ![SortableTableView Example](https://raw.githubusercontent.com/ISchwarz23/SortableTableView/develop/README/SortableTableView-Example.gif)
 
-**Minimum SDK-Version:** 11  |  **Compile SDK-Version:** 23  |  **Latest Library Version:** 2.0.1  
+**Minimum SDK-Version:** 11  |  **Compile SDK-Version:** 23  |  **Latest Library Version:** 2.1.0  
 
 ## Repository Content
 **tableview** - contains the android library sources and resources  
@@ -17,7 +17,7 @@ To use the this library in your project simply add the following dependency to y
 ```
     dependencies {
         ...
-        compile 'de.codecrafters.tableview:tableview:2.0.1'
+        compile 'de.codecrafters.tableview:tableview:2.1.0'
         ...
     }
 ```
@@ -176,7 +176,7 @@ To listen for clicks on headers you can register a `TableHeaderClickListner`. Th
 
 ### Styling
 #### Header Styling
-The table view provides several possibilities to style its header. One possibility is to set a **colour** for the header. Therefore you can adapt the XML file or add it to your code.
+The table view provides several possibilities to style its header. One possibility is to set a **color** for the header. Therefore you can adapt the XML file or add it to your code.
 ```xml
     <de.codecrafters.tableview.TableView
 		xmlns:table="http://schemas.android.com/apk/res-auto"
@@ -238,8 +238,8 @@ For SortableTableViews it is also possible to replace the default **sortable ind
 There is also a factory class existing called `SortStateViewProviders` where you can get some predefined implementations of the `SortStateViewProvider`.
 
 #### Data Row Styling
-In general you can do all your styling of data content in your custom `TableDataAdapter`. But if you want to add colouring of whole table rows you can use the `TableDataRowColorizer`. There are alreasy some implementations of the `TableDataRowColorizer` existing in the library. You can get the by using the Factory class `TableDataRowColorizers`.  
-This Factory contains for example an alternating-table-data-row colorizer that will colour rows with even index different from rows with odd index.
+In general you can do all your styling of data content in your custom `TableDataAdapter`. But if you want to add a background for the whole table rows you can use the `TableDataRowBackgroundProvider`. There are already some implementations of the `TableDataRowBackgroundProvider` existing in the library. You can get them by using the Factory class `TableDataRowBackgroundProviders`.  
+This Factory contains for example an alternating-table-data-row-row provider that will color rows with even index different from rows with odd index.
 ```java
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -248,22 +248,22 @@ This Factory contains for example an alternating-table-data-row colorizer that w
         // ...
     	int colorEvenRows = getResources().getColor(R.color.white);
     	int colorOddRows = getResources().getColor(R.color.gray);
-    	tableView.setDataRowColorizer(TableDataRowColorizers.alternatingRows(colorEvenRows, colorOddRows));
+    	tableView.setDataRowBackgroundProvider(TableDataRowBackgroundProviders.alternatingRowColors(colorEvenRows, colorOddRows));
     }
 ```
-If the implementations of `TableDataRowColorizer` contained in the `TableDataRowColorizers` factory don't fulfil you needs you can create your own implementation of `TableDataRowColorizer`. Here is a small example of how to do so.
+If the implementations of `TableDataRowBackgroundProvider` contained in the `TableDataRowBackgroundProviders` factory don't fulfil you needs you can create your own implementation of `TableDataRowBackgroundProvider`. Here is a small example of how to do so.
 ```java
     @Override
     protected void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
     	setContentView(R.layout.activity_main);
         // ...
-        tableView.setDataRowColorizer(new CarPriceRowColorizer());
+        tableView.setDataRowBackgroundProvider(new CarPriceRowColorProvider());
     }
     
-    private static class CarPriceRowColorizer implements TableDataRowColorizer<Car> {
+    private static class CarPriceRowColorProvider implements TableDataRowBackgroundProviders<Car> {
         @Override
-        public int getRowColor(int rowIndex, Car car) {
+        public Drawable getRowBackground(final int rowIndex, final Car car) {
             int rowColor = getResources(R.color.white);
             
             if(car.getPrice() < 50000) {
@@ -272,11 +272,11 @@ If the implementations of `TableDataRowColorizer` contained in the `TableDataRow
                 rowColor = getResources(R.color.light_red);
             }
                 
-            return rowColor;
+            return new ColorDrawable(rowColor);
         }
     }
 ```
-This colorizer will set the background colour of each row corresponding to the price of the car that is displayed at in this row. Cheap cars (less then 50,000) get a green background, expensive cars (more then 100,000) get a red background and all other cars get a white background.
+This background provider will set the background color of each row corresponding to the price of the car that is displayed at in this row. Cheap cars (less then 50,000) get a green background, expensive cars (more then 100,000) get a red background and all other cars get a white background.
   
 #### Seperator Styling  
 If you want to have a seperator between the data rows you can do so by specifying it in the XML like known from the `ListView`.

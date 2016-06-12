@@ -7,4 +7,10 @@
     <string name="default_text_kws">120kW</string>
 
     <string name="car_producer_image_content_description">Car Producer</string>
+    <string name="kw">kW</string>
+    <string name="ps">PS</string>
+    <string name="brand">Hersteller</string>
+    <string name="model">Bezeichung</string>
+    <string name="power">Leistung</string>
+    <string name="price">Preis</string>
 </resources>

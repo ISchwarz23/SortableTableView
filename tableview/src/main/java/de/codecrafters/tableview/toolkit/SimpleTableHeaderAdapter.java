@@ -40,6 +40,15 @@ public final class SimpleTableHeaderAdapter extends TableHeaderAdapter {
         this.headers = headers;
     }
 
+    public SimpleTableHeaderAdapter(final Context context, final int... headerStringResources) {
+        super(context);
+        this.headers = new String[headerStringResources.length];
+
+        for (int i = 0; i < headerStringResources.length; i++) {
+            headers[i] = context.getString(headerStringResources[i]);
+        }
+    }
+
     /**
      * Sets the padding that will be used for all table headers.
      *
