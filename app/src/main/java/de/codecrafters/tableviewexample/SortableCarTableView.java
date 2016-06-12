@@ -7,7 +7,7 @@ import android.util.AttributeSet;
 import de.codecrafters.tableview.SortableTableView;
 import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
 import de.codecrafters.tableview.toolkit.SortStateViewProviders;
-import de.codecrafters.tableview.toolkit.TableDataRowColorizers;
+import de.codecrafters.tableview.toolkit.TableDataRowBackgroundProviders;
 import de.codecrafters.tableviewexample.data.Car;
 
 
@@ -35,7 +35,7 @@ public class SortableCarTableView extends SortableTableView<Car> {
 
         final int rowColorEven = ContextCompat.getColor(context, R.color.table_data_row_even);
         final int rowColorOdd = ContextCompat.getColor(context, R.color.table_data_row_odd);
-        setDataRowColorizer(TableDataRowColorizers.alternatingRows(rowColorEven, rowColorOdd));
+        setDataRowBackgroundProvider(TableDataRowBackgroundProviders.alternatingRowColors(rowColorEven, rowColorOdd));
         setHeaderSortStateViewProvider(SortStateViewProviders.brightArrows());
 
         setColumnWeight(0, 2);
