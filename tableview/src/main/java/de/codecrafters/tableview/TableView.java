@@ -158,8 +158,7 @@ public class TableView<T> extends LinearLayout {
      *         The {@link TableDataRowColorizer} that shall be used.
      */
     public void setDataRowColorizer(final TableDataRowColorizer<? super T> colorizer) {
-        dataRowBackgroundProvider = new TableDataRowBackgroundColorProvider<>(colorizer);
-        tableDataAdapter.setRowBackgroundProvider(dataRowBackgroundProvider);
+        setDataRowBackgroundProvider(new TableDataRowBackgroundColorProvider<>(colorizer));
     }
 
     /**
