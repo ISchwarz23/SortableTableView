@@ -21,6 +21,7 @@ import de.codecrafters.tableview.colorizers.TableDataRowColorizer;
 import de.codecrafters.tableview.listeners.TableDataClickListener;
 import de.codecrafters.tableview.listeners.TableHeaderClickListener;
 import de.codecrafters.tableview.providers.TableDataRowBackgroundProvider;
+import de.codecrafters.tableview.toolkit.TableDataRowBackgroundProviders;
 import de.codecrafters.tableview.toolkit.TableDataRowColorizers;
 
 
@@ -47,7 +48,7 @@ public class TableView<T> extends LinearLayout {
     private ListView tableDataView;
     private TableHeaderAdapter tableHeaderAdapter;
     private TableDataRowBackgroundProvider<? super T> dataRowBackgroundProvider =
-            new TableDataRowBackgroundColorProvider<>(TableDataRowColorizers.similarRowColor(0x00000000));
+            TableDataRowBackgroundProviders.similarRowColor(0x00000000);
 
     private int headerElevation;
     private int headerColor;

@@ -52,7 +52,7 @@ public final class TableDataRowBackgroundProviders {
      *         The color that will be used for each row.
      * @return A {@link TableDataRowBackgroundProvider} with the described behaviour.
      */
-    public TableDataRowBackgroundProvider<Object> similarRowColor(final int color) {
+    public static TableDataRowBackgroundProvider<Object> similarRowColor(final int color) {
         return new SimpleTableDataRowColorProvider(color);
     }
 
@@ -63,7 +63,7 @@ public final class TableDataRowBackgroundProviders {
      *         The {@link Drawable} that will be used for each row.
      * @return A {@link TableDataRowBackgroundProvider} with the described behaviour.
      */
-    public TableDataRowBackgroundProvider<Object> similarRowDrawable(final Drawable drawable) {
+    public static TableDataRowBackgroundProvider<Object> similarRowDrawable(final Drawable drawable) {
         return new SimpleTableDataRowDrawableProvider(drawable);
     }
 
