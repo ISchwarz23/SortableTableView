@@ -5,12 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import de.codecrafters.tableview.listeners.TableDataClickListener;
+import de.codecrafters.tableview.listeners.TableDataLongClickListener;
 import de.codecrafters.tableviewexample.data.Car;
-import de.codecrafters.tableviewexample.data.CarProducer;
 import de.codecrafters.tableviewexample.data.DataFactory;
 
 
@@ -30,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
         if (carTableView != null) {
             carTableView.setDataAdapter(new CarTableDataAdapter(this, DataFactory.createCarList()));
             carTableView.addDataClickListener(new CarClickListener());
+            carTableView.addDataLongClickListener(new CarLongClickListener());
         }
     }
 
@@ -37,8 +35,18 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onDataClicked(final int rowIndex, final Car clickedData) {
-            final String carString = clickedData.getProducer().getName() + " " + clickedData.getName();
+            final String carString = "Click: " + clickedData.getProducer().getName() + " " + clickedData.getName();
             Toast.makeText(MainActivity.this, carString, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private class CarLongClickListener implements TableDataLongClickListener<Car> {
+
+        @Override
+        public boolean onDataClicked(final int rowIndex, final Car clickedData) {
+            final String carString = "Long Click: " + clickedData.getProducer().getName() + " " + clickedData.getName();
+            Toast.makeText(MainActivity.this, carString, Toast.LENGTH_SHORT).show();
+            return true;
         }
     }
 }
