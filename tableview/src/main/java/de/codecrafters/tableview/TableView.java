@@ -246,8 +246,21 @@ public class TableView<T> extends LinearLayout {
      *
      * @param listener
      *         The listener that shall be removed from this table.
+     * @deprecated This method has been deprecated in the version 2.2.0 for naming alignment reasons. Use the method
+     * {@link TableView#removeHeaderClickListener(TableHeaderClickListener)} instead.
      */
+    @Deprecated
     public void removeHeaderListener(final TableHeaderClickListener listener) {
+        tableHeaderView.removeHeaderClickListener(listener);
+    }
+
+    /**
+     * Removes the given {@link TableHeaderClickListener} from this table.
+     *
+     * @param listener
+     *         The listener that shall be removed from this table.
+     */
+    public void removeHeaderClickListener(final TableHeaderClickListener listener) {
         tableHeaderView.removeHeaderClickListener(listener);
     }
 
