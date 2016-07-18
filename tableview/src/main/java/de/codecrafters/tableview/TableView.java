@@ -19,10 +19,10 @@ import java.util.Set;
 
 import de.codecrafters.tableview.colorizers.TableDataRowColorizer;
 import de.codecrafters.tableview.listeners.TableDataClickListener;
+import de.codecrafters.tableview.listeners.TableDataLongClickListener;
 import de.codecrafters.tableview.listeners.TableHeaderClickListener;
 import de.codecrafters.tableview.providers.TableDataRowBackgroundProvider;
 import de.codecrafters.tableview.toolkit.TableDataRowBackgroundProviders;
-import de.codecrafters.tableview.toolkit.TableDataRowColorizers;
 
 
 /**
@@ -41,6 +41,7 @@ public class TableView<T> extends LinearLayout {
     private static final int DEFAULT_HEADER_ELEVATION = 1;
     private static final int DEFAULT_HEADER_COLOR = 0xFFCCCCCC;
 
+    private final Set<TableDataLongClickListener<T>> dataLongClickListeners = new HashSet<>();
     private final Set<TableDataClickListener<T>> dataClickListeners = new HashSet<>();
     protected TableDataAdapter<T> tableDataAdapter;
     private TableColumnModel columnModel;
@@ -153,10 +154,10 @@ public class TableView<T> extends LinearLayout {
     /**
      * Sets the given {@link TableDataRowColorizer} that will be used to define the background color for
      * every table data row.
-     * @deprecated This method is deprecated. Use {@link TableView#setDataRowBackgroundProvider} instead.
      *
      * @param colorizer
      *         The {@link TableDataRowColorizer} that shall be used.
+     * @deprecated This method is deprecated. Use {@link TableView#setDataRowBackgroundProvider} instead.
      */
     @Deprecated
     public void setDataRowColorizer(final TableDataRowColorizer<? super T> colorizer) {
@@ -176,23 +177,58 @@ public class TableView<T> extends LinearLayout {
     }
 
     /**
-     * Adds a {@link TableDataClickListener} to this table.
+     * Adds a {@link TableDataClickListener} to this table. This listener gets notified every time the user clicks
+     * a certain data item.
      *
      * @param listener
-     *         The listener that should be added.
+     *         The listener that should be added as click listener.
      */
     public void addDataClickListener(final TableDataClickListener<T> listener) {
         dataClickListeners.add(listener);
     }
 
     /**
-     * Removes a {@link TableDataClickListener} to this table.
+     * Adds a {@link TableDataLongClickListener} to this table. This listener gets notified every time the user clicks
+     * long on a certain data item.
+     *
+     * @param listener
+     *         The listener that should be added as long click listener.
+     */
+    public void addDataLongClickListener(final TableDataLongClickListener<T> listener) {
+        dataLongClickListeners.add(listener);
+    }
+
+    /**
+     * Removes the given {@link TableDataClickListener} from the click listeners of this table.
+     *
+     * @param listener
+     *         The listener that should be removed.
+     * @deprecated This method has been deprecated in the version 2.2.0 for naming alignment reasons. Use the method
+     * {@link TableView#removeDataClickListener(TableDataClickListener)} instead.
+     */
+    @Deprecated
+    public void removeTableDataClickListener(final TableDataClickListener<T> listener) {
+        dataClickListeners.remove(listener);
+    }
+
+    /**
+     * Removes the given {@link TableDataClickListener} from the click listeners of this table.
      *
      * @param listener
      *         The listener that should be removed.
      */
-    public void removeTableDataClickListener(final TableDataClickListener<T> listener) {
+    public void removeDataClickListener(final TableDataClickListener<T> listener) {
         dataClickListeners.remove(listener);
+    }
+
+    /**
+     * Removes the given {@link TableDataLongClickListener} from the long click listeners of this table.
+     *
+     * @param listener
+     *         The listener that should be removed.
+     */
+    public void removeDataLongClickListener(final TableDataLongClickListener<T> listener) {
+        dataLongClickListeners.remove(listener);
     }
 
     /**
@@ -354,6 +390,7 @@ public class TableView<T> extends LinearLayout {
 
         tableDataView = new ListView(getContext(), attributes, styleAttributes);
         tableDataView.setOnItemClickListener(new InternalDataClickListener());
+        tableDataView.setOnItemLongClickListener(new InternalDataLongClickListener());
         tableDataView.setLayoutParams(dataViewLayoutParams);
         tableDataView.setAdapter(tableDataAdapter);
         tableDataView.setId(R.id.table_data_view);
@@ -392,7 +429,34 @@ public class TableView<T> extends LinearLayout {
                 }
             }
         }
+    }
 
+    /**
+     * Internal long click management of clicks on the data view.
+     *
+     * @author ISchwarz
+     */
+    private class InternalDataLongClickListener implements AdapterView.OnItemLongClickListener {
+
+        @Override
+        public boolean onItemLongClick(final AdapterView<?> parent, final View view, final int rowIndex, final long id) {
+            return informAllListeners(rowIndex);
+        }
+
+        private boolean informAllListeners(final int rowIndex) {
+            final T clickedObject = tableDataAdapter.getItem(rowIndex);
+            boolean isConsumed = false;
+
+            for (final TableDataLongClickListener<T> listener : dataLongClickListeners) {
+                try {
+                    isConsumed |= listener.onDataClicked(rowIndex, clickedObject);
+                } catch (final Throwable t) {
+                    Log.w(LOG_TAG, "Caught Throwable on listener notification: " + t.toString());
+                    // continue calling listeners
+                }
+            }
+            return isConsumed;
+        }
     }
 
     /**
