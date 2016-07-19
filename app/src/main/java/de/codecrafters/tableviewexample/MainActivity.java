@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private class CarLongClickListener implements TableDataLongClickListener<Car> {
 
         @Override
-        public boolean onDataClicked(final int rowIndex, final Car clickedData) {
+        public boolean onDataLongClicked(final int rowIndex, final Car clickedData) {
             final String carString = "Long Click: " + clickedData.getProducer().getName() + " " + clickedData.getName();
             Toast.makeText(MainActivity.this, carString, Toast.LENGTH_SHORT).show();
             return true;

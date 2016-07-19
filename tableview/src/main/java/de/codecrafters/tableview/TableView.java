@@ -462,7 +462,7 @@ public class TableView<T> extends LinearLayout {
 
             for (final TableDataLongClickListener<T> listener : dataLongClickListeners) {
                 try {
-                    isConsumed |= listener.onDataClicked(rowIndex, clickedObject);
+                    isConsumed |= listener.onDataLongClicked(rowIndex, clickedObject);
                 } catch (final Throwable t) {
                     Log.w(LOG_TAG, "Caught Throwable on listener notification: " + t.toString());
                     // continue calling listeners
