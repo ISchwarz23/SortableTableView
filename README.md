@@ -134,8 +134,7 @@ If all you want to display in the header is the column title as String (like in 
 
 ### Interaction Listening
 #### Data Click Listening
-To listen for clicks on data items you can register a `TableDataClickListener`. The`TableView` provides a method called `addDataClickListener()` to do so.
-to the specific column.
+To listen for clicks on data items you can register a `TableDataClickListener`. The`TableView` provides a method called `addDataClickListener()` to register this listeners.
 ```java
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,6 +152,28 @@ to the specific column.
         }
     }
 ```
+
+#### Long Data Click Listening
+To listen for clicks on data items you can register a `TableDataLongClickListener`. The`TableView` provides a method called `addDataLongClickListener()` to register this columns.
+```java
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+    	super.onCreate(savedInstanceState);
+    	setContentView(R.layout.activity_main);
+        // ...
+        tableView.addDataLongClickListener(new CarLongClickListener());
+    }
+
+	private class CarLongClickListener implements TableDataLongClickListener<Car> {
+        @Override
+        public boolean onDataLongClicked(int rowIndex, Car clickedCar) {
+            String clickedCarString = clickedCar.getProducer().getName() + " " + clickedCar.getName();
+            Toast.makeText(getContext(), clickedCarString, Toast.LENGTH_SHORT).show();
+            return true;
+        }
+    }
+```
+The main difference to the `TableDataClickListener#onDataClicked()` method is, that the `onDataLongClicked()` method has a boolean as return value. This boolean indicates, if the `TableDataLongClickListener` has "consumed" the click event. If none of the registered `TableDataLongClickListeners` has consumed the click event, the `TableDataClickListeners` are informed in addition.
 
 #### Header Click Listening
 To listen for clicks on headers you can register a `TableHeaderClickListner`. The `TableView` provides a method called `addHeaderClickListener()` to do so.

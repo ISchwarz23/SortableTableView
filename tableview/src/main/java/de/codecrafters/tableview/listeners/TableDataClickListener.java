@@ -1,7 +1,7 @@
 package de.codecrafters.tableview.listeners;
 
 /**
- * A listener clicks on table data.
+ * Listens for clicks on table data.
  *
  * @author ISchwarz
  */
