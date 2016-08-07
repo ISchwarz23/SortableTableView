@@ -6,10 +6,10 @@ android {
 
     defaultConfig {
         applicationId "de.codecrafters.tableviewexample"
-        minSdkVersion 13
+        minSdkVersion 11
         targetSdkVersion 24
         versionCode 5
-        versionName "2.2.0"
+        versionName "2.2.1"
     }
     buildTypes {
         release {
