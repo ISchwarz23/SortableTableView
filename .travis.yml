@@ -8,9 +8,9 @@ android:
     - platform-tools
     - tools
     # The BuildTools version used by this project
-    - build-tools-23.0.3
+    - build-tools-24.0.1
     # The SDK version used to compile this project
-    - android-23
+    - android-24
     # Additional components	
     - extra-android-support
     - extra-android-m2repository
