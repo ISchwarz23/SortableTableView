@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 
-def final tableViewLibraryVersion = '2.2.1'
+def final tableViewLibraryVersion = '2.2.2'
 
 ext {
     bintrayRepo = 'maven'
