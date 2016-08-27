@@ -184,7 +184,9 @@ public class SortableTableView<T> extends TableView<T> {
             final int sortedColumnIndex = savedState.getInt(SAVED_STATE_SORTED_COLUMN, -1);
 
             super.onRestoreInstanceState(superState);
-            sortingController.sort(sortedColumnIndex, wasSortedUp);
+            if(sortedColumnIndex != -1) {
+                sortingController.sort(sortedColumnIndex, wasSortedUp);
+            }
         }
     }
 
