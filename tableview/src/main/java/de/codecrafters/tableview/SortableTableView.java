@@ -6,15 +6,10 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.util.Log;
-
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import de.codecrafters.tableview.listeners.TableHeaderClickListener;
 import de.codecrafters.tableview.providers.SortStateViewProvider;
+
+import java.util.*;
 
 /**
  * Extension of the {@link TableView} that gives the possibility to sort the table by every single
@@ -41,8 +36,7 @@ public class SortableTableView<T> extends TableView<T> {
      * Creates a new SortableTableView with the given context.\n
      * (Has same effect like calling {@code new SortableTableView(context, null, android.R.attr.listViewStyle})
      *
-     * @param context
-     *         The context that shall be used.
+     * @param context The context that shall be used.
      */
     public SortableTableView(final Context context) {
         this(context, null);
@@ -52,10 +46,8 @@ public class SortableTableView<T> extends TableView<T> {
      * Creates a new SortableTableView with the given context.\n
      * (Has same effect like calling {@code new SortableTableView(context, attrs, android.R.attr.listViewStyle})
      *
-     * @param context
-     *         The context that shall be used.
-     * @param attributes
-     *         The attributes that shall be set to the view.
+     * @param context    The context that shall be used.
+     * @param attributes The attributes that shall be set to the view.
      */
     public SortableTableView(final Context context, final AttributeSet attributes) {
         this(context, attributes, android.R.attr.listViewStyle);
@@ -64,12 +56,9 @@ public class SortableTableView<T> extends TableView<T> {
     /**
      * Creates a new SortableTableView with the given context.
      *
-     * @param context
-     *         The context that shall be used.
-     * @param attributes
-     *         The attributes that shall be set to the view.
-     * @param styleAttributes
-     *         The style attributes that shall be set to the view.
+     * @param context         The context that shall be used.
+     * @param attributes      The attributes that shall be set to the view.
+     * @param styleAttributes The style attributes that shall be set to the view.
      */
     public SortableTableView(final Context context, final AttributeSet attributes, final int styleAttributes) {
         super(context, attributes, styleAttributes);
@@ -92,10 +81,8 @@ public class SortableTableView<T> extends TableView<T> {
      * Sets the given {@link Comparator} for the column at the given index. The comparator will be used for
      * sorting the given column.
      *
-     * @param columnIndex
-     *         The index of the column the given {@link Comparator} shall be set to.
-     * @param columnComparator
-     *         The {@link Comparator} that shall be set to the column at the given index.
+     * @param columnIndex      The index of the column the given {@link Comparator} shall be set to.
+     * @param columnComparator The {@link Comparator} that shall be set to the column at the given index.
      */
     public void setColumnComparator(final int columnIndex, final Comparator<T> columnComparator) {
         sortingController.setComparator(columnIndex, columnComparator);
@@ -113,8 +100,7 @@ public class SortableTableView<T> extends TableView<T> {
     /**
      * Sets the given {@link SortStateViewProvider}.
      *
-     * @param provider
-     *         The {@link SortStateViewProvider} that shall be used to render the sort views in the header.
+     * @param provider The {@link SortStateViewProvider} that shall be used to render the sort views in the header.
      */
     public void setHeaderSortStateViewProvider(final SortStateViewProvider provider) {
         sortableTableHeaderView.setSortStateViewProvider(provider);
@@ -123,8 +109,7 @@ public class SortableTableView<T> extends TableView<T> {
     /**
      * Gives the {@link Comparator} of the column at the given index.
      *
-     * @param columnIndex
-     *         The index of the column to receive the applied {@link Comparator}.
+     * @param columnIndex The index of the column to receive the applied {@link Comparator}.
      * @return The {@link Comparator} of the column at the given index.
      */
     public Comparator<T> getColumnComparator(final int columnIndex) {
@@ -137,8 +122,7 @@ public class SortableTableView<T> extends TableView<T> {
      * calling this method twice on the same column index will cause a descending ordering). Better practice for
      * doing programmatically ordering of the table is to call the method {@code sort(Comparator<T>}.
      *
-     * @param columnIndex
-     *         The index of the column on which the sorting shall be executed.
+     * @param columnIndex The index of the column on which the sorting shall be executed.
      */
     public void sort(final int columnIndex) {
         sortingController.onHeaderClicked(columnIndex);
@@ -147,10 +131,8 @@ public class SortableTableView<T> extends TableView<T> {
     /**
      * Sorts the table by the values of the column of the given index.
      *
-     * @param columnIndex
-     *         The index of the column for which the sorting shall be executed.
-     * @param sortAscending
-     *         Indicates whether the table was sorted ascending {@code TRUE} or descending {@code FALSE}.
+     * @param columnIndex   The index of the column for which the sorting shall be executed.
+     * @param sortAscending Indicates whether the table was sorted ascending {@code TRUE} or descending {@code FALSE}.
      */
     public void sort(final int columnIndex, final boolean sortAscending) {
         sortingController.sort(columnIndex, sortAscending);
@@ -159,8 +141,7 @@ public class SortableTableView<T> extends TableView<T> {
     /**
      * Sorts the table using the given {@link Comparator}.
      *
-     * @param comparator
-     *         The {@link Comparator} that shall be used to sort the table.
+     * @param comparator The {@link Comparator} that shall be used to sort the table.
      */
     public void sort(final Comparator<T> comparator) {
         sortingController.sortDataSFCT(comparator);
@@ -184,7 +165,7 @@ public class SortableTableView<T> extends TableView<T> {
             final int sortedColumnIndex = savedState.getInt(SAVED_STATE_SORTED_COLUMN, -1);
 
             super.onRestoreInstanceState(superState);
-            if(sortedColumnIndex != -1) {
+            if (sortedColumnIndex != -1) {
                 sortingController.sort(sortedColumnIndex, wasSortedUp);
             }
         }
@@ -250,9 +231,9 @@ public class SortableTableView<T> extends TableView<T> {
 
         private void sortDataSFCT(final Comparator<T> comparator) {
             if (comparator != null) {
-                final List<T> data = tableDataAdapter.getData();
+                final List<T> data = getDataAdapter().getData();
                 Collections.sort(data, comparator);
-                tableDataAdapter.notifyDataSetChanged();
+                getDataAdapter().notifyDataSetChanged();
             }
         }
 

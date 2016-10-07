@@ -9,8 +9,8 @@
     <string name="car_producer_image_content_description">Car Producer</string>
     <string name="kw">kW</string>
     <string name="ps">PS</string>
-    <string name="brand">Hersteller</string>
-    <string name="model">Bezeichung</string>
-    <string name="power">Leistung</string>
-    <string name="price">Preis</string>
+    <string name="brand">Brand</string>
+    <string name="model">Model</string>
+    <string name="power">Power</string>
+    <string name="price">Price</string>
 </resources>

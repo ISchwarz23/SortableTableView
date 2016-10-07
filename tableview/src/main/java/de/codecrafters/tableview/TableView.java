@@ -3,7 +3,10 @@ package de.codecrafters.tableview;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
+import android.support.annotation.ColorInt;
+import android.support.annotation.DrawableRes;
 import android.support.v4.view.ViewCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import de.codecrafters.tableview.colorizers.TableDataRowColorizer;
+import de.codecrafters.tableview.listeners.SwipeToRefreshListener;
 import de.codecrafters.tableview.listeners.TableDataClickListener;
 import de.codecrafters.tableview.listeners.TableDataLongClickListener;
 import de.codecrafters.tableview.listeners.TableHeaderClickListener;
@@ -34,21 +38,21 @@ public class TableView<T> extends LinearLayout {
 
     private static final String LOG_TAG = TableView.class.getName();
 
-    TableDataAdapter<T> tableDataAdapter;
-    private static final int ID_DATA_VIEW = 101010;
-
     private static final int DEFAULT_COLUMN_COUNT = 4;
     private static final int DEFAULT_HEADER_ELEVATION = 1;
     private static final int DEFAULT_HEADER_COLOR = 0xFFCCCCCC;
 
     private final Set<TableDataLongClickListener<T>> dataLongClickListeners = new HashSet<>();
     private final Set<TableDataClickListener<T>> dataClickListeners = new HashSet<>();
-    private TableColumnModel columnModel;
-    private TableHeaderView tableHeaderView;
-    private ListView tableDataView;
-    private TableHeaderAdapter tableHeaderAdapter;
+
     private TableDataRowBackgroundProvider<? super T> dataRowBackgroundProvider =
             TableDataRowBackgroundProviders.similarRowColor(0x00000000);
+    private TableColumnModel columnModel;
+    private TableHeaderView tableHeaderView;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private ListView tableDataView;
+    private TableDataAdapter<T> tableDataAdapter;
+    private TableHeaderAdapter tableHeaderAdapter;
 
     private int headerElevation;
     private int headerColor;
@@ -113,11 +117,59 @@ public class TableView<T> extends LinearLayout {
     }
 
     /**
+     * Toggles the swipe to refresh feature to the user.
+     *
+     * @param enabled Whether the swipe to refresh feature shall be enabled or not.
+     */
+    public void setSwipeToRefreshEnabled(final boolean enabled) {
+        swipeRefreshLayout.setEnabled(enabled);
+    }
+
+    /**
+     * Gives information whether the swipe to refresh feature shall be enabled or not.
+     *
+     * @return Boolean indication whether the swipe to refresh feature shall be enabled or not.
+     */
+    public boolean isSwipeToRefreshEnabled() {
+        return swipeRefreshLayout.isEnabled();
+    }
+
+    /**
+     * Sets the {@link SwipeToRefreshListener} for this table view. If there is already a {@link SwipeToRefreshListener}
+     * set it will be replaced.
+     *
+     * @param listener The {@link SwipeToRefreshListener} that is called when the user triggers the refresh action.
+     */
+    public void setSwipeToRefreshListener(final SwipeToRefreshListener listener) {
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                listener.onRefresh(new SwipeToRefreshListener.RefreshIndicator() {
+                    @Override
+                    public void hide() {
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+
+                    @Override
+                    public void show() {
+                        swipeRefreshLayout.setRefreshing(true);
+                    }
+
+                    @Override
+                    public boolean isVisible() {
+                        return swipeRefreshLayout.isRefreshing();
+                    }
+                });
+            }
+        });
+    }
+
+    /**
      * Sets the given resource as background of the table header.
      *
      * @param resId The if of the resource tht shall be set as background of the table header.
      */
-    public void setHeaderBackground(final int resId) {
+    public void setHeaderBackground(@DrawableRes final int resId) {
         tableHeaderView.setBackgroundResource(resId);
     }
 
@@ -126,8 +178,9 @@ public class TableView<T> extends LinearLayout {
      *
      * @param color The color that shall be set as background of the table header.
      */
-    public void setHeaderBackgroundColor(final int color) {
+    public void setHeaderBackgroundColor(@ColorInt final int color) {
         tableHeaderView.setBackgroundColor(color);
+        swipeRefreshLayout.setColorSchemeColors(color);
     }
 
     /**
@@ -361,6 +414,7 @@ public class TableView<T> extends LinearLayout {
         }
 
         final TableHeaderView tableHeaderView = new TableHeaderView(getContext());
+        tableHeaderView.setBackgroundColor(0xFFCCCCCC);
         setHeaderView(tableHeaderView);
     }
 
@@ -377,11 +431,17 @@ public class TableView<T> extends LinearLayout {
         tableDataView = new ListView(getContext(), attributes, styleAttributes);
         tableDataView.setOnItemClickListener(new InternalDataClickListener());
         tableDataView.setOnItemLongClickListener(new InternalDataLongClickListener());
-        tableDataView.setLayoutParams(dataViewLayoutParams);
+        tableDataView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         tableDataView.setAdapter(tableDataAdapter);
         tableDataView.setId(R.id.table_data_view);
 
-        addView(tableDataView);
+        swipeRefreshLayout = new SwipeRefreshLayout(getContext());
+        swipeRefreshLayout.setLayoutParams(dataViewLayoutParams);
+        swipeRefreshLayout.addView(tableDataView);
+        swipeRefreshLayout.setColorSchemeColors(headerColor);
+        swipeRefreshLayout.setEnabled(false);
+
+        addView(swipeRefreshLayout);
     }
 
     private int getWidthAttribute(final AttributeSet attributes) {

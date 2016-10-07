@@ -39,4 +39,10 @@ public class Car implements Chargable {
     public double getPrice() {
         return price;
     }
+
+
+    @Override
+    public String toString() {
+        return producer.getName() + " " + name;
+    }
 }

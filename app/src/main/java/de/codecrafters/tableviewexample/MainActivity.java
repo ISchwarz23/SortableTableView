@@ -4,11 +4,14 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
-
+import de.codecrafters.tableview.listeners.SwipeToRefreshListener;
 import de.codecrafters.tableview.listeners.TableDataClickListener;
 import de.codecrafters.tableview.listeners.TableDataLongClickListener;
 import de.codecrafters.tableviewexample.data.Car;
 import de.codecrafters.tableviewexample.data.DataFactory;
+
+import java.util.List;
+import java.util.Random;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -25,10 +28,33 @@ public class MainActivity extends AppCompatActivity {
 
         final SortableCarTableView carTableView = (SortableCarTableView) findViewById(R.id.tableView);
         if (carTableView != null) {
-            carTableView.setDataAdapter(new CarTableDataAdapter(this, DataFactory.createCarList()));
+            final CarTableDataAdapter carTableDataAdapter = new CarTableDataAdapter(this, DataFactory.createCarList());
+            carTableView.setDataAdapter(carTableDataAdapter);
             carTableView.addDataClickListener(new CarClickListener());
             carTableView.addDataLongClickListener(new CarLongClickListener());
+            carTableView.setSwipeToRefreshEnabled(true);
+            carTableView.setSwipeToRefreshListener(new SwipeToRefreshListener() {
+                @Override
+                public void onRefresh(final RefreshIndicator refreshIndicator) {
+                    carTableView.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            final Car randomCar = getRandomCar();
+                            carTableDataAdapter.getData().add(randomCar);
+                            carTableDataAdapter.notifyDataSetChanged();
+                            refreshIndicator.hide();
+                            Toast.makeText(MainActivity.this, "Added: " + randomCar, Toast.LENGTH_SHORT).show();
+                        }
+                    }, 3000);
+                }
+            });
         }
+    }
+
+    private Car getRandomCar() {
+        final List<Car> carList = DataFactory.createCarList();
+        final int randomCarIndex = new Random().nextInt() % carList.size();
+        return carList.get(randomCarIndex);
     }
 
     private class CarClickListener implements TableDataClickListener<Car> {
