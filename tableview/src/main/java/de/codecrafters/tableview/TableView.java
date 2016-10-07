@@ -12,17 +12,16 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-
 import de.codecrafters.tableview.colorizers.TableDataRowColorizer;
 import de.codecrafters.tableview.listeners.TableDataClickListener;
 import de.codecrafters.tableview.listeners.TableDataLongClickListener;
 import de.codecrafters.tableview.listeners.TableHeaderClickListener;
 import de.codecrafters.tableview.providers.TableDataRowBackgroundProvider;
 import de.codecrafters.tableview.toolkit.TableDataRowBackgroundProviders;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 
 /**
@@ -35,6 +34,7 @@ public class TableView<T> extends LinearLayout {
 
     private static final String LOG_TAG = TableView.class.getName();
 
+    TableDataAdapter<T> tableDataAdapter;
     private static final int ID_DATA_VIEW = 101010;
 
     private static final int DEFAULT_COLUMN_COUNT = 4;
@@ -43,7 +43,6 @@ public class TableView<T> extends LinearLayout {
 
     private final Set<TableDataLongClickListener<T>> dataLongClickListeners = new HashSet<>();
     private final Set<TableDataClickListener<T>> dataClickListeners = new HashSet<>();
-    protected TableDataAdapter<T> tableDataAdapter;
     private TableColumnModel columnModel;
     private TableHeaderView tableHeaderView;
     private ListView tableDataView;
@@ -59,8 +58,7 @@ public class TableView<T> extends LinearLayout {
      * Creates a new TableView with the given context.\n
      * (Has same effect like calling {@code new TableView(context, null, android.R.attr.listViewStyle})
      *
-     * @param context
-     *         The context that shall be used.
+     * @param context The context that shall be used.
      */
     public TableView(final Context context) {
         this(context, null);
@@ -70,10 +68,8 @@ public class TableView<T> extends LinearLayout {
      * Creates a new TableView with the given context.\n
      * (Has same effect like calling {@code new TableView(context, attrs, android.R.attr.listViewStyle})
      *
-     * @param context
-     *         The context that shall be used.
-     * @param attributes
-     *         The attributes that shall be set to the view.
+     * @param context    The context that shall be used.
+     * @param attributes The attributes that shall be set to the view.
      */
     public TableView(final Context context, final AttributeSet attributes) {
         this(context, attributes, android.R.attr.listViewStyle);
@@ -82,12 +78,9 @@ public class TableView<T> extends LinearLayout {
     /**
      * Creates a new TableView with the given context.
      *
-     * @param context
-     *         The context that shall be used.
-     * @param attributes
-     *         The attributes that shall be set to the view.
-     * @param styleAttributes
-     *         The style attributes that shall be set to the view.
+     * @param context         The context that shall be used.
+     * @param attributes      The attributes that shall be set to the view.
+     * @param styleAttributes The style attributes that shall be set to the view.
      */
     public TableView(final Context context, final AttributeSet attributes, final int styleAttributes) {
         super(context, attributes, styleAttributes);
@@ -100,8 +93,7 @@ public class TableView<T> extends LinearLayout {
     /**
      * Replaces the default {@link TableHeaderView} with the given one.
      *
-     * @param headerView
-     *         The new {@link TableHeaderView} that should be set.
+     * @param headerView The new {@link TableHeaderView} that should be set.
      */
     protected void setHeaderView(final TableHeaderView headerView) {
         this.tableHeaderView = headerView;
@@ -123,8 +115,7 @@ public class TableView<T> extends LinearLayout {
     /**
      * Sets the given resource as background of the table header.
      *
-     * @param resId
-     *         The if of the resource tht shall be set as background of the table header.
+     * @param resId The if of the resource tht shall be set as background of the table header.
      */
     public void setHeaderBackground(final int resId) {
         tableHeaderView.setBackgroundResource(resId);
@@ -133,8 +124,7 @@ public class TableView<T> extends LinearLayout {
     /**
      * Sets the given color as background of the table header.
      *
-     * @param color
-     *         The color that shall be set as background of the table header.
+     * @param color The color that shall be set as background of the table header.
      */
     public void setHeaderBackgroundColor(final int color) {
         tableHeaderView.setBackgroundColor(color);
@@ -144,8 +134,7 @@ public class TableView<T> extends LinearLayout {
      * Sets the elevation level of the header view. If you are not able to see the elevation shadow
      * you should set a background(-color) to the header.
      *
-     * @param elevation
-     *         The elevation that shall be set to the table header.
+     * @param elevation The elevation that shall be set to the table header.
      */
     public void setHeaderElevation(final int elevation) {
         ViewCompat.setElevation(tableHeaderView, elevation);
@@ -155,8 +144,7 @@ public class TableView<T> extends LinearLayout {
      * Sets the given {@link TableDataRowColorizer} that will be used to define the background color for
      * every table data row.
      *
-     * @param colorizer
-     *         The {@link TableDataRowColorizer} that shall be used.
+     * @param colorizer The {@link TableDataRowColorizer} that shall be used.
      * @deprecated This method is deprecated. Use {@link TableView#setDataRowBackgroundProvider} instead.
      */
     @Deprecated
@@ -168,8 +156,7 @@ public class TableView<T> extends LinearLayout {
      * Sets the given {@link TableDataRowBackgroundProvider} that will be used to define the background color for
      * every table data row.
      *
-     * @param backgroundProvider
-     *         The {@link TableDataRowBackgroundProvider} that shall be used.
+     * @param backgroundProvider The {@link TableDataRowBackgroundProvider} that shall be used.
      */
     public void setDataRowBackgroundProvider(final TableDataRowBackgroundProvider<? super T> backgroundProvider) {
         dataRowBackgroundProvider = backgroundProvider;
@@ -180,8 +167,7 @@ public class TableView<T> extends LinearLayout {
      * Adds a {@link TableDataClickListener} to this table. This listener gets notified every time the user clicks
      * a certain data item.
      *
-     * @param listener
-     *         The listener that should be added as click listener.
+     * @param listener The listener that should be added as click listener.
      */
     public void addDataClickListener(final TableDataClickListener<T> listener) {
         dataClickListeners.add(listener);
@@ -191,8 +177,7 @@ public class TableView<T> extends LinearLayout {
      * Adds a {@link TableDataLongClickListener} to this table. This listener gets notified every time the user clicks
      * long on a certain data item.
      *
-     * @param listener
-     *         The listener that should be added as long click listener.
+     * @param listener The listener that should be added as long click listener.
      */
     public void addDataLongClickListener(final TableDataLongClickListener<T> listener) {
         dataLongClickListeners.add(listener);
@@ -201,8 +186,7 @@ public class TableView<T> extends LinearLayout {
     /**
      * Removes the given {@link TableDataClickListener} from the click listeners of this table.
      *
-     * @param listener
-     *         The listener that should be removed.
+     * @param listener The listener that should be removed.
      * @deprecated This method has been deprecated in the version 2.2.0 for naming alignment reasons. Use the method
      * {@link TableView#removeDataClickListener(TableDataClickListener)} instead.
      */
@@ -214,8 +198,7 @@ public class TableView<T> extends LinearLayout {
     /**
      * Removes the given {@link TableDataClickListener} from the click listeners of this table.
      *
-     * @param listener
-     *         The listener that should be removed.
+     * @param listener The listener that should be removed.
      */
     public void removeDataClickListener(final TableDataClickListener<T> listener) {
         dataClickListeners.remove(listener);
@@ -224,8 +207,7 @@ public class TableView<T> extends LinearLayout {
     /**
      * Removes the given {@link TableDataLongClickListener} from the long click listeners of this table.
      *
-     * @param listener
-     *         The listener that should be removed.
+     * @param listener The listener that should be removed.
      */
     public void removeDataLongClickListener(final TableDataLongClickListener<T> listener) {
         dataLongClickListeners.remove(listener);
@@ -234,8 +216,7 @@ public class TableView<T> extends LinearLayout {
     /**
      * Adds the given {@link TableHeaderClickListener} to this table.
      *
-     * @param listener
-     *         The listener that shall be added to this table.
+     * @param listener The listener that shall be added to this table.
      */
     public void addHeaderClickListener(final TableHeaderClickListener listener) {
         tableHeaderView.addHeaderClickListener(listener);
@@ -244,8 +225,7 @@ public class TableView<T> extends LinearLayout {
     /**
      * Removes the given {@link TableHeaderClickListener} from this table.
      *
-     * @param listener
-     *         The listener that shall be removed from this table.
+     * @param listener The listener that shall be removed from this table.
      * @deprecated This method has been deprecated in the version 2.2.0 for naming alignment reasons. Use the method
      * {@link TableView#removeHeaderClickListener(TableHeaderClickListener)} instead.
      */
@@ -257,8 +237,7 @@ public class TableView<T> extends LinearLayout {
     /**
      * Removes the given {@link TableHeaderClickListener} from this table.
      *
-     * @param listener
-     *         The listener that shall be removed from this table.
+     * @param listener The listener that shall be removed from this table.
      */
     public void removeHeaderClickListener(final TableHeaderClickListener listener) {
         tableHeaderView.removeHeaderClickListener(listener);
@@ -276,8 +255,7 @@ public class TableView<T> extends LinearLayout {
     /**
      * Sets the {@link TableHeaderAdapter} that is used to render the header views for each column.
      *
-     * @param headerAdapter
-     *         The {@link TableHeaderAdapter} that should be set.
+     * @param headerAdapter The {@link TableHeaderAdapter} that should be set.
      */
     public void setHeaderAdapter(final TableHeaderAdapter headerAdapter) {
         tableHeaderAdapter = headerAdapter;
@@ -298,8 +276,7 @@ public class TableView<T> extends LinearLayout {
     /**
      * Sets the {@link TableDataAdapter} that is used to render the data view for each cell.
      *
-     * @param dataAdapter
-     *         The {@link TableDataAdapter} that should be set.
+     * @param dataAdapter The {@link TableDataAdapter} that should be set.
      */
     public void setDataAdapter(final TableDataAdapter<T> dataAdapter) {
         tableDataAdapter = dataAdapter;
@@ -321,8 +298,7 @@ public class TableView<T> extends LinearLayout {
     /**
      * Sets the number of columns of this table.
      *
-     * @param columnCount
-     *         The number of columns.
+     * @param columnCount The number of columns.
      */
     public void setColumnCount(final int columnCount) {
         columnModel.setColumnCount(columnCount);
@@ -332,10 +308,8 @@ public class TableView<T> extends LinearLayout {
     /**
      * Sets the column weight (the relative width of the column) of the given column.
      *
-     * @param columnIndex
-     *         The index of the column the weight should be set to.
-     * @param columnWeight
-     *         The weight that should be set to the column.
+     * @param columnIndex  The index of the column the weight should be set to.
+     * @param columnWeight The weight that should be set to the column.
      */
     public void setColumnWeight(final int columnIndex, final int columnWeight) {
         columnModel.setColumnWeight(columnIndex, columnWeight);
@@ -345,8 +319,7 @@ public class TableView<T> extends LinearLayout {
     /**
      * Gives the column weight (the relative width of the column) of the given column.
      *
-     * @param columnIndex
-     *         The index of the column the weight should be returned.
+     * @param columnIndex The index of the column the weight should be returned.
      * @return The weight of the given column index.
      */
     public int getColumnWeight(final int columnIndex) {
