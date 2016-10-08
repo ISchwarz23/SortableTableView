@@ -312,6 +312,22 @@ If you want to have a seperator between the data rows you can do so by specifyin
 ```
 As for the `ListView` you can specify `divider` as a drawable and `dividerHeight` as the vertical size of the divider.  
   
+### Swipe to Refresh
+The TableView has a build in SwipeToRefresh action. By default this is disabled, but you can easily enable it using the follwing line.
+```java
+    tableView.setSwipeToRefreshEnabled( true );
+```
+This enables the user to trigger the table refresh on a single swipe. To listen for this user interaction you have to set an `SwipeToRefreshListener` to your tableview.
+```java
+    carTableView.setSwipeToRefreshListener(new SwipeToRefreshListener() {
+        @Override
+        public void onRefresh(final RefreshIndicator refreshIndicator) {
+            // your async refresh action goes here
+        }
+    });
+```
+The callback method has the `RefreshIndicator` that is shown to the user passed as parameter. So if you finished your refresh action simply call `RefreshIndicator.hide()`.
+  
 ### State Persistence
 The TableView as well as the SortableTableView will persist its state automatically (e.g. on orientation change). If you want to disable this behaviour you can do so using the following code snipped.
 ```java
