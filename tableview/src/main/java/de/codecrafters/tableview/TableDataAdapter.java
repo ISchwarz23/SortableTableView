@@ -2,6 +2,7 @@ package de.codecrafters.tableview;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -32,6 +33,8 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
     private final List<T> data;
     private TableColumnModel columnModel;
     private TableDataRowBackgroundProvider<? super T> rowBackgroundProvider;
+    private int rowDividerHeight = 0;
+    private Drawable rowDivider;
 
 
     /**
@@ -145,11 +148,14 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
 
     @Override
     public final View getView(final int rowIndex, final View convertView, final ViewGroup parent) {
-        final LinearLayout rowView = new LinearLayout(getContext());
+        final LinearLayout rowView;// = new LinearLayout(getContext());
+        if (convertView != null) rowView = (LinearLayout) convertView; else rowView = new LinearLayout(getContext());
 
         final AbsListView.LayoutParams rowLayoutParams = new AbsListView.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         rowView.setLayoutParams(rowLayoutParams);
         rowView.setGravity(Gravity.CENTER_VERTICAL);
+
+
 
         T rowData = null;
         try {
@@ -179,8 +185,16 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
             final LinearLayout.LayoutParams cellLayoutParams = new LinearLayout.LayoutParams(width, LinearLayout.LayoutParams.WRAP_CONTENT);
             cellLayoutParams.weight = columnModel.getColumnWeight(columnIndex);
             cellView.setLayoutParams(cellLayoutParams);
-            rowView.addView(cellView);
+            if (rowView.getChildAt(columnIndex) != null){
+                rowView.removeViewAt(columnIndex);
+                rowView.addView(cellView, columnIndex);
+            } else rowView.addView(cellView);
         }
+
+        if (getRowDivider() != null)
+            rowView.setDividerDrawable(getRowDivider());
+
+        rowView.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE|LinearLayout.SHOW_DIVIDER_BEGINNING|LinearLayout.SHOW_DIVIDER_END);
 
         return rowView;
     }
@@ -263,4 +277,19 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
         return columnModel.getColumnWeightSum();
     }
 
+    public int getRowDividerHeight() {
+        return rowDividerHeight;
+    }
+
+    public void setRowDividerHeight(int rowDividerHeight) {
+        this.rowDividerHeight = rowDividerHeight;
+    }
+
+    public Drawable getRowDivider() {
+        return rowDivider;
+    }
+
+    public void setRowDivider(Drawable rowDivider) {
+        this.rowDivider = rowDivider;
+    }
 }
