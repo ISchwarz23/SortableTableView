@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
         final SortableCarTableView carTableView = (SortableCarTableView) findViewById(R.id.tableView);
         if (carTableView != null) {
-            final CarTableDataAdapter carTableDataAdapter = new CarTableDataAdapter(this, DataFactory.createCarList());
+            final CarTableDataAdapter carTableDataAdapter = new CarTableDataAdapter(this, DataFactory.createCarList(), carTableView);
             carTableView.setDataAdapter(carTableDataAdapter);
             carTableView.addDataClickListener(new CarClickListener());
             carTableView.addDataLongClickListener(new CarLongClickListener());
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Car getRandomCar() {
         final List<Car> carList = DataFactory.createCarList();
-        final int randomCarIndex = new Random().nextInt() % carList.size();
+        final int randomCarIndex = Math.abs(new Random().nextInt() % carList.size());
         return carList.get(randomCarIndex);
     }
 

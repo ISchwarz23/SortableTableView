@@ -9,9 +9,9 @@ package de.codecrafters.tableviewexample.data;
 public class Car implements Chargable {
 
     private final CarProducer producer;
-    private final String name;
     private final int ps;
     private final double price;
+    private String name;
 
     public Car(final CarProducer producer, final String name, final int ps, final double price) {
         this.producer = producer;
@@ -28,6 +28,10 @@ public class Car implements Chargable {
         return name;
     }
 
+    public void setName(final String name) {
+        this.name = name;
+    }
+
     public int getPs() {
         return ps;
     }
@@ -39,7 +43,6 @@ public class Car implements Chargable {
     public double getPrice() {
         return price;
     }
-
 
     @Override
     public String toString() {
