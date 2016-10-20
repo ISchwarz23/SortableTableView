@@ -37,6 +37,7 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
      * Creates a new TableDataAdapter.
      *
      * @param context The context that shall be used.
+     * @param data    The data that shall be displayed.
      */
     public TableDataAdapter(final Context context, final T[] data) {
         this(context, 0, new ArrayList<>(Arrays.asList(data)));
@@ -46,6 +47,7 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
      * Creates a new TableDataAdapter.
      *
      * @param context The context that shall be used.
+     * @param data    The data that shall be displayed.
      */
     public TableDataAdapter(final Context context, final List<T> data) {
         this(context, 0, data);
