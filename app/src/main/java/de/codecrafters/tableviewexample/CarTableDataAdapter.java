@@ -3,7 +3,6 @@ package de.codecrafters.tableviewexample;
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -59,18 +58,11 @@ public class CarTableDataAdapter extends LongPressAwareTableDataAdapter<Car> {
         View renderedView = null;
 
         switch (columnIndex) {
-            case 0:
-                renderedView = renderProducerLogo(car, parentView);
-                break;
             case 1:
                 renderedView = renderEditableCatName(car);
                 break;
-            case 2:
-                renderedView = renderPower(car, parentView);
-                break;
-            case 3:
-                renderedView = renderPrice(car);
-                break;
+            default:
+                renderedView = getDefaultCellView(rowIndex, columnIndex, parentView);
         }
 
         return renderedView;
@@ -81,24 +73,8 @@ public class CarTableDataAdapter extends LongPressAwareTableDataAdapter<Car> {
         editText.setText(car.getName());
         editText.setPadding(20, 10, 20, 10);
         editText.setTextSize(TEXT_SIZE);
-        editText.addTextChangedListener(new TextWatcher() {
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                Log.d("TextWatcher", "Before");
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Log.d("TextWatcher", "OnChange");
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                Log.d("TextWatcher", "After");
-                car.setName(s.toString());
-            }
-        });
+        editText.setSingleLine();
+        editText.addTextChangedListener(new CarNameUpdater(car));
         return editText;
     }
 
@@ -147,6 +123,30 @@ public class CarTableDataAdapter extends LongPressAwareTableDataAdapter<Car> {
         textView.setPadding(20, 10, 20, 10);
         textView.setTextSize(TEXT_SIZE);
         return textView;
+    }
+
+    private static class CarNameUpdater implements TextWatcher {
+
+        private Car carToUpdate;
+
+        public CarNameUpdater(Car carToUpdate) {
+            this.carToUpdate = carToUpdate;
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            // no used
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            // not used
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            carToUpdate.setName(s.toString());
+        }
     }
 
 }
