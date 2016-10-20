@@ -117,21 +117,21 @@ public class TableView<T> extends LinearLayout {
     }
 
     /**
-     * Toggles the swipe to refresh feature to the user.
-     *
-     * @param enabled Whether the swipe to refresh feature shall be enabled or not.
-     */
-    public void setSwipeToRefreshEnabled(final boolean enabled) {
-        swipeRefreshLayout.setEnabled(enabled);
-    }
-
-    /**
      * Gives information whether the swipe to refresh feature shall be enabled or not.
      *
      * @return Boolean indication whether the swipe to refresh feature shall be enabled or not.
      */
     public boolean isSwipeToRefreshEnabled() {
         return swipeRefreshLayout.isEnabled();
+    }
+
+    /**
+     * Toggles the swipe to refresh feature to the user.
+     *
+     * @param enabled Whether the swipe to refresh feature shall be enabled or not.
+     */
+    public void setSwipeToRefreshEnabled(final boolean enabled) {
+        swipeRefreshLayout.setEnabled(enabled);
     }
 
     /**

@@ -7,12 +7,11 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import de.codecrafters.tableview.providers.SortStateViewProvider;
+import de.codecrafters.tableview.toolkit.SortStateViewProviders;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import de.codecrafters.tableview.providers.SortStateViewProvider;
-import de.codecrafters.tableview.toolkit.SortStateViewProviders;
 
 
 /**
@@ -32,8 +31,7 @@ class SortableTableHeaderView extends TableHeaderView {
     /**
      * Creates a new SortableTableHeaderView.
      *
-     * @param context
-     *         The context that shall be used.
+     * @param context The context that shall be used.
      */
     public SortableTableHeaderView(final Context context) {
         super(context);
@@ -66,12 +64,10 @@ class SortableTableHeaderView extends TableHeaderView {
     /**
      * Sets the {@link SortState} of the SortView of the column with the given index.
      *
-     * @param columnIndex
-     *         The index of the column for which the given {@link SortState}
-     *         will be set.
-     * @param state
-     *         The {@link SortState} that shall be set to the sort view at the column with
-     *         the given index.
+     * @param columnIndex The index of the column for which the given {@link SortState}
+     *                    will be set.
+     * @param state       The {@link SortState} that shall be set to the sort view at the column with
+     *                    the given index.
      */
     public void setSortState(final int columnIndex, final SortState state) {
         final ImageView sortView = sortViews.get(columnIndex);
@@ -103,8 +99,7 @@ class SortableTableHeaderView extends TableHeaderView {
     /**
      * Sets the given {@link SortStateViewProvider} to this SortableTableHeaderView.
      *
-     * @param provider
-     *         The {@link SortStateViewProvider} that shall be used to render the sort views.
+     * @param provider The {@link SortStateViewProvider} that shall be used to render the sort views.
      */
     public void setSortStateViewProvider(final SortStateViewProvider provider) {
         sortStateViewProvider = provider;

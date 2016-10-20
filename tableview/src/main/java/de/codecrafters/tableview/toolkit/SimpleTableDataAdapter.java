@@ -7,10 +7,9 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import de.codecrafters.tableview.TableDataAdapter;
 
 import java.util.List;
-
-import de.codecrafters.tableview.TableDataAdapter;
 
 /**
  * A simple {@link TableDataAdapter} that allows to display 2D-String-Arrays in a {@link de.codecrafters.tableview.TableView}.
@@ -51,7 +50,7 @@ public final class SimpleTableDataAdapter extends TableDataAdapter<String[]> {
         try {
             final String textToShow = getItem(rowIndex)[columnIndex];
             textView.setText(textToShow);
-        } catch(final IndexOutOfBoundsException e) {
+        } catch (final IndexOutOfBoundsException e) {
             Log.w(LOG_TAG, "No Sting given for row " + rowIndex + ", column " + columnIndex + ". "
                     + "Caught exception: " + e.toString());
             // Show no text
@@ -63,14 +62,10 @@ public final class SimpleTableDataAdapter extends TableDataAdapter<String[]> {
     /**
      * Sets the padding that will be used for all table cells.
      *
-     * @param left
-     *         The padding on the left side.
-     * @param top
-     *         The padding on the top side.
-     * @param right
-     *         The padding on the right side.
-     * @param bottom
-     *         The padding on the bottom side.
+     * @param left   The padding on the left side.
+     * @param top    The padding on the top side.
+     * @param right  The padding on the right side.
+     * @param bottom The padding on the bottom side.
      */
     public void setPaddings(final int left, final int top, final int right, final int bottom) {
         paddingLeft = left;
@@ -82,8 +77,7 @@ public final class SimpleTableDataAdapter extends TableDataAdapter<String[]> {
     /**
      * Sets the padding that will be used on the left side for all table cells.
      *
-     * @param paddingLeft
-     *         The padding on the left side.
+     * @param paddingLeft The padding on the left side.
      */
     public void setPaddingLeft(final int paddingLeft) {
         this.paddingLeft = paddingLeft;
@@ -92,8 +86,7 @@ public final class SimpleTableDataAdapter extends TableDataAdapter<String[]> {
     /**
      * Sets the padding that will be used on the top side for all table cells.
      *
-     * @param paddingTop
-     *         The padding on the top side.
+     * @param paddingTop The padding on the top side.
      */
     public void setPaddingTop(final int paddingTop) {
         this.paddingTop = paddingTop;
@@ -102,8 +95,7 @@ public final class SimpleTableDataAdapter extends TableDataAdapter<String[]> {
     /**
      * Sets the padding that will be used on the right side for all table cells.
      *
-     * @param paddingRight
-     *         The padding on the right side.
+     * @param paddingRight The padding on the right side.
      */
     public void setPaddingRight(final int paddingRight) {
         this.paddingRight = paddingRight;
@@ -112,8 +104,7 @@ public final class SimpleTableDataAdapter extends TableDataAdapter<String[]> {
     /**
      * Sets the padding that will be used on the bottom side for all table cells.
      *
-     * @param paddingBottom
-     *         The padding on the bottom side.
+     * @param paddingBottom The padding on the bottom side.
      */
     public void setPaddingBottom(final int paddingBottom) {
         this.paddingBottom = paddingBottom;
@@ -122,8 +113,7 @@ public final class SimpleTableDataAdapter extends TableDataAdapter<String[]> {
     /**
      * Sets the text size that will be used for all table cells.
      *
-     * @param textSize
-     *         The text size that shall be used.
+     * @param textSize The text size that shall be used.
      */
     public void setTextSize(final int textSize) {
         this.textSize = textSize;
@@ -132,8 +122,7 @@ public final class SimpleTableDataAdapter extends TableDataAdapter<String[]> {
     /**
      * Sets the typeface that will be used for all table cells.
      *
-     * @param typeface
-     *         The type face that shall be used.
+     * @param typeface The type face that shall be used.
      */
     public void setTypeface(final int typeface) {
         this.typeface = typeface;
@@ -142,8 +131,7 @@ public final class SimpleTableDataAdapter extends TableDataAdapter<String[]> {
     /**
      * Sets the text color that will be used for all table cells.
      *
-     * @param textColor
-     *         The text color that shall be used.
+     * @param textColor The text color that shall be used.
      */
     public void setTextColor(final int textColor) {
         this.textColor = textColor;

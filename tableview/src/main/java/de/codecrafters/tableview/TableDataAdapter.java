@@ -11,12 +11,11 @@ import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import de.codecrafters.tableview.providers.TableDataRowBackgroundProvider;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import de.codecrafters.tableview.providers.TableDataRowBackgroundProvider;
 
 import static android.widget.LinearLayout.LayoutParams;
 
@@ -37,8 +36,7 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
     /**
      * Creates a new TableDataAdapter.
      *
-     * @param context
-     *         The context that shall be used.
+     * @param context The context that shall be used.
      */
     public TableDataAdapter(final Context context, final T[] data) {
         this(context, 0, new ArrayList<>(Arrays.asList(data)));
@@ -47,8 +45,7 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
     /**
      * Creates a new TableDataAdapter.
      *
-     * @param context
-     *         The context that shall be used.
+     * @param context The context that shall be used.
      */
     public TableDataAdapter(final Context context, final List<T> data) {
         this(context, 0, data);
@@ -57,10 +54,8 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
     /**
      * Creates a new TableDataAdapter. (internally used)
      *
-     * @param context
-     *         The context that shall be used.
-     * @param columnCount
-     *         The number of columns.
+     * @param context     The context that shall be used.
+     * @param columnCount The number of columns.
      */
     protected TableDataAdapter(final Context context, final int columnCount, final List<T> data) {
         this(context, new TableColumnModel(columnCount), data);
@@ -69,10 +64,8 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
     /**
      * Creates a new TableDataAdapter. (internally used)
      *
-     * @param context
-     *         The context that shall be used.
-     * @param columnModel
-     *         The column model to be used.
+     * @param context     The context that shall be used.
+     * @param columnModel The column model to be used.
      */
     protected TableDataAdapter(final Context context, final TableColumnModel columnModel, final List<T> data) {
         super(context, -1, data);
@@ -83,8 +76,7 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
     /**
      * Gives the data object that shall be displayed in the row with the given index.
      *
-     * @param rowIndex
-     *         The index of the row to get the data for.
+     * @param rowIndex The index of the row to get the data for.
      * @return The data that shall be displayed in the row with the given index.
      */
     public T getRowData(final int rowIndex) {
@@ -133,12 +125,9 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
     /**
      * Method that gives the cell views for the different table cells.
      *
-     * @param rowIndex
-     *         The index of the row to return the table cell view.
-     * @param columnIndex
-     *         The index of the column to return the table cell view.
-     * @param parentView
-     *         The view to which the returned view will be added.
+     * @param rowIndex    The index of the row to return the table cell view.
+     * @param columnIndex The index of the column to return the table cell view.
+     * @param parentView  The view to which the returned view will be added.
      * @return The created header view for the given column.
      */
     public abstract View getCellView(int rowIndex, int columnIndex, ViewGroup parentView);
@@ -188,8 +177,7 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
     /**
      * Sets the {@link TableDataRowBackgroundProvider} that will be used to define the table data rows background.
      *
-     * @param rowbackgroundProvider
-     *         The {@link TableDataRowBackgroundProvider} that shall be used.
+     * @param rowbackgroundProvider The {@link TableDataRowBackgroundProvider} that shall be used.
      */
     protected void setRowBackgroundProvider(final TableDataRowBackgroundProvider<? super T> rowbackgroundProvider) {
         this.rowBackgroundProvider = rowbackgroundProvider;
@@ -205,8 +193,7 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
     /**
      * Sets the {@link TableColumnModel} that will be used to render the table cells.
      *
-     * @param columnModel
-     *         The {@link TableColumnModel} that should be set.
+     * @param columnModel The {@link TableColumnModel} that should be set.
      */
     protected void setColumnModel(final TableColumnModel columnModel) {
         this.columnModel = columnModel;
@@ -224,8 +211,7 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
     /**
      * Sets the column count which is used to render the table headers.
      *
-     * @param columnCount
-     *         The column count that should be set.
+     * @param columnCount The column count that should be set.
      */
     protected void setColumnCount(final int columnCount) {
         columnModel.setColumnCount(columnCount);
@@ -234,10 +220,8 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
     /**
      * Sets the column weight (the relative width of a column) of the column at the given index.
      *
-     * @param columnIndex
-     *         The index of the column to which this weight should be assigned.
-     * @param columnWeight
-     *         The weight that should be set to the column at the given index.
+     * @param columnIndex  The index of the column to which this weight should be assigned.
+     * @param columnWeight The weight that should be set to the column at the given index.
      */
     protected void setColumnWeight(final int columnIndex, final int columnWeight) {
         columnModel.setColumnWeight(columnIndex, columnWeight);
@@ -246,8 +230,7 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
     /**
      * Gives the column weight (the relative width of a column) of the column at the given index.
      *
-     * @param columnIndex
-     *         The index of the column to receive the column weight.
+     * @param columnIndex The index of the column to receive the column weight.
      * @return The column weight of the column at the given index.
      */
     protected int getColumnWeight(final int columnIndex) {

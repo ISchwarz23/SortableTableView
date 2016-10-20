@@ -1,10 +1,9 @@
 package de.codecrafters.tableview;
 
 import android.view.View;
+import de.codecrafters.tableview.listeners.TableHeaderClickListener;
 
 import java.util.Set;
-
-import de.codecrafters.tableview.listeners.TableHeaderClickListener;
 
 
 /**

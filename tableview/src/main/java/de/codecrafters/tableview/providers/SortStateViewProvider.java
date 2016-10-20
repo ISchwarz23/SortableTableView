@@ -15,8 +15,7 @@ public interface SortStateViewProvider {
     /**
      * Gives the drawable resource for the given {@link SortState}.
      *
-     * @param state
-     *         The {@link SortState} to return the drawable resource for.
+     * @param state The {@link SortState} to return the drawable resource for.
      * @return The drawable resource for the given {@link SortState}.
      */
     int getSortStateViewResource(final SortState state);

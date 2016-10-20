@@ -23,21 +23,10 @@ public class TableColumnModel {
      * Creates a new TableColumnModel with the given number of columns. Every column has by default
      * a weight (relative width) of 1.
      *
-     * @param columnCount
-     *         The number of columns.
+     * @param columnCount The number of columns.
      */
     public TableColumnModel(final int columnCount) {
         this.columnWeights = new HashMap<>();
-        this.columnCount = columnCount;
-    }
-
-    /**
-     * Sets the column count to this model.
-     *
-     * @param columnCount
-     *         The number of columns that shall be set.
-     */
-    public void setColumnCount(final int columnCount) {
         this.columnCount = columnCount;
     }
 
@@ -51,12 +40,19 @@ public class TableColumnModel {
     }
 
     /**
+     * Sets the column count to this model.
+     *
+     * @param columnCount The number of columns that shall be set.
+     */
+    public void setColumnCount(final int columnCount) {
+        this.columnCount = columnCount;
+    }
+
+    /**
      * Sets the column weight (the relative width of a column) of the column at the given index.
      *
-     * @param columnIndex
-     *         The index of the column to which this weight should be assigned.
-     * @param columnWeight
-     *         The weight that should be set to the column at the given index.
+     * @param columnIndex  The index of the column to which this weight should be assigned.
+     * @param columnWeight The weight that should be set to the column at the given index.
      */
     public void setColumnWeight(final int columnIndex, final int columnWeight) {
         columnWeights.put(columnIndex, columnWeight);
@@ -65,8 +61,7 @@ public class TableColumnModel {
     /**
      * Gives the column weight (the relative width of a column) of the column at the given index.
      *
-     * @param columnIndex
-     *         The index of the column to receive the column weight.
+     * @param columnIndex The index of the column to receive the column weight.
      * @return The column weight of the column at the given index.
      */
     public int getColumnWeight(final int columnIndex) {

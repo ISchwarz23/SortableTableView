@@ -1,9 +1,9 @@
 package de.codecrafters.tableviewexample.data;
 
+import de.codecrafters.tableviewexample.R;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import de.codecrafters.tableviewexample.R;
 
 /**
  * A factory that provides data for demonstration porpuses.

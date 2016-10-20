@@ -4,9 +4,9 @@ import de.codecrafters.tableview.colorizers.TableDataRowColorizer;
 
 /**
  * Factory for different {@link TableDataRowColorizer}.
- * @deprecated The {@link TableDataRowColorizers} is deprecated. Use the {@link TableDataRowBackgroundProviders} instead.
  *
  * @author ISchwarz
+ * @deprecated The {@link TableDataRowColorizers} is deprecated. Use the {@link TableDataRowBackgroundProviders} instead.
  */
 @Deprecated
 public final class TableDataRowColorizers {
@@ -19,8 +19,7 @@ public final class TableDataRowColorizers {
      * Gives an implementation of {@link TableDataRowColorizer} that will return the given color
      * for every row.
      *
-     * @param color
-     *         The color that shall be applied to every table data row.
+     * @param color The color that shall be applied to every table data row.
      * @return The described {@link TableDataRowColorizer}.
      */
     public static TableDataRowColorizer<Object> similarRowColor(final int color) {
@@ -31,10 +30,8 @@ public final class TableDataRowColorizers {
      * Gives an implementation of {@link TableDataRowColorizer} that will return alternately the two
      * given colors.
      *
-     * @param colorEvenRows
-     *         The color that will be returned for rows with an even index.
-     * @param colorOddRows
-     *         The color that will be returned for rows with an odd index.
+     * @param colorEvenRows The color that will be returned for rows with an even index.
+     * @param colorOddRows  The color that will be returned for rows with an odd index.
      * @return The described {@link TableDataRowColorizer}.
      */
     public static TableDataRowColorizer<Object> alternatingRows(final int colorEvenRows, final int colorOddRows) {

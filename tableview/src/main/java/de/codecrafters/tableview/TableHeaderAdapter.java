@@ -14,15 +14,14 @@ import android.view.ViewGroup;
  */
 public abstract class TableHeaderAdapter {
 
-    private TableColumnModel columnModel;
     private final Context context;
+    private TableColumnModel columnModel;
 
 
     /**
      * Creates a new TableHeaderAdapter.
      *
-     * @param context
-     *         The context that shall be used.
+     * @param context The context that shall be used.
      */
     public TableHeaderAdapter(final Context context) {
         this(context, 0);
@@ -31,10 +30,8 @@ public abstract class TableHeaderAdapter {
     /**
      * Creates a new TableHeaderAdapter. (internally used)
      *
-     * @param context
-     *         The context that shall be used.
-     * @param columnCount
-     *         The number of columns.
+     * @param context     The context that shall be used.
+     * @param columnCount The number of columns.
      */
     protected TableHeaderAdapter(final Context context, final int columnCount) {
         this(context, new TableColumnModel(columnCount));
@@ -43,10 +40,8 @@ public abstract class TableHeaderAdapter {
     /**
      * Creates a new TableHeaderAdapter. (internally used)
      *
-     * @param context
-     *         The context that shall be used.
-     * @param columnModel
-     *         The column model to be used.
+     * @param context     The context that shall be used.
+     * @param columnModel The column model to be used.
      */
     protected TableHeaderAdapter(final Context context, final TableColumnModel columnModel) {
         this.context = context;
@@ -84,16 +79,6 @@ public abstract class TableHeaderAdapter {
     }
 
     /**
-     * Sets the {@link TableColumnModel} that will be used to render the table headers.
-     *
-     * @param columnModel
-     *         The {@link TableColumnModel} that should be set.
-     */
-    protected void setColumnModel(final TableColumnModel columnModel) {
-        this.columnModel = columnModel;
-    }
-
-    /**
      * Gives the {@link TableColumnModel} that is currently used to render the table headers.
      */
     protected TableColumnModel getColumnModel() {
@@ -101,13 +86,12 @@ public abstract class TableHeaderAdapter {
     }
 
     /**
-     * Sets the column count which is used to render the table headers.
+     * Sets the {@link TableColumnModel} that will be used to render the table headers.
      *
-     * @param columnCount
-     *         The column count that should be set.
+     * @param columnModel The {@link TableColumnModel} that should be set.
      */
-    protected void setColumnCount(final int columnCount) {
-        columnModel.setColumnCount(columnCount);
+    protected void setColumnModel(final TableColumnModel columnModel) {
+        this.columnModel = columnModel;
     }
 
     /**
@@ -120,12 +104,19 @@ public abstract class TableHeaderAdapter {
     }
 
     /**
+     * Sets the column count which is used to render the table headers.
+     *
+     * @param columnCount The column count that should be set.
+     */
+    protected void setColumnCount(final int columnCount) {
+        columnModel.setColumnCount(columnCount);
+    }
+
+    /**
      * Sets the column weight (the relative width of a column) of the column at the given index.
      *
-     * @param columnIndex
-     *         The index of the column to which this weight should be assigned.
-     * @param columnWeight
-     *         The weight that should be set to the column at the given index.
+     * @param columnIndex  The index of the column to which this weight should be assigned.
+     * @param columnWeight The weight that should be set to the column at the given index.
      */
     protected void setColumnWeight(final int columnIndex, final int columnWeight) {
         columnModel.setColumnWeight(columnIndex, columnWeight);
@@ -134,8 +125,7 @@ public abstract class TableHeaderAdapter {
     /**
      * Gives the column weight (the relative width of a column) of the column at the given index.
      *
-     * @param columnIndex
-     *         The index of the column to receive the column weight.
+     * @param columnIndex The index of the column to receive the column weight.
      * @return The column weight of the column at the given index.
      */
     protected int getColumnWeight(final int columnIndex) {
@@ -154,10 +144,8 @@ public abstract class TableHeaderAdapter {
     /**
      * Method that gives the header views for the different columns.
      *
-     * @param columnIndex
-     *         The index of the column to return the header view.
-     * @param parentView
-     *         The view to which the returned view will be added.
+     * @param columnIndex The index of the column to return the header view.
+     * @param parentView  The view to which the returned view will be added.
      * @return The created header view for the given column.
      */
     public abstract View getHeaderView(int columnIndex, ViewGroup parentView);

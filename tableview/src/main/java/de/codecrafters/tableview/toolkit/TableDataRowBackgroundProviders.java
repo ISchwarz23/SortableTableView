@@ -2,7 +2,6 @@ package de.codecrafters.tableview.toolkit;
 
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-
 import de.codecrafters.tableview.providers.TableDataRowBackgroundProvider;
 
 
@@ -21,10 +20,8 @@ public final class TableDataRowBackgroundProviders {
      * Gives an implementation of {@link TableDataRowBackgroundProvider} that will return alternately the two
      * given colors.
      *
-     * @param colorEvenRows
-     *         The color that will be returned for rows with an even index.
-     * @param colorOddRows
-     *         The color that will be returned for rows with an odd index.
+     * @param colorEvenRows The color that will be returned for rows with an even index.
+     * @param colorOddRows  The color that will be returned for rows with an odd index.
      * @return A {@link TableDataRowBackgroundProvider} with the described behaviour.
      */
     public static TableDataRowBackgroundProvider<Object> alternatingRowColors(final int colorEvenRows, final int colorOddRows) {
@@ -35,10 +32,8 @@ public final class TableDataRowBackgroundProviders {
      * Gives an implementation of {@link TableDataRowBackgroundProvider} that will return alternately the two
      * given colors.
      *
-     * @param drawableEvenRows
-     *         The {@link Drawable} that will be returned for rows with an even index.
-     * @param drawableOddRows
-     *         The {@link Drawable}  that will be returned for rows with an odd index.
+     * @param drawableEvenRows The {@link Drawable} that will be returned for rows with an even index.
+     * @param drawableOddRows  The {@link Drawable}  that will be returned for rows with an odd index.
      * @return A {@link TableDataRowBackgroundProvider} with the described behaviour.
      */
     public static TableDataRowBackgroundProvider<Object> alternatingRowDrawables(final Drawable drawableEvenRows, final Drawable drawableOddRows) {
@@ -48,8 +43,7 @@ public final class TableDataRowBackgroundProviders {
     /**
      * Gives an implementation of {@link TableDataRowBackgroundProvider} that will return the given color for each row.
      *
-     * @param color
-     *         The color that will be used for each row.
+     * @param color The color that will be used for each row.
      * @return A {@link TableDataRowBackgroundProvider} with the described behaviour.
      */
     public static TableDataRowBackgroundProvider<Object> similarRowColor(final int color) {
@@ -59,8 +53,7 @@ public final class TableDataRowBackgroundProviders {
     /**
      * Gives an implementation of {@link TableDataRowBackgroundProvider} that will return the given color for each row.
      *
-     * @param drawable
-     *         The {@link Drawable} that will be used for each row.
+     * @param drawable The {@link Drawable} that will be used for each row.
      * @return A {@link TableDataRowBackgroundProvider} with the described behaviour.
      */
     public static TableDataRowBackgroundProvider<Object> similarRowDrawable(final Drawable drawable) {

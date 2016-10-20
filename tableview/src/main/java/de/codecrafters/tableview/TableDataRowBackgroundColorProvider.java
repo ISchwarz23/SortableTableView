@@ -2,17 +2,16 @@ package de.codecrafters.tableview;
 
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-
 import de.codecrafters.tableview.colorizers.TableDataRowColorizer;
 import de.codecrafters.tableview.providers.TableDataRowBackgroundProvider;
 
 
 /**
  * A wrapper for a {@link TableDataRowColorizer} that implements the {@link TableDataRowBackgroundProvider} interface.
- * @deprecated The {@link TableDataRowBackgroundColorProvider} is deprecated as it is only used to map a
- * {@link TableDataRowColorizer} to a {@link TableDataRowBackgroundProvider}.
  *
  * @author ISchwarz
+ * @deprecated The {@link TableDataRowBackgroundColorProvider} is deprecated as it is only used to map a
+ * {@link TableDataRowColorizer} to a {@link TableDataRowBackgroundProvider}.
  */
 @Deprecated
 class TableDataRowBackgroundColorProvider<T> implements TableDataRowBackgroundProvider<T> {
@@ -22,8 +21,7 @@ class TableDataRowBackgroundColorProvider<T> implements TableDataRowBackgroundPr
     /**
      * Creates a new {@link TableDataRowBackgroundColorProvider} using the given {@link TableDataRowColorizer}.
      *
-     * @param colorizer
-     *         The {@link TableDataRowColorizer} that shall be wrapped.
+     * @param colorizer The {@link TableDataRowColorizer} that shall be wrapped.
      */
     public TableDataRowBackgroundColorProvider(final TableDataRowColorizer<T> colorizer) {
         this.colorizer = colorizer;

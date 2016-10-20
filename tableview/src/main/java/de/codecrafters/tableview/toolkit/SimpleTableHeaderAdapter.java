@@ -6,7 +6,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import de.codecrafters.tableview.TableHeaderAdapter;
 
 
@@ -30,10 +29,8 @@ public final class SimpleTableHeaderAdapter extends TableHeaderAdapter {
     /**
      * Creates a new SimpleTableHeaderAdapter.
      *
-     * @param context
-     *         The context to use inside this {@link TableHeaderAdapter}.
-     * @param headers
-     *         The header labels that shall be rendered.
+     * @param context The context to use inside this {@link TableHeaderAdapter}.
+     * @param headers The header labels that shall be rendered.
      */
     public SimpleTableHeaderAdapter(final Context context, final String... headers) {
         super(context);
@@ -52,14 +49,10 @@ public final class SimpleTableHeaderAdapter extends TableHeaderAdapter {
     /**
      * Sets the padding that will be used for all table headers.
      *
-     * @param left
-     *         The padding on the left side.
-     * @param top
-     *         The padding on the top side.
-     * @param right
-     *         The padding on the right side.
-     * @param bottom
-     *         The padding on the bottom side.
+     * @param left   The padding on the left side.
+     * @param top    The padding on the top side.
+     * @param right  The padding on the right side.
+     * @param bottom The padding on the bottom side.
      */
     public void setPaddings(final int left, final int top, final int right, final int bottom) {
         paddingLeft = left;
@@ -71,8 +64,7 @@ public final class SimpleTableHeaderAdapter extends TableHeaderAdapter {
     /**
      * Sets the padding that will be used on the left side for all table headers.
      *
-     * @param paddingLeft
-     *         The padding on the left side.
+     * @param paddingLeft The padding on the left side.
      */
     public void setPaddingLeft(final int paddingLeft) {
         this.paddingLeft = paddingLeft;
@@ -81,8 +73,7 @@ public final class SimpleTableHeaderAdapter extends TableHeaderAdapter {
     /**
      * Sets the padding that will be used on the top side for all table headers.
      *
-     * @param paddingTop
-     *         The padding on the top side.
+     * @param paddingTop The padding on the top side.
      */
     public void setPaddingTop(final int paddingTop) {
         this.paddingTop = paddingTop;
@@ -91,8 +82,7 @@ public final class SimpleTableHeaderAdapter extends TableHeaderAdapter {
     /**
      * Sets the padding that will be used on the right side for all table headers.
      *
-     * @param paddingRight
-     *         The padding on the right side.
+     * @param paddingRight The padding on the right side.
      */
     public void setPaddingRight(final int paddingRight) {
         this.paddingRight = paddingRight;
@@ -101,8 +91,7 @@ public final class SimpleTableHeaderAdapter extends TableHeaderAdapter {
     /**
      * Sets the padding that will be used on the bottom side for all table headers.
      *
-     * @param paddingBottom
-     *         The padding on the bottom side.
+     * @param paddingBottom The padding on the bottom side.
      */
     public void setPaddingBottom(final int paddingBottom) {
         this.paddingBottom = paddingBottom;
@@ -111,8 +100,7 @@ public final class SimpleTableHeaderAdapter extends TableHeaderAdapter {
     /**
      * Sets the text size that will be used for all table headers.
      *
-     * @param textSize
-     *         The text size that shall be used.
+     * @param textSize The text size that shall be used.
      */
     public void setTextSize(final int textSize) {
         this.textSize = textSize;
@@ -121,8 +109,7 @@ public final class SimpleTableHeaderAdapter extends TableHeaderAdapter {
     /**
      * Sets the typeface that will be used for all table headers.
      *
-     * @param typeface
-     *         The type face that shall be used.
+     * @param typeface The type face that shall be used.
      */
     public void setTypeface(final int typeface) {
         this.typeface = typeface;
@@ -131,8 +118,7 @@ public final class SimpleTableHeaderAdapter extends TableHeaderAdapter {
     /**
      * Sets the text color that will be used for all table headers.
      *
-     * @param textColor
-     *         The text color that shall be used.
+     * @param textColor The text color that shall be used.
      */
     public void setTextColor(final int textColor) {
         this.textColor = textColor;

@@ -6,11 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import de.codecrafters.tableview.listeners.TableHeaderClickListener;
 
 import java.util.HashSet;
 import java.util.Set;
-
-import de.codecrafters.tableview.listeners.TableHeaderClickListener;
 
 
 /**
@@ -27,8 +26,7 @@ class TableHeaderView extends LinearLayout {
     /**
      * Creates a new TableHeaderView.
      *
-     * @param context
-     *         The context that shall be used.
+     * @param context The context that shall be used.
      */
     public TableHeaderView(final Context context) {
         super(context);
@@ -42,8 +40,7 @@ class TableHeaderView extends LinearLayout {
     /**
      * Sets the {@link TableHeaderAdapter} that is used to render the header views of every single column.
      *
-     * @param adapter
-     *         The {@link TableHeaderAdapter} that should be set.
+     * @param adapter The {@link TableHeaderAdapter} that should be set.
      */
     public void setAdapter(final TableHeaderAdapter adapter) {
         this.adapter = adapter;
@@ -84,8 +81,7 @@ class TableHeaderView extends LinearLayout {
     /**
      * Adds the given {@link TableHeaderClickListener} to this SortableTableHeaderView.
      *
-     * @param listener
-     *         The {@link TableHeaderClickListener} that shall be added.
+     * @param listener The {@link TableHeaderClickListener} that shall be added.
      */
     public void addHeaderClickListener(final TableHeaderClickListener listener) {
         listeners.add(listener);
@@ -94,8 +90,7 @@ class TableHeaderView extends LinearLayout {
     /**
      * Removes the given {@link TableHeaderClickListener} from this SortableTableHeaderView.
      *
-     * @param listener
-     *         The {@link TableHeaderClickListener} that shall be removed.
+     * @param listener The {@link TableHeaderClickListener} that shall be removed.
      */
     public void removeHeaderClickListener(final TableHeaderClickListener listener) {
         listeners.remove(listener);

@@ -8,6 +8,13 @@ package de.codecrafters.tableview.listeners;
 public interface SwipeToRefreshListener {
 
     /**
+     * Callback method when the user triggers the refresh.
+     *
+     * @param refreshIndicator The refresh indicator that is shown to the user.
+     */
+    void onRefresh(final RefreshIndicator refreshIndicator);
+
+    /**
      * Interface representing the refresh indicator shown to the user.
      */
     interface RefreshIndicator {
@@ -29,11 +36,4 @@ public interface SwipeToRefreshListener {
          */
         boolean isVisible();
     }
-
-    /**
-     * Callback method when the user triggers the refresh.
-     *
-     * @param refreshIndicator The refresh indicator that is shown to the user.
-     */
-    void onRefresh(final RefreshIndicator refreshIndicator);
 }

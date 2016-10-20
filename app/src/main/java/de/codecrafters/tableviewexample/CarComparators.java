@@ -1,8 +1,8 @@
 package de.codecrafters.tableviewexample;
 
-import java.util.Comparator;
-
 import de.codecrafters.tableviewexample.data.Car;
+
+import java.util.Comparator;
 
 
 /**
