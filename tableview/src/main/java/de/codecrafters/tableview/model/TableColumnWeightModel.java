@@ -1,4 +1,6 @@
-package de.codecrafters.tableview;
+package de.codecrafters.tableview.model;
+
+import de.codecrafters.tableview.TableView;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,13 +13,12 @@ import java.util.Map;
  *
  * @author ISchwarz
  */
-public class TableColumnModel {
+public class TableColumnWeightModel implements TableColumnModel {
 
     private static final int DEFAULT_COLUMN_WEIGHT = 1;
 
     private final Map<Integer, Integer> columnWeights;
     private int columnCount;
-
 
     /**
      * Creates a new TableColumnModel with the given number of columns. Every column has by default
@@ -25,27 +26,25 @@ public class TableColumnModel {
      *
      * @param columnCount The number of columns.
      */
-    public TableColumnModel(final int columnCount) {
+    public TableColumnWeightModel(final int columnCount) {
         this.columnWeights = new HashMap<>();
         this.columnCount = columnCount;
     }
 
-    /**
-     * Gives the column count of this model.
-     *
-     * @return The number of columns that is currently set.
-     */
+    @Override
     public int getColumnCount() {
         return columnCount;
     }
 
-    /**
-     * Sets the column count to this model.
-     *
-     * @param columnCount The number of columns that shall be set.
-     */
+    @Override
     public void setColumnCount(final int columnCount) {
         this.columnCount = columnCount;
+    }
+
+    @Override
+    public int getColumnWidth(int columnIndex, int tableWidth) {
+        final int widthUnit = (tableWidth / getColumnWeightSum());
+        return widthUnit * getColumnWeight(columnIndex);
     }
 
     /**

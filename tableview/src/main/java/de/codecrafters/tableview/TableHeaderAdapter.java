@@ -5,6 +5,8 @@ import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import de.codecrafters.tableview.model.TableColumnModel;
+import de.codecrafters.tableview.model.TableColumnWeightModel;
 
 
 /**
@@ -34,7 +36,7 @@ public abstract class TableHeaderAdapter {
      * @param columnCount The number of columns.
      */
     protected TableHeaderAdapter(final Context context, final int columnCount) {
-        this(context, new TableColumnModel(columnCount));
+        this(context, new TableColumnWeightModel(columnCount));
     }
 
     /**
@@ -79,7 +81,7 @@ public abstract class TableHeaderAdapter {
     }
 
     /**
-     * Gives the {@link TableColumnModel} that is currently used to render the table headers.
+     * Gives the {@link TableColumnWeightModel} that is currently used to render the table headers.
      */
     protected TableColumnModel getColumnModel() {
         return columnModel;
@@ -88,7 +90,7 @@ public abstract class TableHeaderAdapter {
     /**
      * Sets the {@link TableColumnModel} that will be used to render the table headers.
      *
-     * @param columnModel The {@link TableColumnModel} that should be set.
+     * @param columnModel The {@link TableColumnModel} that should be used.
      */
     protected void setColumnModel(final TableColumnModel columnModel) {
         this.columnModel = columnModel;
@@ -110,35 +112,6 @@ public abstract class TableHeaderAdapter {
      */
     protected void setColumnCount(final int columnCount) {
         columnModel.setColumnCount(columnCount);
-    }
-
-    /**
-     * Sets the column weight (the relative width of a column) of the column at the given index.
-     *
-     * @param columnIndex  The index of the column to which this weight should be assigned.
-     * @param columnWeight The weight that should be set to the column at the given index.
-     */
-    protected void setColumnWeight(final int columnIndex, final int columnWeight) {
-        columnModel.setColumnWeight(columnIndex, columnWeight);
-    }
-
-    /**
-     * Gives the column weight (the relative width of a column) of the column at the given index.
-     *
-     * @param columnIndex The index of the column to receive the column weight.
-     * @return The column weight of the column at the given index.
-     */
-    protected int getColumnWeight(final int columnIndex) {
-        return columnModel.getColumnWeight(columnIndex);
-    }
-
-    /**
-     * Gives the overall column weight (sum of all column weights).
-     *
-     * @return The collumn weight sum.
-     */
-    protected int getColumnWeightSum() {
-        return columnModel.getColumnWeightSum();
     }
 
     /**

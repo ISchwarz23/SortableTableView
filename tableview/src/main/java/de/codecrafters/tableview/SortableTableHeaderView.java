@@ -110,6 +110,11 @@ class SortableTableHeaderView extends TableHeaderView {
     protected void renderHeaderViews() {
         removeAllViews();
 
+        int tableWidth = 0;
+        if (getParent() instanceof View) {
+            tableWidth = ((View) getParent()).getWidth();
+        }
+
         for (int columnIndex = 0; columnIndex < adapter.getColumnCount(); columnIndex++) {
             final LinearLayout headerContainerLayout = (LinearLayout) adapter.getLayoutInflater().inflate(R.layout.sortable_header, this, false);
             headerContainerLayout.setOnClickListener(new InternalHeaderClickListener(columnIndex, getHeaderClickListeners()));
@@ -131,10 +136,9 @@ class SortableTableHeaderView extends TableHeaderView {
             }
             sortViews.put(columnIndex, sortView);
 
-            final int width = 0;
+            final int width = adapter.getColumnModel().getColumnWidth(columnIndex, tableWidth);
             final int height = LayoutParams.WRAP_CONTENT;
-            final int weight = adapter.getColumnWeight(columnIndex);
-            final LayoutParams headerLayoutParams = new LayoutParams(width, height, weight);
+            final LayoutParams headerLayoutParams = new LayoutParams(width, height);
             addView(headerContainerLayout, headerLayoutParams);
         }
 

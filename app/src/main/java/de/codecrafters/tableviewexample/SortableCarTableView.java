@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import de.codecrafters.tableview.SortableTableView;
+import de.codecrafters.tableview.model.TableColumnWeightModel;
 import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
 import de.codecrafters.tableview.toolkit.SortStateViewProviders;
 import de.codecrafters.tableview.toolkit.TableDataRowBackgroundProviders;
@@ -37,10 +38,12 @@ public class SortableCarTableView extends SortableTableView<Car> {
         setDataRowBackgroundProvider(TableDataRowBackgroundProviders.alternatingRowColors(rowColorEven, rowColorOdd));
         setHeaderSortStateViewProvider(SortStateViewProviders.brightArrows());
 
-        setColumnWeight(0, 2);
-        setColumnWeight(1, 3);
-        setColumnWeight(2, 3);
-        setColumnWeight(3, 2);
+        final TableColumnWeightModel tableColumnWeightModel = new TableColumnWeightModel(4);
+        tableColumnWeightModel.setColumnWeight(0, 2);
+        tableColumnWeightModel.setColumnWeight(1, 3);
+        tableColumnWeightModel.setColumnWeight(2, 3);
+        tableColumnWeightModel.setColumnWeight(3, 2);
+        setColumnModel(tableColumnWeightModel);
 
         setColumnComparator(0, CarComparators.getCarProducerComparator());
         setColumnComparator(1, CarComparators.getCarNameComparator());

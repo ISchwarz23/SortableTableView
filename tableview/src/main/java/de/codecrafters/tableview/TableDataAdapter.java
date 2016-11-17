@@ -11,6 +11,8 @@ import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import de.codecrafters.tableview.model.TableColumnModel;
+import de.codecrafters.tableview.model.TableColumnWeightModel;
 import de.codecrafters.tableview.providers.TableDataRowBackgroundProvider;
 
 import java.util.ArrayList;
@@ -60,7 +62,7 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
      * @param columnCount The number of columns.
      */
     protected TableDataAdapter(final Context context, final int columnCount, final List<T> data) {
-        this(context, new TableColumnModel(columnCount), data);
+        this(context, new TableColumnWeightModel(columnCount), data);
     }
 
     /**
@@ -157,18 +159,16 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
         }
 
 
-        final int widthUnit = (parent.getWidth() / columnModel.getColumnWeightSum());
+        final int tableWidth = parent.getWidth();
 
-        for (int columnIndex = 0; columnIndex < getColumnCount(); columnIndex++) {
+        for (int columnIndex = 0; columnIndex < columnModel.getColumnCount(); columnIndex++) {
             View cellView = getCellView(rowIndex, columnIndex, rowView);
             if (cellView == null) {
                 cellView = new TextView(getContext());
             }
 
-            final int width = widthUnit * columnModel.getColumnWeight(columnIndex);
-
-            final LinearLayout.LayoutParams cellLayoutParams = new LinearLayout.LayoutParams(width, LinearLayout.LayoutParams.WRAP_CONTENT);
-            cellLayoutParams.weight = columnModel.getColumnWeight(columnIndex);
+            final int cellWidth = columnModel.getColumnWidth(columnIndex, tableWidth);
+            final LinearLayout.LayoutParams cellLayoutParams = new LinearLayout.LayoutParams(cellWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
             cellView.setLayoutParams(cellLayoutParams);
             rowView.addView(cellView);
         }
@@ -179,14 +179,14 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
     /**
      * Sets the {@link TableDataRowBackgroundProvider} that will be used to define the table data rows background.
      *
-     * @param rowbackgroundProvider The {@link TableDataRowBackgroundProvider} that shall be used.
+     * @param rowBackgroundProvider The {@link TableDataRowBackgroundProvider} that shall be used.
      */
-    protected void setRowBackgroundProvider(final TableDataRowBackgroundProvider<? super T> rowbackgroundProvider) {
-        this.rowBackgroundProvider = rowbackgroundProvider;
+    protected void setRowBackgroundProvider(final TableDataRowBackgroundProvider<? super T> rowBackgroundProvider) {
+        this.rowBackgroundProvider = rowBackgroundProvider;
     }
 
     /**
-     * Gives the {@link TableColumnModel} that is currently used to render the table headers.
+     * Gives the {@link TableColumnWeightModel} that is currently used to render the table headers.
      */
     protected TableColumnModel getColumnModel() {
         return columnModel;
@@ -200,52 +200,4 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
     protected void setColumnModel(final TableColumnModel columnModel) {
         this.columnModel = columnModel;
     }
-
-    /**
-     * Gives the column count that is currently used to render the table headers.
-     *
-     * @return The number of columns.
-     */
-    protected int getColumnCount() {
-        return columnModel.getColumnCount();
-    }
-
-    /**
-     * Sets the column count which is used to render the table headers.
-     *
-     * @param columnCount The column count that should be set.
-     */
-    protected void setColumnCount(final int columnCount) {
-        columnModel.setColumnCount(columnCount);
-    }
-
-    /**
-     * Sets the column weight (the relative width of a column) of the column at the given index.
-     *
-     * @param columnIndex  The index of the column to which this weight should be assigned.
-     * @param columnWeight The weight that should be set to the column at the given index.
-     */
-    protected void setColumnWeight(final int columnIndex, final int columnWeight) {
-        columnModel.setColumnWeight(columnIndex, columnWeight);
-    }
-
-    /**
-     * Gives the column weight (the relative width of a column) of the column at the given index.
-     *
-     * @param columnIndex The index of the column to receive the column weight.
-     * @return The column weight of the column at the given index.
-     */
-    protected int getColumnWeight(final int columnIndex) {
-        return columnModel.getColumnWeight(columnIndex);
-    }
-
-    /**
-     * Gives the overall column weight (sum of all column weights).
-     *
-     * @return The collumn weight sum.
-     */
-    protected int getColumnWeightSum() {
-        return columnModel.getColumnWeightSum();
-    }
-
 }

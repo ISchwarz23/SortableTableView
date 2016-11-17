@@ -20,6 +20,8 @@ import de.codecrafters.tableview.listeners.SwipeToRefreshListener;
 import de.codecrafters.tableview.listeners.TableDataClickListener;
 import de.codecrafters.tableview.listeners.TableDataLongClickListener;
 import de.codecrafters.tableview.listeners.TableHeaderClickListener;
+import de.codecrafters.tableview.model.TableColumnModel;
+import de.codecrafters.tableview.model.TableColumnWeightModel;
 import de.codecrafters.tableview.providers.TableDataRowBackgroundProvider;
 import de.codecrafters.tableview.toolkit.TableDataRowBackgroundProviders;
 
@@ -340,6 +342,27 @@ public class TableView<T> extends LinearLayout {
     }
 
     /**
+     * Gives the {@link TableColumnModel} which is currently set to this {@link TableView}.
+     *
+     * @return The current {@link TableColumnModel}
+     */
+    public TableColumnModel getColumnModel() {
+        return columnModel;
+    }
+
+    /**
+     * Sets the given {@link TableColumnModel} to this {@link TableView}.
+     *
+     * @param columnModel The {@link TableColumnModel} that shall be used.
+     */
+    public void setColumnModel(final TableColumnModel columnModel) {
+        this.columnModel = columnModel;
+        this.tableHeaderAdapter.setColumnModel(this.columnModel);
+        this.tableDataAdapter.setColumnModel(this.columnModel);
+        forceRefresh();
+    }
+
+    /**
      * Gives the number of columns of this table.
      *
      * @return The current number of columns.
@@ -363,10 +386,16 @@ public class TableView<T> extends LinearLayout {
      *
      * @param columnIndex  The index of the column the weight should be set to.
      * @param columnWeight The weight that should be set to the column.
+     * @deprecated This method has been deprecated in the version 2.4.0. Use the method
+     * {@link #setColumnModel(TableColumnModel)} instead.
      */
+    @Deprecated
     public void setColumnWeight(final int columnIndex, final int columnWeight) {
-        columnModel.setColumnWeight(columnIndex, columnWeight);
-        forceRefresh();
+        if (columnModel instanceof TableColumnWeightModel) {
+            TableColumnWeightModel columnWeightModel = (TableColumnWeightModel) columnModel;
+            columnWeightModel.setColumnWeight(columnIndex, columnWeight);
+            forceRefresh();
+        }
     }
 
     /**
@@ -374,9 +403,16 @@ public class TableView<T> extends LinearLayout {
      *
      * @param columnIndex The index of the column the weight should be returned.
      * @return The weight of the given column index.
+     * @deprecated This method has been deprecated in the version 2.4.0. Use the method
+     * {@link #getColumnModel()} instead.
      */
+    @Deprecated
     public int getColumnWeight(final int columnIndex) {
-        return columnModel.getColumnWeight(columnIndex);
+        if (columnModel instanceof TableColumnWeightModel) {
+            TableColumnWeightModel columnWeightModel = (TableColumnWeightModel) columnModel;
+            return columnWeightModel.getColumnWeight(columnIndex);
+        }
+        return -1;
     }
 
     @Override
@@ -392,6 +428,7 @@ public class TableView<T> extends LinearLayout {
         }
         if (tableDataView != null) {
             tableDataView.invalidate();
+            tableDataAdapter.notifyDataSetChanged();
         }
     }
 
@@ -401,7 +438,7 @@ public class TableView<T> extends LinearLayout {
         headerColor = styledAttributes.getInt(R.styleable.TableView_tableView_headerColor, DEFAULT_HEADER_COLOR);
         headerElevation = styledAttributes.getInt(R.styleable.TableView_tableView_headerElevation, DEFAULT_HEADER_ELEVATION);
         final int columnCount = styledAttributes.getInt(R.styleable.TableView_tableView_columnCount, DEFAULT_COLUMN_COUNT);
-        columnModel = new TableColumnModel(columnCount);
+        columnModel = new TableColumnWeightModel(columnCount);
 
         styledAttributes.recycle();
     }

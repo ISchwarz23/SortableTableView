@@ -35,6 +35,16 @@ class TableHeaderView extends LinearLayout {
 
         final LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         setLayoutParams(layoutParams);
+
+        addOnLayoutChangeListener(new OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                if (right - left != oldRight - oldLeft) {
+                    System.out.println("was resized");
+                    renderHeaderViews();
+                }
+            }
+        });
     }
 
     /**
@@ -59,6 +69,11 @@ class TableHeaderView extends LinearLayout {
     protected void renderHeaderViews() {
         removeAllViews();
 
+        int tableWidth = 0;
+        if (getParent() instanceof View) {
+            tableWidth = ((View) getParent()).getWidth();
+        }
+
         for (int columnIndex = 0; columnIndex < adapter.getColumnCount(); columnIndex++) {
             View headerView = adapter.getHeaderView(columnIndex, this);
             if (headerView == null) {
@@ -66,10 +81,9 @@ class TableHeaderView extends LinearLayout {
             }
             headerView.setOnClickListener(new InternalHeaderClickListener(columnIndex, getHeaderClickListeners()));
 
-            final int width = 0;
+            final int width = adapter.getColumnModel().getColumnWidth(columnIndex, tableWidth);
             final int height = LayoutParams.WRAP_CONTENT;
-            final int weight = adapter.getColumnWeight(columnIndex);
-            final LayoutParams headerLayoutParams = new LayoutParams(width, height, weight);
+            final LayoutParams headerLayoutParams = new LayoutParams(width, height);
             addView(headerView, headerLayoutParams);
         }
     }
