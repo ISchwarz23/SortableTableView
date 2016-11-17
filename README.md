@@ -41,11 +41,28 @@ A second possibility to define the column count of your TableView is to set it d
 ```
 
 #### Column Width
-To define the relative width of your columns you can define a specific *weight* for each of them (as you may know from [LinearLayout](http://developer.android.com/guide/topics/ui/layout/linear.html)). By default the weight of each column is set to 1. So every column has the same width. To make the first column (index of first column is 0) twice as wide as the other columns simple do the following call.
+To define the column widths you can set a `TableColumnModel` that defines the width for each column. You can use a
+predefined `TableColumnModel` or implement your custom one.
+
+**TableColumnWeightModel**  
+This model defines the column widths in a relative manner. You can define a weight for each column index.
+The default column weight is 1.
 ```java
-	tableView.setColumnWeight(0, 2);
+TableColumnWeightModel columnModel = new TableColumnWeightModel(4);
+columnModel.setColumnWeight(1, 2);
+columnModel.setColumnWeight(2, 2);
+tableView.setColumnModel(columnModel);
 ```
-Because the width of an column is not given absolute but relative, the TableView will adapt to all screen sizes.
+
+**TableColumnWidthModel**  
+This model defines the column widths in a absolute manner. You can define a width in pixels for each column index.
+The default column width is 200px. You can pass a different default to the constructor.
+```
+TableColumnWidthModel columnModel = new TableColumnWidthModel(4, 350);
+columnModel.setColumnWidth(1, 500);
+columnModel.setColumnWidth(2, 600);
+tableView.setColumnModel(columnModel);
+```
 
 ### Showing Data
 #### Simple Data
