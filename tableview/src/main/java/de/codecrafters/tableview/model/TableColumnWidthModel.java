@@ -8,6 +8,7 @@ import java.util.Map;
  * A {@link TableColumnModel} implementation holding absolute column widths.
  *
  * @author ISchwarz
+ * @deprecated This class has been deprecated in version 2.4.1. Use the {@link TableColumnPxWidthModel} instead.
  */
 @Deprecated
 public class TableColumnWidthModel implements TableColumnModel {
