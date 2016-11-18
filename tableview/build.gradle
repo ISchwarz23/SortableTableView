@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 
-def final tableViewLibraryVersion = '2.4.0'
+def final tableViewLibraryVersion = '2.4.1'
 
 ext {
     bintrayRepo = 'maven'
@@ -34,7 +34,7 @@ android {
     defaultConfig {
         minSdkVersion 11
         targetSdkVersion 25
-        versionCode 12
+        versionCode 13
         versionName tableViewLibraryVersion
     }
     buildTypes {
