@@ -3,16 +3,14 @@ package de.codecrafters.tableview.model;
 import java.util.HashMap;
 import java.util.Map;
 
-
 /**
- * A {@link TableColumnModel} implementation holding absolute column widths.
+ * A {@link TableColumnModel} implementation holding absolute column widths in pixel.
  *
  * @author ISchwarz
  */
-@Deprecated
-public class TableColumnWidthModel implements TableColumnModel {
+public class TableColumnPxWidthModel implements TableColumnModel {
 
-    private static final int DEFAULT_COLUMN_WIDTH = 200;
+    private static final int DEFAULT_COLUMN_WIDTH_IN_PX = 200;
 
     private final Map<Integer, Integer> columnWidths;
     private int columnCount;
@@ -24,29 +22,30 @@ public class TableColumnWidthModel implements TableColumnModel {
      *
      * @param columnCount The number of columns.
      */
-    public TableColumnWidthModel(final int columnCount) {
-        this(columnCount, DEFAULT_COLUMN_WIDTH);
+    public TableColumnPxWidthModel(final int columnCount) {
+        this(columnCount, DEFAULT_COLUMN_WIDTH_IN_PX);
     }
 
     /**
      * Creates a new TableColumnModel with the given number of columns. Every column has the given default width.
      *
-     * @param columnCount The number of columns.
+     * @param columnCount            The number of columns.
+     * @param defaultColumnWidthInPx The default width of columns in pixels.
      */
-    public TableColumnWidthModel(final int columnCount, final int defaultColumnWidth) {
+    public TableColumnPxWidthModel(final int columnCount, final int defaultColumnWidthInPx) {
         this.columnWidths = new HashMap<>();
         this.columnCount = columnCount;
-        this.defaultColumnWidth = defaultColumnWidth;
+        this.defaultColumnWidth = defaultColumnWidthInPx;
     }
 
     /**
      * Sets the column width for the column at the given index.
      *
-     * @param columnIndex The index of the column.
-     * @param columnWidth The width of the column.
+     * @param columnIndex     The index of the column.
+     * @param columnWidthInPx The width of the column in pixel.
      */
-    public void setColumnWidth(int columnIndex, int columnWidth) {
-        this.columnWidths.put(columnIndex, columnWidth);
+    public void setColumnWidth(int columnIndex, int columnWidthInPx) {
+        this.columnWidths.put(columnIndex, columnWidthInPx);
     }
 
     @Override

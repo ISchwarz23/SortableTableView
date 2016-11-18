@@ -42,8 +42,8 @@ public class TableColumnWeightModel implements TableColumnModel {
     }
 
     @Override
-    public int getColumnWidth(int columnIndex, int tableWidth) {
-        final int widthUnit = (tableWidth / getColumnWeightSum());
+    public int getColumnWidth(int columnIndex, int tableWidthInPx) {
+        final int widthUnit = (tableWidthInPx / getColumnWeightSum());
         return widthUnit * getColumnWeight(columnIndex);
     }
 

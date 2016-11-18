@@ -27,9 +27,9 @@ public interface TableColumnModel {
     /**
      * Gives the column width of the given index.
      *
-     * @param columnIndex The index of the column.
-     * @param tableWidth  The width of the table where it should be used.
+     * @param columnIndex    The index of the column.
+     * @param tableWidthInPx The width of the table where it should be used.
      * @return The width of the column with the given index.
      */
-    int getColumnWidth(int columnIndex, int tableWidth);
+    int getColumnWidth(int columnIndex, int tableWidthInPx);
 }
