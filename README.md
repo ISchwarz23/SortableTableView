@@ -54,11 +54,21 @@ columnModel.setColumnWeight(2, 2);
 tableView.setColumnModel(columnModel);
 ```
 
-**TableColumnWidthModel**  
+**TableColumnDpWidthModel**  
+This model defines the column widths in a absolute manner. You can define a width in density-independent pixels for each column index.
+The default column width is 100dp. You can pass a different default to the constructor.
+```java
+TableColumnDpWidthModel columnModel = new TableColumnDpWidthModel(context, 4, 200);
+columnModel.setColumnWidth(1, 300);
+columnModel.setColumnWidth(2, 250);
+tableView.setColumnModel(columnModel);
+```
+
+**TableColumnPxWidthModel**  
 This model defines the column widths in a absolute manner. You can define a width in pixels for each column index.
 The default column width is 200px. You can pass a different default to the constructor.
-```
-TableColumnWidthModel columnModel = new TableColumnWidthModel(4, 350);
+```java
+TableColumnPxWidthModel columnModel = new TableColumnPxWidthModel(4, 350);
 columnModel.setColumnWidth(1, 500);
 columnModel.setColumnWidth(2, 600);
 tableView.setColumnModel(columnModel);
