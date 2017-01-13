@@ -24,10 +24,12 @@ import java.util.*;
  */
 public class SortableTableView<T> extends TableView<T> {
 
-    public static final String SAVED_STATE_SUPER_STATE = "SAVED_STATE_SUPER";
-    public static final String SAVED_STATE_SORTED_DIRECTION = "SAVED_STATE_SORTED_DIRECTION";
-    public static final String SAVED_STATE_SORTED_COLUMN = "SAVED_STATE_SORTED_COLUMN";
     private static final String LOG_TAG = SortableTableView.class.getName();
+
+    private static final String SAVED_STATE_SUPER_STATE = "SAVED_STATE_SUPER";
+    private static final String SAVED_STATE_SORTED_DIRECTION = "SAVED_STATE_SORTED_DIRECTION";
+    private static final String SAVED_STATE_SORTED_COLUMN = "SAVED_STATE_SORTED_COLUMN";
+
     private final SortableTableHeaderView sortableTableHeaderView;
     private final SortingController sortingController;
 
