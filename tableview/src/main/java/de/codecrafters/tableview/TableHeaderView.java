@@ -40,7 +40,6 @@ class TableHeaderView extends LinearLayout {
             @Override
             public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
                 if (right - left != oldRight - oldLeft) {
-                    System.out.println("was resized");
                     renderHeaderViews();
                 }
             }
