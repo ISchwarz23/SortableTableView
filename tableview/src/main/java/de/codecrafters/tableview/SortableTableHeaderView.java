@@ -2,6 +2,7 @@ package de.codecrafters.tableview;
 
 import android.content.Context;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -9,9 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import de.codecrafters.tableview.providers.SortStateViewProvider;
 import de.codecrafters.tableview.toolkit.SortStateViewProviders;
-
-import java.util.HashMap;
-import java.util.Map;
 
 
 /**
@@ -23,8 +21,9 @@ class SortableTableHeaderView extends TableHeaderView {
 
     private static final String LOG_TAG = SortableTableHeaderView.class.toString();
 
-    private final Map<Integer, ImageView> sortViews = new HashMap<>();
-    private final Map<Integer, SortState> sortStates = new HashMap<>();
+    private final SparseArray<ImageView> sortViews = new SparseArray<>();
+    private final SparseArray<SortState> sortStates = new SparseArray<>();
+    
     private SortStateViewProvider sortStateViewProvider = SortStateViewProviders.darkArrows();
 
 
@@ -41,23 +40,21 @@ class SortableTableHeaderView extends TableHeaderView {
      * Will set all sort views to state "sortable".
      */
     public void resetSortViews() {
-        for (final int column : sortStates.keySet()) {
-            SortState columnSortState = sortStates.get(column);
+        for (int i = 0; i < sortStates.size(); i++) {
+            final int columnIndex = sortStates.keyAt(i);
+
+            SortState columnSortState = sortStates.get(columnIndex);
             if (columnSortState != SortState.NOT_SORTABLE) {
                 columnSortState = SortState.SORTABLE;
             }
-            sortStates.put(column, columnSortState);
+            sortStates.put(columnIndex, columnSortState);
         }
-        for (final int column : sortStates.keySet()) {
-            final ImageView sortView = sortViews.get(column);
-            final SortState sortState = sortStates.get(column);
-            final int imageRes = sortStateViewProvider.getSortStateViewResource(sortState);
-            sortView.setImageResource(imageRes);
-            if (imageRes == 0) {
-                sortView.setVisibility(GONE);
-            } else {
-                sortView.setVisibility(VISIBLE);
-            }
+
+        for (int i = 0; i < sortStates.size(); i++) {
+            final int columnIndex = sortStates.keyAt(i);
+            final ImageView sortView = sortViews.get(columnIndex);
+            final SortState sortState = sortStates.get(columnIndex);
+            setSortStateToView(sortState, sortView);
         }
     }
 
@@ -66,10 +63,10 @@ class SortableTableHeaderView extends TableHeaderView {
      *
      * @param columnIndex The index of the column for which the given {@link SortState}
      *                    will be set.
-     * @param state       The {@link SortState} that shall be set to the sort view at the column with
+     * @param sortState   The {@link SortState} that shall be set to the sort view at the column with
      *                    the given index.
      */
-    public void setSortState(final int columnIndex, final SortState state) {
+    public void setSortState(final int columnIndex, final SortState sortState) {
         final ImageView sortView = sortViews.get(columnIndex);
 
         if (sortView == null) {
@@ -77,13 +74,18 @@ class SortableTableHeaderView extends TableHeaderView {
             return;
         }
 
-        sortStates.put(columnIndex, state);
+        sortStates.put(columnIndex, sortState);
+        setSortStateToView(sortState, sortView);
+    }
+
+    private void setSortStateToView(final SortState state, final ImageView view) {
+
         final int imageRes = sortStateViewProvider.getSortStateViewResource(state);
-        sortView.setImageResource(imageRes);
+        view.setImageResource(imageRes);
         if (imageRes == 0) {
-            sortView.setVisibility(GONE);
+            view.setVisibility(GONE);
         } else {
-            sortView.setVisibility(VISIBLE);
+            view.setVisibility(VISIBLE);
         }
     }
 
@@ -108,17 +110,14 @@ class SortableTableHeaderView extends TableHeaderView {
 
     @Override
     protected void renderHeaderViews() {
-        removeAllViewsInLayout();
         removeAllViews();
 
         int tableWidth = 0;
         if (getParent() instanceof View) {
             tableWidth = ((View) getParent()).getWidth();
         }
-        Log.d(LOG_TAG, "tableWidth = " + tableWidth);
 
         for (int columnIndex = 0; columnIndex < adapter.getColumnCount(); columnIndex++) {
-
             // create column header layout
             final LinearLayout headerLayout = (LinearLayout) adapter.getLayoutInflater().inflate(R.layout.sortable_header, this, false);
             headerLayout.setOnClickListener(new InternalHeaderClickListener(columnIndex, getHeaderClickListeners()));
@@ -136,22 +135,13 @@ class SortableTableHeaderView extends TableHeaderView {
             ImageView sortView = (ImageView) headerLayout.findViewById(R.id.sort_view);
             sortViews.put(columnIndex, sortView);
 
-            // get the sort state
+            // get the sort state image
             SortState sortState = sortStates.get(columnIndex);
             if (sortState == null) {
                 sortState = SortState.NOT_SORTABLE;
                 sortStates.put(columnIndex, sortState);
             }
-
-            // get the sort image
-            Log.d(LOG_TAG, "Column: " + columnIndex + ", SortState: " + sortState);
-            final int imageRes = sortStateViewProvider.getSortStateViewResource(sortState);
-            sortView.setImageResource(imageRes);
-            if (imageRes == 0) {
-                sortView.setVisibility(GONE);
-            } else {
-                sortView.setVisibility(VISIBLE);
-            }
+            setSortStateToView(sortState, sortView);
 
             // add the column header
             final int width = adapter.getColumnModel().getColumnWidth(columnIndex, tableWidth);
