@@ -82,6 +82,8 @@ public abstract class TableHeaderAdapter {
 
     /**
      * Gives the {@link TableColumnWeightModel} that is currently used to render the table headers.
+     *
+     * @return The {@link TableColumnModel} which is currently used.
      */
     protected TableColumnModel getColumnModel() {
         return columnModel;

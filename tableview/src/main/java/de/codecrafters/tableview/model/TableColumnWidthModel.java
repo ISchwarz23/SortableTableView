@@ -32,7 +32,8 @@ public class TableColumnWidthModel implements TableColumnModel {
     /**
      * Creates a new TableColumnModel with the given number of columns. Every column has the given default width.
      *
-     * @param columnCount The number of columns.
+     * @param columnCount        The number of columns.
+     * @param defaultColumnWidth The column width that is used, if not specified differently.
      */
     public TableColumnWidthModel(final int columnCount, final int defaultColumnWidth) {
         this.columnWidths = new HashMap<>();

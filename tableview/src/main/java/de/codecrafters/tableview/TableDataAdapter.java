@@ -60,6 +60,7 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
      *
      * @param context     The context that shall be used.
      * @param columnCount The number of columns.
+     * @param data        The data which shall be displayed in the table.
      */
     protected TableDataAdapter(final Context context, final int columnCount, final List<T> data) {
         this(context, new TableColumnWeightModel(columnCount), data);
@@ -70,6 +71,7 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
      *
      * @param context     The context that shall be used.
      * @param columnModel The column model to be used.
+     * @param data        The data which shall be displayed in the table.
      */
     protected TableDataAdapter(final Context context, final TableColumnModel columnModel, final List<T> data) {
         super(context, -1, data);
@@ -187,6 +189,8 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
 
     /**
      * Gives the {@link TableColumnWeightModel} that is currently used to render the table headers.
+     *
+     * @return The {@link TableColumnModel} which is currently used..
      */
     protected TableColumnModel getColumnModel() {
         return columnModel;
