@@ -103,46 +103,61 @@ class SortableTableHeaderView extends TableHeaderView {
      */
     public void setSortStateViewProvider(final SortStateViewProvider provider) {
         sortStateViewProvider = provider;
-        resetSortViews();
+        renderHeaderViews();
     }
 
     @Override
     protected void renderHeaderViews() {
+        removeAllViewsInLayout();
         removeAllViews();
 
         int tableWidth = 0;
         if (getParent() instanceof View) {
             tableWidth = ((View) getParent()).getWidth();
         }
+        Log.d(LOG_TAG, "tableWidth = " + tableWidth);
 
         for (int columnIndex = 0; columnIndex < adapter.getColumnCount(); columnIndex++) {
-            final LinearLayout headerContainerLayout = (LinearLayout) adapter.getLayoutInflater().inflate(R.layout.sortable_header, this, false);
-            headerContainerLayout.setOnClickListener(new InternalHeaderClickListener(columnIndex, getHeaderClickListeners()));
 
-            View headerView = adapter.getHeaderView(columnIndex, headerContainerLayout);
+            // create column header layout
+            final LinearLayout headerLayout = (LinearLayout) adapter.getLayoutInflater().inflate(R.layout.sortable_header, this, false);
+            headerLayout.setOnClickListener(new InternalHeaderClickListener(columnIndex, getHeaderClickListeners()));
+
+            // create header
+            View headerView = adapter.getHeaderView(columnIndex, headerLayout);
             if (headerView == null) {
                 headerView = new TextView(getContext());
             }
-            final FrameLayout headerContainer = (FrameLayout) headerContainerLayout.findViewById(R.id.container);
-            headerContainer.addView(headerView);
 
-            final int imageRes = sortStateViewProvider.getSortStateViewResource(SortState.NOT_SORTABLE);
-            final ImageView sortView = (ImageView) headerContainerLayout.findViewById(R.id.sort_view);
+            // add the header view to the header layout
+            ((FrameLayout) headerLayout.findViewById(R.id.container)).addView(headerView);
+
+            // get the sort view
+            ImageView sortView = (ImageView) headerLayout.findViewById(R.id.sort_view);
+            sortViews.put(columnIndex, sortView);
+
+            // get the sort state
+            SortState sortState = sortStates.get(columnIndex);
+            if (sortState == null) {
+                sortState = SortState.NOT_SORTABLE;
+                sortStates.put(columnIndex, sortState);
+            }
+
+            // get the sort image
+            Log.d(LOG_TAG, "Column: " + columnIndex + ", SortState: " + sortState);
+            final int imageRes = sortStateViewProvider.getSortStateViewResource(sortState);
             sortView.setImageResource(imageRes);
             if (imageRes == 0) {
                 sortView.setVisibility(GONE);
             } else {
                 sortView.setVisibility(VISIBLE);
             }
-            sortViews.put(columnIndex, sortView);
 
+            // add the column header
             final int width = adapter.getColumnModel().getColumnWidth(columnIndex, tableWidth);
             final int height = LayoutParams.WRAP_CONTENT;
-            final LayoutParams headerLayoutParams = new LayoutParams(width, height);
-            addView(headerContainerLayout, headerLayoutParams);
+            addView(headerLayout, new LayoutParams(width, height));
         }
-
-        resetSortViews();
     }
 
 }
