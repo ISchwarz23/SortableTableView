@@ -52,7 +52,7 @@ public abstract class EndlessOnScrollListener implements OnScrollListener {
         if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + rowThreshold)) {
             // I load the next page of gigs using a background task,
             // but you can call any function here.
-            onMoreRowsRequested(firstVisibleItem, visibleItemCount, totalItemCount);
+            onReloadingTriggered(firstVisibleItem, visibleItemCount, totalItemCount);
             loading = true;
         }
     }
@@ -69,6 +69,6 @@ public abstract class EndlessOnScrollListener implements OnScrollListener {
      * @param visibleRowCount The number of rows that are visible.
      * @param totalRowCount   The total number of rows.
      */
-    public abstract void onMoreRowsRequested(final int firstRowItem, final int visibleRowCount, final int totalRowCount);
+    public abstract void onReloadingTriggered(final int firstRowItem, final int visibleRowCount, final int totalRowCount);
 
 }
