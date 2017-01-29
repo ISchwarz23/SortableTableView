@@ -222,6 +222,53 @@ To listen for clicks on headers you can register a `TableHeaderClickListner`. Th
     }
 ```
 
+#### On Scroll Listening
+To listen for scroll or scroll state changes you can register a `OnScrollListener`. The `TableView` provides a method called `addOnScrollListener()` to do so.
+```java
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+    	super.onCreate(savedInstanceState);
+    	setContentView(R.layout.activity_main);
+        // ...
+        tableView.addOnScrollListener(new MyOnScrollListener());
+    }
+
+	private class MyOnScrollListener implements OnScrollListener {
+        @Override
+        public void onScroll(final ListView tableDataView, final int firstVisibleItem, final int visibleItemCount, final int totalItemCount) {
+            // listen for scroll changes
+        }
+        
+        @Override
+        public void onScrollStateChanged(final ListView tableDateView, final ScrollState scrollState) {
+            // listen for scroll state changes
+        }
+    }
+```
+In addition this library provides an `EndlessOnScrollListener` which allows the loading of further data when the user scrolls to the
+end of the table. Therefore you can give an row threshold which defines when the data shall be reloaded. A threshold of 3
+would mean, that the loading shall be triggered when the user reaches the 3rd last row. The default threshold is 5.
+```java
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+    	super.onCreate(savedInstanceState);
+    	setContentView(R.layout.activity_main);
+        // ...
+        tableView.addOnScrollListener(new MyEndlessOnScrollListener());
+    }
+
+	private class MyEndlessOnScrollListener extends EndlessOnScrollListener {
+    
+        @Override
+        public void onReloadingTriggered(final int firstRowItem, final int visibleRowCount, final int totalRowCount) {
+            // show a loading view to the user
+            // reload some data
+            // add the loaded data to the adapter
+            // hide the loading view
+        }
+    }
+```
+
 ### Styling
 #### Header Styling
 The table view provides several possibilities to style its header. One possibility is to set a **color** for the header. Therefore you can adapt the XML file or add it to your code.
