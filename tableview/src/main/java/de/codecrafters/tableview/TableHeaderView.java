@@ -1,11 +1,8 @@
 package de.codecrafters.tableview;
 
 import android.content.Context;
-import android.view.Gravity;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.ListView;
 import de.codecrafters.tableview.listeners.TableHeaderClickListener;
 
 import java.util.HashSet;
@@ -18,10 +15,10 @@ import java.util.Set;
  *
  * @author ISchwarz
  */
-class TableHeaderView extends LinearLayout {
+class TableHeaderView extends ListView {
 
     private final Set<TableHeaderClickListener> listeners = new HashSet<>();
-    protected TableHeaderAdapter adapter;
+    private TableHeaderAdapter adapter;
 
     /**
      * Creates a new TableHeaderView.
@@ -30,20 +27,7 @@ class TableHeaderView extends LinearLayout {
      */
     public TableHeaderView(final Context context) {
         super(context);
-        setOrientation(LinearLayout.HORIZONTAL);
-        setGravity(Gravity.CENTER_VERTICAL);
-
-        final LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        setLayoutParams(layoutParams);
-
-        addOnLayoutChangeListener(new OnLayoutChangeListener() {
-            @Override
-            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                if (right - left != oldRight - oldLeft) {
-                    renderHeaderViews();
-                }
-            }
-        });
+        setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
     }
 
     /**
@@ -53,38 +37,20 @@ class TableHeaderView extends LinearLayout {
      */
     public void setAdapter(final TableHeaderAdapter adapter) {
         this.adapter = adapter;
-        renderHeaderViews();
+        super.setAdapter(adapter);
+    }
+
+    @Override
+    public TableHeaderAdapter getAdapter() {
+        return adapter;
     }
 
     @Override
     public void invalidate() {
-        renderHeaderViews();
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
+        }
         super.invalidate();
-    }
-
-    /**
-     * This method renders the header views for every single column.
-     */
-    protected void renderHeaderViews() {
-        removeAllViews();
-
-        int tableWidth = 0;
-        if (getParent() instanceof View) {
-            tableWidth = ((View) getParent()).getWidth();
-        }
-
-        for (int columnIndex = 0; columnIndex < adapter.getColumnCount(); columnIndex++) {
-            View headerView = adapter.getHeaderView(columnIndex, this);
-            if (headerView == null) {
-                headerView = new TextView(getContext());
-            }
-            headerView.setOnClickListener(new InternalHeaderClickListener(columnIndex, getHeaderClickListeners()));
-
-            final int width = adapter.getColumnModel().getColumnWidth(columnIndex, tableWidth);
-            final int height = LayoutParams.WRAP_CONTENT;
-            final LayoutParams headerLayoutParams = new LayoutParams(width, height);
-            addView(headerView, headerLayoutParams);
-        }
     }
 
     protected Set<TableHeaderClickListener> getHeaderClickListeners() {

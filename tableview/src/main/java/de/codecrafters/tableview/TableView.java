@@ -425,6 +425,7 @@ public class TableView<T> extends LinearLayout {
     private void forceRefresh() {
         if (tableHeaderView != null) {
             tableHeaderView.invalidate();
+            tableHeaderAdapter.notifyDataSetChanged();
         }
         if (tableDataView != null) {
             tableDataView.invalidate();

@@ -2,9 +2,14 @@ package de.codecrafters.tableview;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import de.codecrafters.tableview.model.TableColumnModel;
 import de.codecrafters.tableview.model.TableColumnWeightModel;
 
@@ -14,7 +19,7 @@ import de.codecrafters.tableview.model.TableColumnWeightModel;
  *
  * @author ISchwarz
  */
-public abstract class TableHeaderAdapter {
+public abstract class TableHeaderAdapter extends ArrayAdapter {
 
     private final Context context;
     private TableColumnModel columnModel;
@@ -46,6 +51,7 @@ public abstract class TableHeaderAdapter {
      * @param columnModel The column model to be used.
      */
     protected TableHeaderAdapter(final Context context, final TableColumnModel columnModel) {
+        super(context, 0);
         this.context = context;
         this.columnModel = columnModel;
     }
@@ -114,6 +120,36 @@ public abstract class TableHeaderAdapter {
      */
     protected void setColumnCount(final int columnCount) {
         columnModel.setColumnCount(columnCount);
+    }
+
+    @Override
+    public int getCount() {
+        return 1;
+    }
+
+    @Override
+    public final View getView(final int position, final View convertView, final ViewGroup parent) {
+
+        final LinearLayout rowView = new LinearLayout(getContext());
+
+        final AbsListView.LayoutParams rowLayoutParams = new AbsListView.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        rowView.setLayoutParams(rowLayoutParams);
+        rowView.setGravity(Gravity.CENTER_VERTICAL);
+
+        final int tableWidth = parent.getWidth();
+        for (int columnIndex = 0; columnIndex < getColumnModel().getColumnCount(); columnIndex++) {
+            View cellView = getHeaderView(columnIndex, rowView);
+            if (cellView == null) {
+                cellView = new TextView(getContext());
+            }
+
+            final int cellWidth = getColumnModel().getColumnWidth(columnIndex, tableWidth);
+            final LinearLayout.LayoutParams cellLayoutParams = new LinearLayout.LayoutParams(cellWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
+            cellView.setLayoutParams(cellLayoutParams);
+            rowView.addView(cellView);
+        }
+
+        return rowView;
     }
 
     /**

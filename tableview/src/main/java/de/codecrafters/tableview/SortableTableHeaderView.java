@@ -1,13 +1,16 @@
 package de.codecrafters.tableview;
 
 import android.content.Context;
-import android.util.Log;
+import android.content.res.Resources;
 import android.util.SparseArray;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import de.codecrafters.tableview.model.TableColumnModel;
 import de.codecrafters.tableview.providers.SortStateViewProvider;
 import de.codecrafters.tableview.toolkit.SortStateViewProviders;
 
@@ -19,11 +22,9 @@ import de.codecrafters.tableview.toolkit.SortStateViewProviders;
  */
 class SortableTableHeaderView extends TableHeaderView {
 
-    private static final String LOG_TAG = SortableTableHeaderView.class.toString();
-
     private final SparseArray<ImageView> sortViews = new SparseArray<>();
     private final SparseArray<SortState> sortStates = new SparseArray<>();
-    
+
     private SortStateViewProvider sortStateViewProvider = SortStateViewProviders.darkArrows();
 
 
@@ -58,6 +59,11 @@ class SortableTableHeaderView extends TableHeaderView {
         }
     }
 
+    @Override
+    public void setAdapter(TableHeaderAdapter adapter) {
+        super.setAdapter(new SortStateArrayAdapter(adapter));
+    }
+
     /**
      * Sets the {@link SortState} of the SortView of the column with the given index.
      *
@@ -67,25 +73,20 @@ class SortableTableHeaderView extends TableHeaderView {
      *                    the given index.
      */
     public void setSortState(final int columnIndex, final SortState sortState) {
-        final ImageView sortView = sortViews.get(columnIndex);
-
-        if (sortView == null) {
-            Log.e(LOG_TAG, "SortView not found for columnIndex with index " + columnIndex);
-            return;
-        }
-
         sortStates.put(columnIndex, sortState);
-        setSortStateToView(sortState, sortView);
+        invalidate();
     }
 
     private void setSortStateToView(final SortState state, final ImageView view) {
 
-        final int imageRes = sortStateViewProvider.getSortStateViewResource(state);
-        view.setImageResource(imageRes);
-        if (imageRes == 0) {
-            view.setVisibility(GONE);
-        } else {
-            view.setVisibility(VISIBLE);
+        if (view != null) {
+            final int imageRes = sortStateViewProvider.getSortStateViewResource(state);
+            view.setImageResource(imageRes);
+            if (imageRes == 0) {
+                view.setVisibility(GONE);
+            } else {
+                view.setVisibility(VISIBLE);
+            }
         }
     }
 
@@ -105,25 +106,83 @@ class SortableTableHeaderView extends TableHeaderView {
      */
     public void setSortStateViewProvider(final SortStateViewProvider provider) {
         sortStateViewProvider = provider;
-        renderHeaderViews();
+        invalidate();
     }
 
     @Override
-    protected void renderHeaderViews() {
-        removeAllViews();
+    public void invalidate() {
+        if (getAdapter() != null) {
+            getAdapter().notifyDataSetChanged();
+        }
+        super.invalidate();
+    }
 
-        int tableWidth = 0;
-        if (getParent() instanceof View) {
-            tableWidth = ((View) getParent()).getWidth();
+    @Override
+    public TableHeaderAdapter getAdapter() {
+        if (super.getAdapter() instanceof SortStateArrayAdapter) {
+            return ((SortStateArrayAdapter) super.getAdapter()).delegate;
+        }
+        return super.getAdapter();
+    }
+
+    private class SortStateArrayAdapter extends TableHeaderAdapter {
+
+        private final TableHeaderAdapter delegate;
+
+        public SortStateArrayAdapter(final TableHeaderAdapter delegate) {
+            super(delegate.getContext());
+            this.delegate = delegate;
         }
 
-        for (int columnIndex = 0; columnIndex < adapter.getColumnCount(); columnIndex++) {
+        @Override
+        public Context getContext() {
+            return delegate.getContext();
+        }
+
+        @Override
+        public LayoutInflater getLayoutInflater() {
+            return delegate.getLayoutInflater();
+        }
+
+        @Override
+        public Resources getResources() {
+            return delegate.getResources();
+        }
+
+        @Override
+        public TableColumnModel getColumnModel() {
+            return delegate.getColumnModel();
+        }
+
+        @Override
+        public void setColumnModel(TableColumnModel columnModel) {
+            delegate.setColumnModel(columnModel);
+        }
+
+        @Override
+        public int getColumnCount() {
+            return delegate.getColumnCount();
+        }
+
+        @Override
+        public void setColumnCount(int columnCount) {
+            delegate.setColumnCount(columnCount);
+        }
+
+        @Override
+        public int getCount() {
+            return delegate.getCount();
+        }
+
+        @Override
+        public View getHeaderView(final int columnIndex, final ViewGroup parentView) {
+
             // create column header layout
-            final LinearLayout headerLayout = (LinearLayout) adapter.getLayoutInflater().inflate(R.layout.sortable_header, this, false);
+            final LinearLayout headerLayout = (LinearLayout) delegate.getLayoutInflater().inflate(R.layout.sortable_header, parentView, false);
             headerLayout.setOnClickListener(new InternalHeaderClickListener(columnIndex, getHeaderClickListeners()));
 
             // create header
-            View headerView = adapter.getHeaderView(columnIndex, headerLayout);
+            View headerView = delegate.getHeaderView(columnIndex, headerLayout);
             if (headerView == null) {
                 headerView = new TextView(getContext());
             }
@@ -143,10 +202,7 @@ class SortableTableHeaderView extends TableHeaderView {
             }
             setSortStateToView(sortState, sortView);
 
-            // add the column header
-            final int width = adapter.getColumnModel().getColumnWidth(columnIndex, tableWidth);
-            final int height = LayoutParams.WRAP_CONTENT;
-            addView(headerLayout, new LayoutParams(width, height));
+            return headerLayout;
         }
     }
 
