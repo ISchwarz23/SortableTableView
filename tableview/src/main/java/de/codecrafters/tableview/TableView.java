@@ -11,15 +11,9 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.*;
 import de.codecrafters.tableview.colorizers.TableDataRowColorizer;
-import de.codecrafters.tableview.listeners.SwipeToRefreshListener;
-import de.codecrafters.tableview.listeners.TableDataClickListener;
-import de.codecrafters.tableview.listeners.TableDataLongClickListener;
-import de.codecrafters.tableview.listeners.TableHeaderClickListener;
+import de.codecrafters.tableview.listeners.*;
 import de.codecrafters.tableview.model.TableColumnModel;
 import de.codecrafters.tableview.model.TableColumnWeightModel;
 import de.codecrafters.tableview.providers.TableDataRowBackgroundProvider;
@@ -46,6 +40,7 @@ public class TableView<T> extends LinearLayout {
 
     private final Set<TableDataLongClickListener<T>> dataLongClickListeners = new HashSet<>();
     private final Set<TableDataClickListener<T>> dataClickListeners = new HashSet<>();
+    private final Set<OnScrollListener> onScrollListeners = new HashSet<>();
 
     private TableDataRowBackgroundProvider<? super T> dataRowBackgroundProvider =
             TableDataRowBackgroundProviders.similarRowColor(0x00000000);
@@ -236,6 +231,24 @@ public class TableView<T> extends LinearLayout {
      */
     public void addDataLongClickListener(final TableDataLongClickListener<T> listener) {
         dataLongClickListeners.add(listener);
+    }
+
+    /**
+     * Adds a {@link OnScrollListener} to this table view.
+     *
+     * @param onScrollListener The {@link OnScrollListener} that shall be added.
+     */
+    public void addOnScrollListener(final OnScrollListener onScrollListener) {
+        onScrollListeners.add(onScrollListener);
+    }
+
+    /**
+     * Removes a {@link OnScrollListener} from this table view.
+     *
+     * @param onScrollListener The {@link OnScrollListener} that shall be removed.
+     */
+    public void removeOnScrollListener(final OnScrollListener onScrollListener) {
+        onScrollListeners.remove(onScrollListener);
     }
 
     /**
@@ -472,6 +485,7 @@ public class TableView<T> extends LinearLayout {
         tableDataView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         tableDataView.setAdapter(tableDataAdapter);
         tableDataView.setId(R.id.table_data_view);
+        tableDataView.setOnScrollListener(new InternalOnScrollListener());
 
         swipeRefreshLayout = new SwipeRefreshLayout(getContext());
         swipeRefreshLayout.setLayoutParams(dataViewLayoutParams);
@@ -540,6 +554,32 @@ public class TableView<T> extends LinearLayout {
                 }
             }
             return isConsumed;
+        }
+    }
+
+    /**
+     * Internal on {@link android.widget.AbsListView.OnScrollListener} that dispatches the callbacks to the registered
+     * {@link OnScrollListener}s.
+     *
+     * @author ISchwarz
+     */
+    private class InternalOnScrollListener implements AbsListView.OnScrollListener {
+
+        @Override
+        public void onScrollStateChanged(final AbsListView absListView, final int scrollStateValue) {
+            final OnScrollListener.ScrollState scrollState = OnScrollListener.ScrollState.fromValue(scrollStateValue);
+
+            for (final OnScrollListener onScrollListener : onScrollListeners) {
+                onScrollListener.onScrollStateChanged(tableDataView, scrollState);
+            }
+        }
+
+        @Override
+        public void onScroll(final AbsListView absListView, final int firstVisibleItem, final int visibleItemCount, final int totalItemCount) {
+
+            for (final OnScrollListener onScrollListener : onScrollListeners) {
+                onScrollListener.onScroll(tableDataView, firstVisibleItem, visibleItemCount, totalItemCount);
+            }
         }
     }
 
