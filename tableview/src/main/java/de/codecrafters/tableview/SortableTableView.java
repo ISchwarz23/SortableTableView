@@ -190,7 +190,7 @@ public class SortableTableView<T> extends TableView<T> {
 
         @Override
         public void onHeaderClicked(final int columnIndex) {
-            if (comparators.get(columnIndex) != null) {
+            if (comparators.get(columnIndex) == null) {
                 Log.i(LOG_TAG, "Unable to sort column with index " + columnIndex + ". Reason: no comparator set for this column.");
                 return;
             }
@@ -203,7 +203,7 @@ public class SortableTableView<T> extends TableView<T> {
         }
 
         public void sort(final int columnIndex, final boolean sortUp) {
-            if (comparators.get(columnIndex) != null) {
+            if (comparators.get(columnIndex) == null) {
                 Log.i(LOG_TAG, "Unable to sort column with index " + columnIndex + ". Reason: no comparator set for this column.");
                 return;
             }
