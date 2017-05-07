@@ -114,6 +114,24 @@ public class TableView<T> extends LinearLayout {
     }
 
     /**
+     * Sets the view that shall be shown if no data is available.
+     *
+     * @param emptyDataView The reference to the view that shall be shown if no data is available.
+     */
+    public void setEmptyDataIndicatorView(final View emptyDataView) {
+        tableDataView.setEmptyView(emptyDataView);
+    }
+
+    /**
+     * Gives the view that is shown if no data is available.
+     *
+     * @return The view that is shown if no data is available.
+     */
+    public View getEmptyDataIndicatorView() {
+        return tableDataView.getEmptyView();
+    }
+
+    /**
      * Gives information whether the swipe to refresh feature shall be enabled or not.
      *
      * @return Boolean indication whether the swipe to refresh feature shall be enabled or not.
