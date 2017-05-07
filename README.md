@@ -89,7 +89,7 @@ For displaying simple data like a 2D-String-Array you can use the `SimpleTableDa
             setContentView(R.layout.activity_main);
 
             TableView<String[]> tableView = (TableView<String[]>) findViewById(R.id.tableView);
-            tableView.setDataAdapter(new SimpleTableDataAdapter(this, dataToShow));
+            tableView.setDataAdapter(new SimpleTableDataAdapter(this, DATA_TO_SHOW));
         }
     }        
 ```
@@ -154,6 +154,19 @@ If you need to make your data sortable, you should use the `SortableTableView` i
 	}
 ```
 By doing so the `SortableTableView` will automatically display a sortable indicator next to the table header of the column with the index 0. By clicking this table header, the table is sorted ascending with the given Comparator. If the table header is clicked again, it will be sorted in descending order.
+
+#### Empty Data Indicator
+If you want to show a certain view if there is no data available in the table, you can use the `setEmptyDataIndicatorView` method. Therefore you first have to add this view to your layout (preferable with visibility `gone`) and then pass it to the `TableView`.
+```java
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        // ...
+        tableView.setEmptyDataIndicatorView(findViewById(R.id.empty_data_indicator));
+    }
+```
+This view is automatically shown if no data is available and hidden if there is some data to show.
 
 #### Header Data
 Setting data to the header views is identical to setting data to the table cells. All you need to do is extending the `TableHeaderAdapter` which is also providing the easy access methods that are described for the `TableDataAdapter`.  
