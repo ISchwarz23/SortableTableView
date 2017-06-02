@@ -21,6 +21,30 @@ To use the this library in your project simply add the following dependency to y
         ...
     }
 ```
+
+## Support Me
+I offer this library and the complete source code of it for free! To develop open source software is not without cost though — it takes technical knowledge, time, and effort.
+You don't have to be a developer to support my open source work! If you want to receive personal support, or just feel all warm and fuzzy inside from helping open source development, donations are very welcome.
+Thank you in advance! :)
+
+*"Thank's for creating this project, here's a coffee (or some beer) for you!"*  
+[Donate 5$](https://www.paypal.me/ISchwarz23/5USD) or  [Donate 5€](https://www.paypal.me/ISchwarz23/5EUR)
+
+*"Wow, I am stunned. Let me take you to the movies!"*  
+[Donate 10$](https://www.paypal.me/ISchwarz23/10USD) or  [Donate 10€](https://www.paypal.me/ISchwarz23/10EUR)
+
+*"I really appreciate your work, let's grab some lunch!"*  
+[Donate 15$](https://www.paypal.me/ISchwarz23/15USD) or  [Donate 15€](https://www.paypal.me/ISchwarz23/15EUR)
+
+*"That's some awesome stuff you did right there, dinner is on me!"*  
+[Donate 25$](https://www.paypal.me/ISchwarz23/25USD) or  [Donate 25€](https://www.paypal.me/ISchwarz23/25EUR)
+
+*"I really really want to support this project, great job!"*  
+[Donate 50$](https://www.paypal.me/ISchwarz23/50USD) or  [Donate 50€](https://www.paypal.me/ISchwarz23/50EUR)
+
+*"You are the man! This project saved me hours (if not days) of struggle and hard work, simply awesome!"*  
+[Donate 100$](https://www.paypal.me/ISchwarz23/100USD) or  [Donate 100€](https://www.paypal.me/ISchwarz23/100EUR)
+
   
 ## Features
 ### Layouting
