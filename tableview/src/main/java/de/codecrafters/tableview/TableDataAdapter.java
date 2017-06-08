@@ -139,7 +139,7 @@ public abstract class TableDataAdapter<T> extends ArrayAdapter<T> {
     public abstract View getCellView(int rowIndex, int columnIndex, ViewGroup parentView);
 
     @Override
-    public final View getView(final int rowIndex, final View convertView, final ViewGroup parent) {
+    public View getView(final int rowIndex, final View convertView, final ViewGroup parent) {
         final LinearLayout rowView = new LinearLayout(getContext());
 
         final AbsListView.LayoutParams rowLayoutParams = new AbsListView.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
