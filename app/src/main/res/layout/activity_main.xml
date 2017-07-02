@@ -20,6 +20,7 @@
         android:layout_height="match_parent"
         custom:tableView_columnCount="4"
         custom:tableView_headerColor="@color/primary"
+        custom:sortIconPosition="right"
         custom:tableView_headerElevation="10"/>
 
 </RelativeLayout>

@@ -27,6 +27,7 @@ class SortableTableHeaderView extends TableHeaderView {
 
     private SortStateViewProvider sortStateViewProvider = SortStateViewProviders.darkArrows();
 
+    private int iconPosition = SortableTableView.SORT_ICON_LEFT;
 
     /**
      * Creates a new SortableTableHeaderView.
@@ -125,6 +126,10 @@ class SortableTableHeaderView extends TableHeaderView {
         return super.getAdapter();
     }
 
+    public void setIconPosition(int iconPosition) {
+        this.iconPosition = iconPosition;
+    }
+
     private class SortStateArrayAdapter extends TableHeaderAdapter {
 
         private final TableHeaderAdapter delegate;
@@ -178,7 +183,11 @@ class SortableTableHeaderView extends TableHeaderView {
         public View getHeaderView(final int columnIndex, final ViewGroup parentView) {
 
             // create column header layout
-            final LinearLayout headerLayout = (LinearLayout) delegate.getLayoutInflater().inflate(R.layout.sortable_header, parentView, false);
+            // check if icon position is left or right
+            final LinearLayout headerLayout = (LinearLayout)
+                    (iconPosition == 0 ?
+                            delegate.getLayoutInflater().inflate(R.layout.sortable_header, parentView, false)
+                            : delegate.getLayoutInflater().inflate(R.layout.sortable_header_right, parentView, false));
             headerLayout.setOnClickListener(new InternalHeaderClickListener(columnIndex, getHeaderClickListeners()));
 
             // create header

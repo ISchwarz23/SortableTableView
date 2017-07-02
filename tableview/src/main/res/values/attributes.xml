@@ -5,5 +5,12 @@
         <attr name="tableView_headerElevation" format="integer"/>
         <attr name="tableView_headerColor" format="color"/>
     </declare-styleable>
+    <declare-styleable name="SortableTableView">
+        <!--Set the left or right position for the sort icon. Default is left-->
+        <attr name="sortIconPosition" format="enum">
+            <enum name="left" value="0"/>
+            <enum name="right" value="1"/>
+        </attr>
+    </declare-styleable>
 </resources>
 
