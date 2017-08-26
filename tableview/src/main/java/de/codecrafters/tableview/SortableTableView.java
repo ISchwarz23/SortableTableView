@@ -138,9 +138,36 @@ public class SortableTableView<T> extends TableView<T> {
      *
      * @param columnIndex   The index of the column for which the sorting shall be executed.
      * @param sortAscending Indicates whether the table was sorted ascending {@code TRUE} or descending {@code FALSE}.
+     * @deprecated Use {@link SortableTableView#sort(int, SortingOrder)} instead.
      */
+    @Deprecated
     public void sort(final int columnIndex, final boolean sortAscending) {
-        sortingController.sort(columnIndex, sortAscending);
+        final SortingOrder sortingOrder;
+        if (sortAscending) {
+            sortingOrder = SortingOrder.ASCENDING;
+        } else {
+            sortingOrder = SortingOrder.DESCENDING;
+        }
+        sortingController.sort(columnIndex, sortingOrder);
+    }
+
+    /**
+     * Sorts the table by the values of the column of the given index.
+     *
+     * @param columnIndex  The index of the column for which the sorting shall be executed.
+     * @param sortingOrder Indicates whether the table was sorted ascending or descending.
+     */
+    public void sort(final int columnIndex, final SortingOrder sortingOrder) {
+        sortingController.sort(columnIndex, sortingOrder);
+    }
+
+    /**
+     * Gives the sorting status of this table.
+     *
+     * @return The sorting status of this table.
+     */
+    public SortingStatus getSortingStatus() {
+        return sortingController.sortingStatus;
     }
 
     /**
@@ -156,8 +183,8 @@ public class SortableTableView<T> extends TableView<T> {
     protected Parcelable onSaveInstanceState() {
         final Bundle state = new Bundle();
         state.putParcelable(SAVED_STATE_SUPER_STATE, super.onSaveInstanceState());
-        state.putBoolean(SAVED_STATE_SORTED_DIRECTION, sortingController.isSortedUp);
-        state.putInt(SAVED_STATE_SORTED_COLUMN, sortingController.sortedColumnIndex);
+        state.putSerializable(SAVED_STATE_SORTED_DIRECTION, sortingController.sortingStatus.getSortedOrder());
+        state.putInt(SAVED_STATE_SORTED_COLUMN, sortingController.sortingStatus.getSortedColumnIndex());
         return state;
     }
 
@@ -166,12 +193,12 @@ public class SortableTableView<T> extends TableView<T> {
         if (state instanceof Bundle) {
             final Bundle savedState = (Bundle) state;
             final Parcelable superState = savedState.getParcelable(SAVED_STATE_SUPER_STATE);
-            final boolean wasSortedUp = savedState.getBoolean(SAVED_STATE_SORTED_DIRECTION, false);
+            final SortingOrder sortingOrder = (SortingOrder) savedState.getSerializable(SAVED_STATE_SORTED_DIRECTION);
             final int sortedColumnIndex = savedState.getInt(SAVED_STATE_SORTED_COLUMN, -1);
 
             super.onRestoreInstanceState(superState);
             if (sortedColumnIndex != -1) {
-                sortingController.sort(sortedColumnIndex, wasSortedUp);
+                sortingController.sort(sortedColumnIndex, sortingOrder);
             }
         }
     }
@@ -184,9 +211,9 @@ public class SortableTableView<T> extends TableView<T> {
     private class SortingController implements TableHeaderClickListener {
 
         private final SparseArray<Comparator<T>> comparators = new SparseArray<>();
-        private int sortedColumnIndex = -1;
+        private final SortingStatus sortingStatus = new SortingStatus();
+
         private Comparator<T> sortedColumnComparator;
-        private boolean isSortedUp;
 
         @Override
         public void onHeaderClicked(final int columnIndex) {
@@ -199,23 +226,23 @@ public class SortableTableView<T> extends TableView<T> {
             sortDataSFCT(sortedColumnComparator);
             setSortView(columnIndex);
 
-            sortedColumnIndex = columnIndex;
+            sortingStatus.setSortedColumnIndex(columnIndex);
         }
 
-        public void sort(final int columnIndex, final boolean sortUp) {
+        public void sort(final int columnIndex, final SortingOrder sortingOrder) {
             if (comparators.get(columnIndex) == null) {
                 Log.i(LOG_TAG, "Unable to sort column with index " + columnIndex + ". Reason: no comparator set for this column.");
                 return;
             }
 
             Comparator<T> columnComparator = comparators.get(columnIndex);
-            if (!sortUp) {
+            if (sortingOrder == SortingOrder.DESCENDING) {
                 columnComparator = Collections.reverseOrder(columnComparator);
             }
 
             sortedColumnComparator = columnComparator;
-            sortedColumnIndex = columnIndex;
-            isSortedUp = sortUp;
+            sortingStatus.setSortedColumnIndex(columnIndex);
+            sortingStatus.setSortedOrder(sortingOrder);
 
             sortDataSFCT(columnComparator);
             setSortView(columnIndex);
@@ -223,7 +250,7 @@ public class SortableTableView<T> extends TableView<T> {
 
         private void setSortView(final int columnIndex) {
             sortableTableHeaderView.resetSortViews();
-            if (isSortedUp) {
+            if (sortingStatus.getSortedOrder() == SortingOrder.ASCENDING) {
                 sortableTableHeaderView.setSortState(columnIndex, SortState.SORTED_ASC);
             } else {
                 sortableTableHeaderView.setSortState(columnIndex, SortState.SORTED_DESC);
@@ -250,18 +277,18 @@ public class SortableTableView<T> extends TableView<T> {
             final Comparator<T> columnComparator = comparators.get(columnIndex);
 
             final Comparator<T> comparator;
-            if (sortedColumnIndex == columnIndex) {
-                if (isSortedUp) {
+            if (sortingStatus.getSortedColumnIndex() == columnIndex) {
+                if (sortingStatus.getSortedOrder() == SortingOrder.ASCENDING) {
                     comparator = Collections.reverseOrder(columnComparator);
+                    sortingStatus.setSortedOrder(SortingOrder.DESCENDING);
                 } else {
                     comparator = columnComparator;
+                    sortingStatus.setSortedOrder(SortingOrder.ASCENDING);
                 }
-                isSortedUp = !isSortedUp;
             } else {
                 comparator = columnComparator;
-                isSortedUp = true;
+                sortingStatus.setSortedOrder(SortingOrder.ASCENDING);
             }
-
             return comparator;
         }
 
