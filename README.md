@@ -439,6 +439,19 @@ This enables the user to trigger the table refresh on a single swipe. To listen 
 ```
 The callback method has the `RefreshIndicator` that is shown to the user passed as parameter. So if you finished your refresh action simply call `RefreshIndicator.hide()`.
   
+### Hide Table Header
+To hide the header of the TableView just call the `setHeaderVisible( false )` method. You can do this also with animation calling `setHeaderVisibile( false, 1000 )` where the second parameter is the duration of the animation.
+To make the header visible again just call `setHeaderVisible( true )` or `setHeaderVisible( true, 1000 )`.
+
+#### Hide/Show Table Header on Scroll
+To hide an show the table header when the user is scrolling, just use the `TableHeaderCollapseOnScrollListener`.
+```java
+    carTableView.setOnScrollListener(new TableHeaderCollapseOnScrollListener( carTableView ));
+```
+By default the `TableHeaderCollapseOnScrollListener` will hide the header, when the user scrolls two rows to the bottom or shows it again when scrolling two rows to top.
+To change this you can call `TableHeaderCollapseOnScrollListener#setRowOffset( int )` with your preferred offset.
+To enable animation you can call `TableHeaderCollapseOnScrollListener#setAnimationDuration( int )` with your preferred animation duration.
+  
 ### State Persistence
 The TableView as well as the SortableTableView will persist its state automatically (e.g. on orientation change). If you want to disable this behaviour you can do so using the following code snipped.
 ```java
