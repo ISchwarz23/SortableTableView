@@ -1,5 +1,9 @@
 package de.codecrafters.tableview;
 
+import android.animation.Animator;
+import android.animation.LayoutTransition;
+import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
@@ -41,6 +45,7 @@ public class TableView<T> extends LinearLayout {
     private final Set<TableDataLongClickListener<T>> dataLongClickListeners = new HashSet<>();
     private final Set<TableDataClickListener<T>> dataClickListeners = new HashSet<>();
     private final Set<OnScrollListener> onScrollListeners = new HashSet<>();
+    private final LayoutTransition layoutTransition;
 
     private TableDataRowBackgroundProvider<? super T> dataRowBackgroundProvider =
             TableDataRowBackgroundProviders.similarRowColor(0x00000000);
@@ -89,6 +94,8 @@ public class TableView<T> extends LinearLayout {
         setAttributes(attributes);
         setupTableHeaderView(attributes);
         setupTableDataView(attributes, styleAttributes);
+
+        layoutTransition = new LayoutTransition();
     }
 
     /**
@@ -111,6 +118,53 @@ public class TableView<T> extends LinearLayout {
         setHeaderElevation(headerElevation);
 
         forceRefresh();
+    }
+
+    /**
+     * Sets the {@link TableView} header visible or hides it.
+     *
+     * @param visible Whether the {@link TableView} header shall be visible or not.
+     */
+    public void setHeaderVisible(boolean visible) {
+        setHeaderVisible(visible, 0);
+    }
+
+    /**
+     * Sets the {@link TableView} header visible or hides it.
+     *
+     * @param visible Whether the {@link TableView} header shall be visible or not.
+     */
+    public void setHeaderVisible(boolean visible, int animationDuration) {
+        if (visible && !isHeaderVisible()) {
+            if (animationDuration > 0) {
+                final Animator moveInAnimator = ObjectAnimator.ofPropertyValuesHolder((Object) null, PropertyValuesHolder.ofFloat("y", 0));
+                moveInAnimator.setDuration(animationDuration);
+                layoutTransition.setAnimator(LayoutTransition.APPEARING, moveInAnimator);
+                setLayoutTransition(layoutTransition);
+            } else {
+                setLayoutTransition(null);
+            }
+            addView(tableHeaderView, 0);
+        } else if (!visible && isHeaderVisible()) {
+            if (animationDuration > 0) {
+                final Animator moveOutAnimator = ObjectAnimator.ofPropertyValuesHolder((Object) null, PropertyValuesHolder.ofFloat("y", -tableHeaderView.getHeight()));
+                moveOutAnimator.setDuration(animationDuration);
+                layoutTransition.setAnimator(LayoutTransition.DISAPPEARING, moveOutAnimator);
+                setLayoutTransition(layoutTransition);
+            } else {
+                setLayoutTransition(null);
+            }
+            removeView(tableHeaderView);
+        }
+    }
+
+    /**
+     * Gives a boolean that indicates if the {@link TableView} header is visible or not.
+     *
+     * @return A boolean that indicates if the {@link TableView} header is visible or not.
+     */
+    public boolean isHeaderVisible() {
+        return getChildCount() == 2;//tableHeaderView.getVisibility() == VISIBLE;
     }
 
     /**

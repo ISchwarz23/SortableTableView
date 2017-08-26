@@ -1,6 +1,7 @@
 package de.codecrafters.tableviewexample;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -87,9 +88,9 @@ public class CarTableDataAdapter extends LongPressAwareTableDataAdapter<Car> {
         textView.setTextSize(TEXT_SIZE);
 
         if (car.getPrice() < 50000) {
-            textView.setTextColor(0xFF2E7D32);
+            textView.setTextColor(ContextCompat.getColor(getContext(), R.color.table_price_low));
         } else if (car.getPrice() > 100000) {
-            textView.setTextColor(0xFFC62828);
+            textView.setTextColor(ContextCompat.getColor(getContext(), R.color.table_price_high));
         }
 
         return textView;
