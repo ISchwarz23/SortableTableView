@@ -48,7 +48,7 @@ public class SortingStatus {
     /**
      * Gives the column index, by which the {@link SortableTableView} is currently sorted.
      *
-     * @return The column index, by which the {@link SortableTableView} is currently sorted or {@value -1} if the table is not sorted.
+     * @return The column index, by which the {@link SortableTableView} is currently sorted or {@code -1} if the table is not sorted.
      */
     public int getSortedColumnIndex() {
         return sortedColumnIndex;
