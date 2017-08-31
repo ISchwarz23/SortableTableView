@@ -7,12 +7,11 @@ import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.SparseArray;
+import de.codecrafters.tableview.listeners.SortingStatusChangeListener;
 import de.codecrafters.tableview.listeners.TableHeaderClickListener;
 import de.codecrafters.tableview.providers.SortStateViewProvider;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 /**
  * Extension of the {@link TableView} that gives the possibility to sort the table by every single
@@ -171,6 +170,26 @@ public class SortableTableView<T> extends TableView<T> {
     }
 
     /**
+     * Adds the given {@link SortingStatusChangeListener} to this {@link SortableTableView}.
+     *
+     * @param listener The {@link SortingStatusChangeListener} that shall be added to this {@link SortableTableView}.
+     * @return A boolean indicating if the adding of the {@link SortingStatusChangeListener} has been successful.
+     */
+    public boolean addSortingStatusChangedListener(final SortingStatusChangeListener listener) {
+        return sortingController.sortingStatusListeners.add(listener);
+    }
+
+    /**
+     * Removes the given {@link SortingStatusChangeListener} from this {@link SortableTableView}.
+     *
+     * @param listener The {@link SortingStatusChangeListener} that shall be removed from this {@link SortableTableView}.
+     * @return A boolean indicating if the removal of the {@link SortingStatusChangeListener} has been successful.
+     */
+    public boolean removeSortingStatusChangedListener(final SortingStatusChangeListener listener) {
+        return sortingController.sortingStatusListeners.remove(listener);
+    }
+
+    /**
      * Sorts the table using the given {@link Comparator}.
      *
      * @param comparator The {@link Comparator} that shall be used to sort the table.
@@ -210,6 +229,7 @@ public class SortableTableView<T> extends TableView<T> {
      */
     private class SortingController implements TableHeaderClickListener {
 
+        private final Set<SortingStatusChangeListener> sortingStatusListeners = new HashSet<>();
         private final SparseArray<Comparator<T>> comparators = new SparseArray<>();
         private final SortingStatus sortingStatus = new SortingStatus();
 
@@ -222,11 +242,29 @@ public class SortableTableView<T> extends TableView<T> {
                 return;
             }
 
-            sortedColumnComparator = getComparator(columnIndex);
+            final SortingOrder sortingOrder = getSortingOrder(columnIndex);
+            sortedColumnComparator = getComparator(columnIndex, sortingOrder);
+
+            sortingStatus.setSortedColumnIndex(columnIndex);
+            sortingStatus.setSortedOrder(sortingOrder);
+
             sortDataSFCT(sortedColumnComparator);
             setSortView(columnIndex);
 
-            sortingStatus.setSortedColumnIndex(columnIndex);
+            notifySortingStatusListeners();
+        }
+
+        private void notifySortingStatusListeners() {
+            for (final SortingStatusChangeListener sortingStatusListener : sortingStatusListeners) {
+                sortingStatusListener.onSortingStatusChanged(sortingStatus);
+            }
+        }
+
+        private SortingOrder getSortingOrder(int columnIndex) {
+            if (sortingStatus.getSortedColumnIndex() == columnIndex && sortingStatus.getSortedOrder() == SortingOrder.ASCENDING) {
+                return SortingOrder.DESCENDING;
+            }
+            return SortingOrder.ASCENDING;
         }
 
         public void sort(final int columnIndex, final SortingOrder sortingOrder) {
@@ -273,23 +311,14 @@ public class SortableTableView<T> extends TableView<T> {
             return comparators.get(columnIndex);
         }
 
-        private Comparator<T> getComparator(final int columnIndex) {
+        private Comparator<T> getComparator(final int columnIndex, final SortingOrder sortingOrder) {
             final Comparator<T> columnComparator = comparators.get(columnIndex);
 
-            final Comparator<T> comparator;
-            if (sortingStatus.getSortedColumnIndex() == columnIndex) {
-                if (sortingStatus.getSortedOrder() == SortingOrder.ASCENDING) {
-                    comparator = Collections.reverseOrder(columnComparator);
-                    sortingStatus.setSortedOrder(SortingOrder.DESCENDING);
-                } else {
-                    comparator = columnComparator;
-                    sortingStatus.setSortedOrder(SortingOrder.ASCENDING);
-                }
+            if (sortingOrder == SortingOrder.ASCENDING) {
+                return columnComparator;
             } else {
-                comparator = columnComparator;
-                sortingStatus.setSortedOrder(SortingOrder.ASCENDING);
+                return Collections.reverseOrder(columnComparator);
             }
-            return comparator;
         }
 
         public void setComparator(final int columnIndex, final Comparator<T> columnComparator) {
