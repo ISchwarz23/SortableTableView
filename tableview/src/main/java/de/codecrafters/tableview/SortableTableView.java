@@ -175,7 +175,7 @@ public class SortableTableView<T> extends TableView<T> {
      * @param listener The {@link SortingStatusChangeListener} that shall be added to this {@link SortableTableView}.
      * @return A boolean indicating if the adding of the {@link SortingStatusChangeListener} has been successful.
      */
-    public boolean addSortingStatusChangedListener(final SortingStatusChangeListener listener) {
+    public boolean addSortingStatusChangeListener(final SortingStatusChangeListener listener) {
         return sortingController.sortingStatusListeners.add(listener);
     }
 
@@ -185,7 +185,7 @@ public class SortableTableView<T> extends TableView<T> {
      * @param listener The {@link SortingStatusChangeListener} that shall be removed from this {@link SortableTableView}.
      * @return A boolean indicating if the removal of the {@link SortingStatusChangeListener} has been successful.
      */
-    public boolean removeSortingStatusChangedListener(final SortingStatusChangeListener listener) {
+    public boolean removeSortingStatusChangeListener(final SortingStatusChangeListener listener) {
         return sortingController.sortingStatusListeners.remove(listener);
     }
 
