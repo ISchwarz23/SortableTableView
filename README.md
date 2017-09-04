@@ -195,7 +195,7 @@ This view is automatically shown if no data is available and hidden if there is 
 Setting data to the header views is identical to setting data to the table cells. All you need to do is extending the `TableHeaderAdapter` which is also providing the easy access methods that are described for the `TableDataAdapter`.  
 If all you want to display in the header is the column title as String (like in most cases) the `SimpleTableHeaderAdapter` will fulfil your needs.
 To show simple Strings inside your table header, use the following code:
-```
+```java
 public class MainActivity extends AppCompatActivity {
     
     private static final String[] TABLE_HEADERS = { "This", "is", "a", "test" };
@@ -208,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
 }  
 ```
 To show Strings from resources inside your table header, use the following code:
-```
+```java
 public class MainActivity extends AppCompatActivity {
     
     private static final int[] TABLE_HEADERS = { R.string.header_col1, R.string.header_col2, R.string.header_col3 };
