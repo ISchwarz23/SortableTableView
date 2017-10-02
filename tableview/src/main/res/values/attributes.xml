@@ -4,6 +4,7 @@
         <attr name="tableView_columnCount" format="integer"/>
         <attr name="tableView_headerElevation" format="integer"/>
         <attr name="tableView_headerColor" format="color"/>
+        <attr name="tableView_swipeRefreshColor" format="color"/>
     </declare-styleable>
 </resources>
 

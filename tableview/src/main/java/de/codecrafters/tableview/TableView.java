@@ -15,17 +15,26 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
-import de.codecrafters.tableview.colorizers.TableDataRowColorizer;
-import de.codecrafters.tableview.listeners.*;
-import de.codecrafters.tableview.model.TableColumnModel;
-import de.codecrafters.tableview.model.TableColumnWeightModel;
-import de.codecrafters.tableview.providers.TableDataRowBackgroundProvider;
-import de.codecrafters.tableview.toolkit.TableDataRowBackgroundProviders;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+
+import de.codecrafters.tableview.colorizers.TableDataRowColorizer;
+import de.codecrafters.tableview.listeners.OnScrollListener;
+import de.codecrafters.tableview.listeners.SwipeToRefreshListener;
+import de.codecrafters.tableview.listeners.TableDataClickListener;
+import de.codecrafters.tableview.listeners.TableDataLongClickListener;
+import de.codecrafters.tableview.listeners.TableHeaderClickListener;
+import de.codecrafters.tableview.model.TableColumnModel;
+import de.codecrafters.tableview.model.TableColumnWeightModel;
+import de.codecrafters.tableview.providers.TableDataRowBackgroundProvider;
+import de.codecrafters.tableview.toolkit.TableDataRowBackgroundProviders;
 
 
 /**
@@ -41,6 +50,7 @@ public class TableView<T> extends LinearLayout {
     private static final int DEFAULT_COLUMN_COUNT = 4;
     private static final int DEFAULT_HEADER_ELEVATION = 1;
     private static final int DEFAULT_HEADER_COLOR = 0xFFCCCCCC;
+    private static final int DEFAULT_SWIPE_REFRESH_COLOR = 0xFFCCCCCC;
 
     private final Set<TableDataLongClickListener<T>> dataLongClickListeners = new HashSet<>();
     private final Set<TableDataClickListener<T>> dataClickListeners = new HashSet<>();
@@ -58,7 +68,7 @@ public class TableView<T> extends LinearLayout {
 
     private int headerElevation;
     private int headerColor;
-
+    private int swipeRefreshColor;
 
     /**
      * Creates a new TableView with the given context.\n
@@ -249,7 +259,6 @@ public class TableView<T> extends LinearLayout {
      */
     public void setHeaderBackgroundColor(@ColorInt final int color) {
         tableHeaderView.setBackgroundColor(color);
-        swipeRefreshLayout.setColorSchemeColors(color);
     }
 
     /**
@@ -260,6 +269,15 @@ public class TableView<T> extends LinearLayout {
      */
     public void setHeaderElevation(final int elevation) {
         ViewCompat.setElevation(tableHeaderView, elevation);
+    }
+
+    /**
+     * Sets the given color for SwipeRefreshLayout.
+     *
+     * @param color The color that shall be set for SwipeRefreshLayout.
+     */
+    public void setSwipeRefreshColor(@ColorInt final int color) {
+        swipeRefreshColor = color;
     }
 
     /**
@@ -525,6 +543,7 @@ public class TableView<T> extends LinearLayout {
         headerElevation = styledAttributes.getInt(R.styleable.TableView_tableView_headerElevation, DEFAULT_HEADER_ELEVATION);
         final int columnCount = styledAttributes.getInt(R.styleable.TableView_tableView_columnCount, DEFAULT_COLUMN_COUNT);
         columnModel = new TableColumnWeightModel(columnCount);
+        swipeRefreshColor = styledAttributes.getInt(R.styleable.TableView_tableView_swipeRefreshColor, DEFAULT_SWIPE_REFRESH_COLOR);
 
         styledAttributes.recycle();
     }
@@ -562,7 +581,7 @@ public class TableView<T> extends LinearLayout {
         swipeRefreshLayout = new SwipeRefreshLayout(getContext());
         swipeRefreshLayout.setLayoutParams(dataViewLayoutParams);
         swipeRefreshLayout.addView(tableDataView);
-        swipeRefreshLayout.setColorSchemeColors(headerColor);
+        swipeRefreshLayout.setColorSchemeColors(swipeRefreshColor);
         swipeRefreshLayout.setEnabled(false);
 
         addView(swipeRefreshLayout);
