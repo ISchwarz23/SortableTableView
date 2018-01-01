@@ -23,10 +23,10 @@ To use the this library in your project simply add the following dependency to y
 ```
 
 ## Pro Version
-If you want to have the best TableView experience, we offer you the possibility to get the _pro version_ of the 
-SortableTableView. This is what the pro version offers you:
+If you want to have the best TableView experience, we offer you the possibility to get the [pro version](http://www.sortabletableview.com) 
+of the SortableTableView. This is what the pro version offers you:
 
-| | Open Version | Pro Version |
+| | Open-Source Version | Pro Version |
 | --- | --- | --- |
 | render simple data | :white_check_mark: | :white_check_mark: |
 | render custom data | :white_check_mark: | :white_check_mark: |
@@ -44,6 +44,7 @@ SortableTableView. This is what the pro version offers you:
 
 To get more information visit the [SortableTableView-Page](http://www.sortabletableview.com).
 
+<!---
 ## Support the open-source version
 As the open-source version brings a lot of work to maintain, you can support me with a small donation in order
 to keep the free version alive.
@@ -65,7 +66,7 @@ to keep the free version alive.
 
 *"You are the man! This project saved me hours (if not days) of struggle and hard work, simply awesome!"*  
 [Donate 100$](https://www.paypal.me/ISchwarz23/100USD) or  [Donate 100€](https://www.paypal.me/ISchwarz23/100EUR)
-
+--->
   
 ## Features
 ### Layouting
