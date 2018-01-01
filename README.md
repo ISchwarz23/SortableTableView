@@ -22,10 +22,31 @@ To use the this library in your project simply add the following dependency to y
     }
 ```
 
-## Support Me
-I offer this library and the complete source code of it for free! To develop open source software is not without cost though — it takes technical knowledge, time, and effort.
-You don't have to be a developer to support my open source work! If you want to receive personal support, or just feel all warm and fuzzy inside from helping open source development, donations are very welcome.
-Thank you in advance! :)
+## Pro Version
+If you want to have the best TableView experience, we offer you the possibility to get the _pro version_ of the 
+SortableTableView. This is what the pro version offers you:
+
+| | Open Version | Pro Version |
+| --- | --- | --- |
+| render simple data | :white_check_mark: | :white_check_mark: |
+| render custom data | :white_check_mark: | :white_check_mark: |
+| header styling | :white_check_mark: | :white_check_mark: |
+| data row styling | :white_check_mark: | :white_check_mark: |
+| data sorting | :white_check_mark: | :white_check_mark: |
+| data loading | :white_check_mark: | :white_check_mark: |
+| data searching | :red_circle:* | :white_check_mark: |
+| data selection | :red_circle: | :white_check_mark: |
+| view recycling | :red_circle: | :white_check_mark: |
+| support | :red_circle: | :white_check_mark: |
+| maintenance | :red_circle: | :white_check_mark: |
+| quick start guide | :red_circle: | :white_check_mark: |
+| full documentation | :red_circle: | :white_check_mark: |
+
+To get more information visit the [SortableTableView-Page](http://www.sortabletableview.com).
+
+## Support the open-source version
+As the open-source version brings a lot of work to maintain, you can support me with a small donation in order
+to keep the free version alive.
 
 *"Thank's for creating this project, here's a coffee (or some beer) for you!"*  
 [Donate 5$](https://www.paypal.me/ISchwarz23/5USD) or  [Donate 5€](https://www.paypal.me/ISchwarz23/5EUR)
