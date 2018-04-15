@@ -28,20 +28,20 @@ of the SortableTableView. This is what the pro version offers you:
 
 | | Open-Source Version | Pro Version |
 | --- | --- | --- |
-| render simple data | [![Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/microsoft/106/heavy-check-mark_2714.png)] | [![Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/microsoft/106/heavy-check-mark_2714.png)] |
-| render custom data | [![Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/microsoft/106/heavy-check-mark_2714.png)] | [![Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/microsoft/106/heavy-check-mark_2714.png)] |
-| header styling | [![Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/microsoft/106/heavy-check-mark_2714.png)] | [![Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/microsoft/106/heavy-check-mark_2714.png)] |
-| data row styling | [![Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/microsoft/106/heavy-check-mark_2714.png)] | [![Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/microsoft/106/heavy-check-mark_2714.png)] |
-| data sorting | [![Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/microsoft/106/heavy-check-mark_2714.png)] | [![Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/microsoft/106/heavy-check-mark_2714.png)] |
-| data loading | [![Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/microsoft/106/heavy-check-mark_2714.png)] | [![Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/microsoft/106/heavy-check-mark_2714.png)] |
-| searching | [![Not Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/emojidex/112/cross-mark_274c.png)] | [![Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/microsoft/106/heavy-check-mark_2714.png)] |
-| paging | [![Not Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/emojidex/112/cross-mark_274c.png)] | [![Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/microsoft/106/heavy-check-mark_2714.png)] |
-| selection | [![Not Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/emojidex/112/cross-mark_274c.png)] | [![Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/microsoft/106/heavy-check-mark_2714.png)] |
-| view recycling | [![Not Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/emojidex/112/cross-mark_274c.png)] | [![Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/microsoft/106/heavy-check-mark_2714.png)] |
-| support | [![Not Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/emojidex/112/cross-mark_274c.png)] | [![Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/microsoft/106/heavy-check-mark_2714.png)] |
-| maintenance | [![Not Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/emojidex/112/cross-mark_274c.png)] | [![Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/microsoft/106/heavy-check-mark_2714.png)] |
-| quick start guide | [![Not Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/emojidex/112/cross-mark_274c.png)] | [![Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/microsoft/106/heavy-check-mark_2714.png)] |
-| full documentation | [![Not Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/emojidex/112/cross-mark_274c.png)] | [![Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/microsoft/106/heavy-check-mark_2714.png)] |
+| render simple data | <img src="https://emojipedia-us.s3.amazonaws.com/thumbs/120/microsoft/106/heavy-check-mark_2714.png" height="24"> | ![Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/microsoft/106/heavy-check-mark_2714.png) |
+| render custom data | ![Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/microsoft/106/heavy-check-mark_2714.png) | ![Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/microsoft/106/heavy-check-mark_2714.png) |
+| header styling | ![Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/microsoft/106/heavy-check-mark_2714.png) | ![Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/microsoft/106/heavy-check-mark_2714.png) |
+| data row styling | ![Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/microsoft/106/heavy-check-mark_2714.png) | ![Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/microsoft/106/heavy-check-mark_2714.png) |
+| data sorting | ![Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/microsoft/106/heavy-check-mark_2714.png) | ![Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/microsoft/106/heavy-check-mark_2714.png) |
+| data loading | ![Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/microsoft/106/heavy-check-mark_2714.png) | ![Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/microsoft/106/heavy-check-mark_2714.png) |
+| searching | ![Not Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/emojidex/112/cross-mark_274c.png) | ![Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/microsoft/106/heavy-check-mark_2714.png) |
+| paging | ![Not Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/emojidex/112/cross-mark_274c.png) | ![Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/microsoft/106/heavy-check-mark_2714.png) |
+| selection | ![Not Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/emojidex/112/cross-mark_274c.png) | ![Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/microsoft/106/heavy-check-mark_2714.png) |
+| view recycling | ![Not Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/emojidex/112/cross-mark_274c.png) | ![Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/microsoft/106/heavy-check-mark_2714.png) |
+| support | ![Not Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/emojidex/112/cross-mark_274c.png) | ![Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/microsoft/106/heavy-check-mark_2714.png) |
+| maintenance | ![Not Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/emojidex/112/cross-mark_274c.png) | ![Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/microsoft/106/heavy-check-mark_2714.png) |
+| quick start guide | ![Not Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/emojidex/112/cross-mark_274c.png) | ![Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/microsoft/106/heavy-check-mark_2714.png) |
+| full documentation | ![Not Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/emojidex/112/cross-mark_274c.png) | ![Available](https://emojipedia-us.s3.amazonaws.com/thumbs/120/microsoft/106/heavy-check-mark_2714.png) |
 
 To get more information visit the [SortableTableView-Page](http://www.sortabletableview.com).
 
