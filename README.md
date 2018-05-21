@@ -4,7 +4,9 @@ An Android library providing a TableView and a SortableTableView.
 
 ![SortableTableView Example](https://raw.githubusercontent.com/ISchwarz23/SortableTableView/develop/README/SortableTableView-Example.gif)
 
-**Minimum SDK-Version:** 11  |  **Compile SDK-Version:** 25  |  **Latest Library Version:** 2.8.0  
+**Minimum SDK-Version:** 11  |  **Compile SDK-Version:** 25  |  **Latest Library Version:** 2.8.0  
+
+**New version available!** Check [version 3.1.0](http://www.sortabletableview.com) of the pro version.
 
 ## Repository Content
 **tableview** - contains the android library sources and resources  
