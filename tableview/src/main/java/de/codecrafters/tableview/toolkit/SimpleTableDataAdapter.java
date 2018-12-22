@@ -2,8 +2,11 @@ package de.codecrafters.tableview.toolkit;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -27,6 +30,7 @@ public final class SimpleTableDataAdapter extends TableDataAdapter<String[]> {
     private int textSize = 18;
     private int typeface = Typeface.NORMAL;
     private int textColor = 0x99000000;
+    private int gravity = Gravity.START;
 
 
     public SimpleTableDataAdapter(final Context context, final String[][] data) {
@@ -50,6 +54,7 @@ public final class SimpleTableDataAdapter extends TableDataAdapter<String[]> {
         try {
             final String textToShow = getItem(rowIndex)[columnIndex];
             textView.setText(textToShow);
+            textView.setGravity(gravity);
         } catch (final IndexOutOfBoundsException e) {
             Log.w(LOG_TAG, "No Sting given for row " + rowIndex + ", column " + columnIndex + ". "
                     + "Caught exception: " + e.toString());
@@ -57,6 +62,14 @@ public final class SimpleTableDataAdapter extends TableDataAdapter<String[]> {
         }
 
         return textView;
+    }
+
+    /**
+     * Sets the gravity of the text inside the data cell.
+     * @param gravity Sets the gravity of the text inside the data cell.
+     */
+    public void setGravity(int gravity) {
+        this.gravity = gravity;
     }
 
     /**
