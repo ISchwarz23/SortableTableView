@@ -3,6 +3,7 @@ package de.codecrafters.tableview.toolkit;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -25,6 +26,7 @@ public final class SimpleTableHeaderAdapter extends TableHeaderAdapter {
     private int textSize = 18;
     private int typeface = Typeface.BOLD;
     private int textColor = 0x99000000;
+    private int gravity = Gravity.START;
 
     /**
      * Creates a new SimpleTableHeaderAdapter.
@@ -59,6 +61,14 @@ public final class SimpleTableHeaderAdapter extends TableHeaderAdapter {
         paddingTop = top;
         paddingRight = right;
         paddingBottom = bottom;
+    }
+
+    /**
+     * Sets the gravity of the text inside the header cell.
+     * @param gravity The gravity of the text inside the header cell.
+     */
+    public void setGravity(int gravity) {
+        this.gravity = gravity;
     }
 
     /**
@@ -130,6 +140,7 @@ public final class SimpleTableHeaderAdapter extends TableHeaderAdapter {
 
         if (columnIndex < headers.length) {
             textView.setText(headers[columnIndex]);
+            textView.setGravity(gravity);
         }
 
         textView.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
