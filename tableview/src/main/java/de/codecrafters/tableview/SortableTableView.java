@@ -1,6 +1,7 @@
 package de.codecrafters.tableview;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -35,6 +36,9 @@ public class SortableTableView<T> extends TableView<T> {
     private final SortableTableHeaderView sortableTableHeaderView;
     private final SortingController sortingController;
 
+    public static final int SORT_ICON_LEFT = 0;
+    public static final int SORT_ICON_RIGHT = 1;
+    private int sortIconPosition;
 
     /**
      * Creates a new SortableTableView with the given context.\n
@@ -66,11 +70,11 @@ public class SortableTableView<T> extends TableView<T> {
      */
     public SortableTableView(final Context context, final AttributeSet attributes, final int styleAttributes) {
         super(context, attributes, styleAttributes);
-
+        setCustomAttributes(attributes);
         sortableTableHeaderView = new SortableTableHeaderView(context);
         sortableTableHeaderView.setBackgroundColor(0xFFCCCCCC);
+        sortableTableHeaderView.setIconPosition(sortIconPosition);
         setHeaderView(sortableTableHeaderView);
-
         sortingController = new SortingController();
         sortableTableHeaderView.addHeaderClickListener(sortingController);
     }
@@ -221,6 +225,12 @@ public class SortableTableView<T> extends TableView<T> {
             }
         }
     }
+
+    private void setCustomAttributes(AttributeSet attributes) {
+        final TypedArray styledAttributes = getContext().obtainStyledAttributes(attributes, R.styleable.SortableTableView);
+        sortIconPosition = styledAttributes.getInt(R.styleable.SortableTableView_sortIconPosition, SORT_ICON_LEFT);
+    }
+
 
     /**
      * A controller managing all actions that are in the context of sorting.
