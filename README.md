@@ -15,11 +15,20 @@ An Android library providing a TableView and a SortableTableView.
 [![Example App](http://www.clintonfitch.com/wp-content/uploads/2015/06/Google-Play-Button.jpg)](https://play.google.com/store/apps/details?id=de.codecrafters.tableviewexample)
 
 ## Setup
-To use the this library in your project simply add the following dependency to your *build.gradle* file.
+Add it in your root build.gradle at the end of repositories:
+```
+    allprojects {
+        repositories {
+            ...
+            maven { url 'https://jitpack.io' }
+        }
+    }
+```
+Then add the dependency:
 ```
     dependencies {
         ...
-        compile 'de.codecrafters.tableview:tableview:2.8.0'
+        implementation 'com.github.ISchwarz23:SortableTableView:2.8.1'
         ...
     }
 ```
